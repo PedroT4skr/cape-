@@ -1,0 +1,5 @@
+allowBuilds:
+  esbuild: true
+  msedge-tts: set this to true or false
+minimumReleaseAgeExclude:
+  - msedge-tts@2.1.0

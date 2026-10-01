@@ -1,0 +1,27 @@
+{
+  "name": "cape-caa",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@echristian/edge-tts": "^0.0.14",
+    "@lucide/svelte": "^1.55.0",
+    "dexie": "^4.0.10",
+    "msedge-tts": "^2.1.0"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@types/node": "^26.6.5",
+    "@types/ws": "^8.18.2",
+    "svelte": "^5.22.4",
+    "typescript": "^5.7.3",
+    "vite": "^6.2.0",
+    "vite-plugin-pwa": "^0.21.1",
+    "ws": "^8.22.0"
+  }
+}
