@@ -2,7 +2,7 @@
 
 > **Instituição:** CAPE (Centro de Apoio Pedagógico Especializado) de Vitória da Conquista - BA  
 > **Propósito:** Plataforma PWA de Comunicação Alternativa e Ampliada (CAA) para tablets de baixo custo, substituindo pastas físicas PECS.  
-> **Versão:** 3.0.3 (Sincronização Completa do Áudio de Incentivo nas Atividades)
+> **Versão:** 3.0.4 (README Profissional com Galeria Visual e Versionamento no GitHub)
 
 ---
 
@@ -104,6 +104,17 @@
 ---
 
 ## 3. Histórico de Alterações
+
+- **v3.0.4 (README Profissional com Galeria Visual e Versionamento no GitHub):**
+  - **Documentação Pública (`README.md`):** Apresentação concisa e de alto impacto contendo badges dinâmicos de stack (PWA, Svelte 5, TypeScript, Dexie.js, Edge-TTS, WCAG AAA), tabela de categorias gramaticais da Chave de Fitzgerald com hexadecimais, guia rápido de execução e credenciais de educador (`PIN 1234`).
+  - **Galeria Visual com Capturas do App (`docs/screenshots/`):**
+    - `01_prancha_principal.png`: Prancha PECS e barra superior de sentença.
+    - `02_atividades_pedagogicas.png`: Catálogo de pastas didáticas.
+    - `03_player_discalculia.png`: Exercício concreto de contagem e botões táteis 3D.
+    - `04_painel_ajustes_sistema.png`: Painel do terapeuta, vozes neurais e diagnóstico offline.
+    - `05_mobile_responsivo.png`: Exibição adaptada para celular (390x844).
+  - **Deploy e Versionamento:** Repositório oficial sincronizado em `https://github.com/PedroT4skr/cape-.git` com 9 Pull Requests temáticos aprovados e mesclados na branch `main`.
+
 
 - **v3.0.3 (Sincronização Completa do Áudio de Incentivo nas Atividades):**
   - **Fim do Corte Prematuro de Voz (`activity.store.ts` & `speech.service.ts`):**
