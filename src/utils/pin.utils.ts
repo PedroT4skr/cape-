@@ -1,11 +1,55 @@
 import { APP_CONFIG } from '../constants/config.constants'
 
+export const PIN_STORAGE_KEY = 'cape:admin:pin:v1'
+
 export interface MathChallenge {
   num1: number
   num2: number
   operation: '+' | 'x'
   expectedAnswer: number
   questionText: string
+}
+
+/**
+ * Retorna o PIN atualmente ativo (do localStorage ou o padrão 1234)
+ */
+export function getCurrentPin(): string {
+  try {
+    const savedPin = localStorage.getItem(PIN_STORAGE_KEY)
+    if (savedPin && savedPin.trim().length >= 4) {
+      return savedPin.trim()
+    }
+  } catch {
+    // Caso de navegação anônima restrita
+  }
+  return APP_CONFIG.DEFAULT_PIN
+}
+
+/**
+ * Define um novo PIN personalizado
+ */
+export function setCustomPin(newPin: string): boolean {
+  const sanitized = newPin.trim()
+  if (!/^\d{4,8}$/.test(sanitized)) {
+    return false
+  }
+  try {
+    localStorage.setItem(PIN_STORAGE_KEY, sanitized)
+    return true
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Restaura o PIN para o padrão de fábrica do CAPE (1234)
+ */
+export function resetPinToDefault(): void {
+  try {
+    localStorage.removeItem(PIN_STORAGE_KEY)
+  } catch {
+    // Ignora erro
+  }
 }
 
 /**
@@ -37,8 +81,8 @@ export function generateMathChallenge(): MathChallenge {
 }
 
 /**
- * Valida se o PIN informado corresponde ao PIN cadastrado
+ * Valida se o PIN informado corresponde ao PIN ativo do sistema
  */
-export function validatePin(inputPin: string, correctPin: string = APP_CONFIG.DEFAULT_PIN): boolean {
+export function validatePin(inputPin: string, correctPin: string = getCurrentPin()): boolean {
   return inputPin.trim() === correctPin.trim()
 }

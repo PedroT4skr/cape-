@@ -1,6 +1,7 @@
 <script lang="ts">
   import StorageStatus from './StorageStatus.svelte'
   import VoiceSettings from './VoiceSettings.svelte'
+  import PinSettings from './PinSettings.svelte'
   import { db } from '../../db/db'
   import { currentBoard, loadBoard } from '../../stores/board.store'
   import { RotateCcw, AlertTriangle } from '@lucide/svelte'
@@ -21,6 +22,9 @@
 <div class="system-tab-grid">
   <!-- Configurações e Seletor do Motor de Voz Neural -->
   <VoiceSettings />
+
+  <!-- Segurança e Troca de PIN do Painel -->
+  <PinSettings />
 
   <!-- Diagnóstico e Memória do Tablet -->
   <StorageStatus />
@@ -50,7 +54,7 @@
 <style>
   .system-tab-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 16px;
     width: 100%;
     max-width: 100%;
