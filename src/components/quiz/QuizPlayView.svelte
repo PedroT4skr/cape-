@@ -164,8 +164,29 @@
   }
 
   @media (max-width: 600px) {
+    .play-container {
+      padding: 0.5rem 0.75rem 1.25rem;
+      gap: 0.75rem;
+    }
+
+    .play-main {
+      gap: 0.75rem;
+    }
+
     .options-grid {
       grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .play-actions {
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+    }
+
+    .prev-btn {
+      padding: 0.75rem 0.9rem;
+      font-size: 0.85rem;
+      border-radius: 12px;
     }
   }
 

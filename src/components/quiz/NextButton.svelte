@@ -43,6 +43,14 @@
     animation: pulse-cta 1.2s ease-in-out infinite;
   }
 
+  @media (max-width: 600px) {
+    .next-btn {
+      padding: 0.8rem 1.2rem;
+      font-size: 0.98rem;
+      border-radius: 12px;
+    }
+  }
+
   @keyframes pulse-cta {
     0%, 100% {
       transform: scale(1);

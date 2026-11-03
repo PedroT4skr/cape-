@@ -136,4 +136,22 @@
   .return-student-btn:active {
     background: #1E293B;
   }
+
+  @media (max-width: 600px) {
+    .hub-tabs {
+      gap: 4px;
+      padding: 4px;
+    }
+
+    .hub-tab-btn {
+      padding: 8px 6px;
+      font-size: 0.76rem;
+      gap: 5px;
+    }
+
+    .return-student-btn {
+      padding: 9px 14px;
+      font-size: 0.8rem;
+    }
+  }
 </style>

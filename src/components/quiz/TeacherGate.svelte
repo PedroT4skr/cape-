@@ -37,9 +37,7 @@
     <header class="gate-header">
       <span class="gate-icon">🔒</span>
       <h2 id="gate-title" class="gate-title">Acesso do Professor</h2>
-      <p class="gate-subtitle">
-        Digite o PIN de segurança para visualizar o ranking.
-      </p>
+      <p class="gate-subtitle">Digite o PIN para ver o ranking</p>
     </header>
 
     <div class="pin-dots">
@@ -49,9 +47,7 @@
     </div>
 
     {#if error}
-      <p class="gate-error-msg" role="alert">
-        Senha incorreta. Tente novamente.
-      </p>
+      <p class="gate-error-msg" role="alert">Senha incorreta. Tente novamente.</p>
     {/if}
 
     <div class="pin-keypad" role="group" aria-label="Teclado numérico">
@@ -81,12 +77,12 @@
   .gate-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(15, 23, 42, 0.6);
+    background: rgba(15, 23, 42, 0.65);
     backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    padding: 12px;
     z-index: 1000;
     animation: fadeIn 0.15s ease-out;
   }
@@ -95,41 +91,44 @@
     background: #FFFFFF;
     border: 2px solid #E2E8F0;
     border-radius: 20px;
-    max-width: 380px;
+    max-width: 360px;
     width: 100%;
-    padding: 1.75rem 1.5rem;
+    max-height: 94dvh;
+    overflow-y: auto;
+    padding: 1.5rem 1.25rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.15rem;
+    gap: 1rem;
     text-align: center;
     box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
   }
 
-  .gate-icon { font-size: 2rem; }
+  .gate-icon { font-size: 1.8rem; line-height: 1; }
 
   .gate-title {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     font-weight: 850;
     color: #0F172A;
     margin: 0;
   }
 
   .gate-subtitle {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: #64748B;
-    margin: 0.2rem 0 0;
+    margin: 0.15rem 0 0;
   }
 
   .pin-dots {
     display: flex;
-    gap: 0.9rem;
+    gap: 0.75rem;
     justify-content: center;
   }
 
   .pin-dot {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     border: 2px solid #CBD5E1;
     background: transparent;
@@ -148,11 +147,11 @@
   }
 
   .gate-error-msg {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     color: #BE123C;
     background: #FFF1F2;
     border: 1px solid #FECDD3;
-    padding: 0.4rem 0.75rem;
+    padding: 0.35rem 0.65rem;
     border-radius: 8px;
     margin: 0;
     font-weight: 700;
@@ -161,13 +160,13 @@
   .pin-keypad {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.6rem;
+    gap: 0.5rem;
     width: 100%;
-    max-width: 260px;
+    max-width: 250px;
   }
 
   .keypad-btn {
-    height: 52px;
+    height: 48px;
     font-size: 1.25rem;
     font-weight: 750;
     background: #F8FAFC;
@@ -190,11 +189,52 @@
     background: transparent;
     border: none;
     color: #64748B;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 700;
     cursor: pointer;
-    padding: 0.25rem 0.5rem;
+    padding: 0.2rem 0.5rem;
   }
 
   .gate-close-link:hover { color: #0F172A; }
+
+  /* Ajuste para celulares com tela pequena ou baixa */
+  @media (max-height: 680px), (max-width: 420px) {
+    .gate-modal {
+      padding: 1rem 0.9rem;
+      gap: 0.65rem;
+      max-width: 320px;
+    }
+
+    .gate-icon {
+      font-size: 1.5rem;
+    }
+
+    .gate-title {
+      font-size: 1rem;
+    }
+
+    .gate-subtitle {
+      font-size: 0.75rem;
+    }
+
+    .pin-dots {
+      gap: 0.5rem;
+    }
+
+    .pin-dot {
+      width: 12px;
+      height: 12px;
+    }
+
+    .pin-keypad {
+      max-width: 220px;
+      gap: 0.4rem;
+    }
+
+    .keypad-btn {
+      height: 40px;
+      font-size: 1.15rem;
+      border-radius: 10px;
+    }
+  }
 </style>

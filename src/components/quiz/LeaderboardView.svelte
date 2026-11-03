@@ -375,4 +375,34 @@
 
   .overtime-badge { color: #D97706; font-weight: 800; }
   .on-time-badge { color: #059669; }
+
+  @media (max-width: 640px) {
+    .leaderboard-container {
+      padding: 0.75rem 0.75rem 2rem;
+      gap: 0.75rem;
+    }
+
+    .leaderboard-header {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .leaderboard-top-actions {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .btn-secondary, .btn-danger, .btn-back {
+      padding: 0.5rem 0.6rem;
+      font-size: 0.75rem;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .leaderboard-table th, .leaderboard-table td {
+      padding: 0.6rem 0.75rem;
+      font-size: 0.8rem;
+    }
+  }
 </style>

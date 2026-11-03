@@ -91,6 +91,27 @@
     background: #F8FAFC;
   }
 
+  @media (max-width: 640px) {
+    .option-btn {
+      min-height: 50px;
+      padding: 0.55rem 0.85rem;
+      gap: 0.65rem;
+      border-radius: 12px;
+      border-width: 2px;
+    }
+
+    .option-badge {
+      width: 30px;
+      height: 30px;
+      font-size: 0.95rem;
+      border-radius: 8px;
+    }
+
+    .option-label {
+      font-size: clamp(1.05rem, 4vw, 1.3rem);
+    }
+  }
+
   @media (max-width: 540px) {
     .option-shortcut {
       display: none;

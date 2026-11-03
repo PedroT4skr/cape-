@@ -5,7 +5,7 @@
 > 1. **Comunicação Alternativa e Ampliada (CAA):** Pranchas de pictogramas, chave de Fitzgerald e voz neural.  
 > 2. **Atividades Cognitivas:** Alfabetização, percepção visual e apoio à discalculia.  
 > 3. **Quiz Matemático TDAH:** Cálculo rápido gamificado em 3 níveis com cronômetro sem bloqueio e penalidade positiva.  
-> **Versão:** 5.2.0 (Feedback Auditivo Tátil Global em Toda Interação de Clique & Redesign Gamificado)
+> **Versão:** 5.3.0 (Otimização Completa de Responsividade Mobile em Toda a Suíte CAPE)
 
 ---
 
@@ -16,23 +16,27 @@
 3. **Feedback Auditivo Universal TDAH / Acessibilidade:**
    - **Toda e qualquer interação de clique** (botões, links, alternativas, abas, cards e células) emite um clique sonoro tátil suave (*pop/tap* sintético via Web Audio API pura).
    - Gerenciado de forma não-intrusiva por [`ui-sound-manager.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/services/ui-sound-manager.ts) com throttle de 60ms para evitar poluição acústica ou eco de duplo toque.
-4. **Módulo 1: Comunicação Alternativa (CAA):**
+4. **Design Responsivo Universal (Mobile & Tablets Compactos):**
+   - Suporte refinado para telas estreitas (320px–480px) e alturas reduzidas (600px–720px / landscape mobile).
+   - Teclados numéricos compactos (40px de altura de tecla), display enxuto de PIN, modais com `max-height: 94dvh` e scroll interno suave.
+   - Botões de alternativas do quiz com altura otimizada (50px) para que todas as 4 alternativas caibam na viewport sem empurrar o CTA para fora da tela.
+5. **Módulo 1: Comunicação Alternativa (CAA):**
    - Chave de Fitzgerald semântica para categorização visual das células.
    - Barra de frases com síntese de voz (Edge-TTS via WebSocket e fallback Web Speech).
    - Prevenção de toques involuntários com throttle de 300ms.
-5. **Módulo 2: Atividades Cognitivas:**
+6. **Módulo 2: Atividades Cognitivas:**
    - Currículos modulares para Alfabetização Fonológica, Percepção Visual e Discalculia (Método CPA).
    - Telas dedicadas e feedback de reforço positivo com comemorações.
-6. **Módulo 3: Quiz Matemático Adaptado para TDAH:**
+7. **Módulo 3: Quiz Matemático Adaptado para TDAH:**
    - **3 Dificuldades Modulares:** Iniciante (soma/subtração), Intermediário (4 operações mistas e ordem) e Difícil (equações de 1º grau, %, potências, PA e funções).
    - **Mecânica sem Bloqueio Cognitivo:** O aluno nunca é travado ao zerar o tempo; acertos após o tempo zerar sofrem decréscimo progressivo de 40% a 50%.
    - **Direcionamento de Ação (UI):** O botão "PRÓXIMA QUESTÃO" permanece inativo (cinza) até que uma alternativa seja marcada, passando a pulsar continuamente em verde (`@keyframes pulse-cta`).
    - **Leaderboard Assíncrono do Professor:** Quadro de líderes protegido por PIN, filtros por categoria e exportação CSV.
-7. **Módulo 4: Segurança & Gestão de PIN do Painel:**
+8. **Módulo 4: Segurança & Gestão de PIN do Painel:**
    - O PIN de acesso ao painel pode ser alterado a qualquer momento em **Sistema & Ajustes** (`PinSettings.svelte`).
    - Exige autenticação com o PIN atual antes de gravar o novo PIN (4 a 8 dígitos numéricos).
    - Permite restauração direta para o PIN de fábrica do CAPE (`1234`).
-8. **Hub Central & Navegação Unificada:**
+9. **Hub Central & Navegação Unificada:**
    - Alternância fluida entre módulos através do cabeçalho global e do Hub Portal.
 
 ---
@@ -73,6 +77,10 @@
 
 ## 3. Histórico de Versões
 
+- **v5.3.0 (Responsividade Universal em Dispositivos Móveis):**
+  - Otimização responsiva nos modais de PIN (`TeacherGate.svelte`, `PinChallengeModal.svelte`) com botões reduzidos (40px) e controle de altura (`94dvh`).
+  - Redimensionamento e layout em grade responsiva no Quiz TDAH (`StartScreen.svelte`, `DifficultyCard.svelte`, `QuestionCard.svelte`, `OptionButton.svelte`, `QuizPlayView.svelte`, `ResultScreen.svelte`, `LeaderboardView.svelte`).
+  - Ajustes de densidade no Hub Portal e painéis de administração em telas menores que 640px.
 - **v5.2.0 (Feedback Auditivo Universal & Redesign Gamificado):**
   - Implementado [`ui-sound-manager.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/services/ui-sound-manager.ts) para resposta auditiva tátil instantânea em todos os cliques do aplicativo.
   - Redesign completo dos cards de dificuldade e da tela inicial do Quiz Matemático TDAH.

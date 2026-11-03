@@ -178,4 +178,42 @@
     color: var(--pill-text);
     border-color: transparent;
   }
+
+  /* Otimização Responsiva Mobile: Compacto, sem scroll excessivo */
+  @media (max-width: 640px) {
+    .diff-card {
+      padding: 0.75rem 0.85rem;
+      gap: 0.5rem;
+      border-radius: 14px;
+    }
+
+    .diff-card-top {
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .emoji-box {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+    }
+
+    .diff-emoji {
+      font-size: 1.2rem;
+    }
+
+    .diff-label {
+      font-size: 0.98rem;
+    }
+
+    .diff-subtitle {
+      font-size: 0.74rem;
+      line-height: 1.2;
+    }
+
+    .pill {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+    }
+  }
 </style>

@@ -155,6 +155,48 @@
   @media (max-width: 700px) {
     .hub-grid {
       grid-template-columns: 1fr;
+      gap: 0.85rem;
+    }
+
+    .hub-container {
+      padding: 1.25rem 0.75rem 2rem;
+      gap: 1.25rem;
+    }
+
+    .hub-header {
+      gap: 0.35rem;
+    }
+
+    .hub-title {
+      font-size: 1.45rem;
+    }
+
+    .hub-subtitle {
+      font-size: 0.85rem;
+    }
+
+    .hub-card {
+      padding: 1rem;
+      gap: 0.75rem;
+      border-radius: 16px;
+    }
+
+    .card-icon-wrapper {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+    }
+
+    .card-desc {
+      font-size: 0.8rem;
+    }
+
+    .quick-board-btn {
+      font-size: 0.82rem;
     }
   }
 

@@ -44,4 +44,22 @@
     letter-spacing: 0.03em;
     font-variant-numeric: tabular-nums;
   }
+
+  @media (max-width: 640px) {
+    .question-card {
+      padding: 0.85rem 1rem;
+      gap: 0.4rem;
+      border-radius: 14px;
+    }
+
+    .question-prompt {
+      font-size: clamp(1.1rem, 4.5vw, 1.45rem);
+      line-height: 1.25;
+    }
+
+    .question-expression {
+      font-size: clamp(1.7rem, 7.5vw, 2.5rem);
+      word-break: break-word;
+    }
+  }
 </style>

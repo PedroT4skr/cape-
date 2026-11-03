@@ -185,8 +185,39 @@
   }
 
   @media (max-width: 640px) {
+    .start-container {
+      padding: 0.75rem 0.75rem 1.5rem;
+      gap: 0.75rem;
+    }
+
+    .start-card {
+      padding: 1rem;
+      gap: 0.9rem;
+      border-radius: 16px;
+    }
+
+    .start-title {
+      font-size: 1.5rem;
+    }
+
+    .start-subtitle {
+      font-size: 0.85rem;
+    }
+
+    .name-input {
+      padding: 0.75rem 0.85rem 0.75rem 2.4rem;
+      font-size: 0.98rem;
+    }
+
+    .start-btn {
+      padding: 0.85rem 1.2rem;
+      font-size: 1.05rem;
+      border-radius: 12px;
+    }
+
     .difficulty-grid {
       grid-template-columns: 1fr;
+      gap: 0.5rem;
     }
   }
 

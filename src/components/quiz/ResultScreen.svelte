@@ -379,6 +379,31 @@
   }
 
   @media (max-width: 640px) {
+    .results-container {
+      padding: 0.75rem 0.75rem 2rem;
+      gap: 1rem;
+    }
+
+    .results-score-card {
+      padding: 1rem;
+      gap: 1rem;
+      border-radius: 16px;
+    }
+
+    .score-value {
+      font-size: clamp(2.4rem, 7vw, 3.2rem);
+    }
+
+    .review-card-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.35rem;
+    }
+
+    .review-status {
+      align-self: flex-start;
+    }
+
     .results-actions {
       grid-template-columns: 1fr;
     }
