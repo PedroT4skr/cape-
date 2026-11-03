@@ -10,7 +10,8 @@
   import { FITZGERALD_COLORS } from '../../constants/fitzgerald.constants'
   import IconRenderer from '../common/IconRenderer.svelte'
   import AddCellModal from './AddCellModal.svelte'
-  import { Plus, Trash2, LayoutGrid } from '@lucide/svelte'
+  import { Plus, Trash2, LayoutGrid, Printer } from '@lucide/svelte'
+  import { printBoardAsPecs } from '../../services/print-pecs.service'
 
   let isAddCellOpen = $state(false)
 

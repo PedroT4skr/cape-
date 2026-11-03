@@ -2,6 +2,7 @@
   import StorageStatus from './StorageStatus.svelte'
   import VoiceSettings from './VoiceSettings.svelte'
   import PinSettings from './PinSettings.svelte'
+  import BackupSettings from './BackupSettings.svelte'
   import { db } from '../../db/db'
   import { currentBoard, loadBoard } from '../../stores/board.store'
   import { RotateCcw, AlertTriangle } from '@lucide/svelte'
@@ -25,6 +26,9 @@
 
   <!-- Segurança e Troca de PIN do Painel -->
   <PinSettings />
+
+  <!-- Backup de Pranchas JSON -->
+  <BackupSettings />
 
   <!-- Diagnóstico e Memória do Tablet -->
   <StorageStatus />
