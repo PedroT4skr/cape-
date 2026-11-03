@@ -1,15 +1,16 @@
 <script lang="ts">
   import { isTeacherGateOpen, isLeaderboardOpen } from '../../stores/quiz.store'
+  import { getCurrentPin } from '../../utils/pin.utils'
 
-  const DEFAULT_PIN = '1234'
   let pin = $state('')
   let error = $state(false)
 
   function handleDigit(digit: string) {
-    if (pin.length < 4) {
+    if (pin.length < 8) {
       pin += digit
-      if (pin.length === 4) {
-        if (pin === DEFAULT_PIN) {
+      const targetPin = getCurrentPin()
+      if (pin.length === targetPin.length) {
+        if (pin === targetPin) {
           error = false
           isTeacherGateOpen.set(false)
           isLeaderboardOpen.set(true)
@@ -37,7 +38,7 @@
       <span class="gate-icon">🔒</span>
       <h2 id="gate-title" class="gate-title">Acesso do Professor</h2>
       <p class="gate-subtitle">
-        Digite a senha de 4 dígitos para visualizar o ranking pedagógico assíncrono.
+        Digite o PIN de segurança para visualizar o ranking.
       </p>
     </header>
 
@@ -49,7 +50,7 @@
 
     {#if error}
       <p class="gate-error-msg" role="alert">
-        Senha incorreta. A senha padrão de demonstração é <strong>1234</strong>.
+        Senha incorreta. Tente novamente.
       </p>
     {/if}
 
@@ -80,119 +81,120 @@
   .gate-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(15, 23, 42, 0.85);
-    backdrop-filter: blur(8px);
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1rem;
     z-index: 1000;
-    animation: fadeIn 0.2s ease-out;
+    animation: fadeIn 0.15s ease-out;
   }
 
   .gate-modal {
-    background: #1e293b;
-    border: 2px solid #334155;
+    background: #FFFFFF;
+    border: 2px solid #E2E8F0;
     border-radius: 20px;
-    max-width: 400px;
+    max-width: 380px;
     width: 100%;
-    padding: 2rem 1.5rem;
+    padding: 1.75rem 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.25rem;
+    gap: 1.15rem;
     text-align: center;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15);
   }
 
-  .gate-icon { font-size: 2.2rem; }
+  .gate-icon { font-size: 2rem; }
 
   .gate-title {
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: #f8fafc;
+    font-size: 1.25rem;
+    font-weight: 850;
+    color: #0F172A;
     margin: 0;
   }
 
   .gate-subtitle {
     font-size: 0.85rem;
-    color: #94a3b8;
-    margin: 0.25rem 0 0;
+    color: #64748B;
+    margin: 0.2rem 0 0;
   }
 
   .pin-dots {
     display: flex;
-    gap: 1rem;
+    gap: 0.9rem;
     justify-content: center;
   }
 
   .pin-dot {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
-    border: 2px solid #475569;
+    border: 2px solid #CBD5E1;
     background: transparent;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
   }
 
   .pin-dot.filled {
-    background: #10b981;
-    border-color: #10b981;
-    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    background: #059669;
+    border-color: #059669;
+    box-shadow: 0 0 8px rgba(5, 150, 105, 0.4);
   }
 
   .pin-dot.error {
-    border-color: #ef4444;
-    background: rgba(239, 68, 68, 0.4);
+    border-color: #E11D48;
+    background: rgba(225, 29, 72, 0.3);
   }
 
   .gate-error-msg {
-    font-size: 0.85rem;
-    color: #fca5a5;
-    background: rgba(239, 68, 68, 0.15);
-    border: 1px solid #ef4444;
+    font-size: 0.82rem;
+    color: #BE123C;
+    background: #FFF1F2;
+    border: 1px solid #FECDD3;
     padding: 0.4rem 0.75rem;
     border-radius: 8px;
     margin: 0;
+    font-weight: 700;
   }
 
   .pin-keypad {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.65rem;
+    gap: 0.6rem;
     width: 100%;
-    max-width: 270px;
+    max-width: 260px;
   }
 
   .keypad-btn {
-    height: 56px;
-    font-size: 1.35rem;
-    font-weight: 700;
-    background: #0f172a;
-    color: #f8fafc;
-    border: 1px solid #334155;
+    height: 52px;
+    font-size: 1.25rem;
+    font-weight: 750;
+    background: #F8FAFC;
+    color: #0F172A;
+    border: 1px solid #CBD5E1;
     border-radius: 12px;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 0.12s ease;
   }
 
   .keypad-btn:active {
-    background: #334155;
+    background: #E2E8F0;
     transform: scale(0.96);
   }
 
-  .keypad-clear { color: #f87171; }
-  .keypad-cancel { color: #94a3b8; }
+  .keypad-clear { color: #E11D48; }
+  .keypad-cancel { color: #64748B; }
 
   .gate-close-link {
     background: transparent;
     border: none;
-    color: #94a3b8;
+    color: #64748B;
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     padding: 0.25rem 0.5rem;
   }
 
-  .gate-close-link:hover { color: #f8fafc; }
+  .gate-close-link:hover { color: #0F172A; }
 </style>

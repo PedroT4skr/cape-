@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Difficulty } from '../../types/quiz.types'
   import { DIFFICULTIES } from '../../config/quiz.config'
-  import { Check, Clock, Award } from '@lucide/svelte'
+  import { Clock, Award } from '@lucide/svelte'
 
   interface Props {
     difficulty: Difficulty
@@ -14,25 +14,25 @@
 
   const themeColors = {
     beginner: {
-      accent: '#10b981',
-      bgGlow: 'rgba(16, 185, 129, 0.12)',
-      borderActive: '#34d399',
-      badgeBg: 'rgba(16, 185, 129, 0.18)',
-      badgeText: '#34d399'
+      accent: '#059669',
+      borderActive: '#10B981',
+      bgActive: '#ECFDF5',
+      pillBg: '#D1FAE5',
+      pillText: '#065F46'
     },
     intermediate: {
-      accent: '#f59e0b',
-      bgGlow: 'rgba(245, 158, 11, 0.12)',
-      borderActive: '#fbbf24',
-      badgeBg: 'rgba(245, 158, 11, 0.18)',
-      badgeText: '#fbbf24'
+      accent: '#D97706',
+      borderActive: '#F59E0B',
+      bgActive: '#FFFBEB',
+      pillBg: '#FEF3C7',
+      pillText: '#92400E'
     },
     advanced: {
-      accent: '#8b5cf6',
-      bgGlow: 'rgba(139, 92, 246, 0.12)',
-      borderActive: '#a78bfa',
-      badgeBg: 'rgba(139, 92, 246, 0.18)',
-      badgeText: '#c4b5fd'
+      accent: '#7C3AED',
+      borderActive: '#8B5CF6',
+      bgActive: '#F5F3FF',
+      pillBg: '#EDE9FE',
+      pillText: '#5B21B6'
     }
   }
 
@@ -44,17 +44,10 @@
   class="diff-card {difficulty} {selected ? 'is-selected' : ''}"
   onclick={() => onselect(difficulty)}
   aria-pressed={selected}
-  style="--theme-accent: {theme.accent}; --theme-glow: {theme.bgGlow}; --theme-border: {theme.borderActive}; --badge-bg: {theme.badgeBg}; --badge-text: {theme.badgeText};"
+  style="--theme-accent: {theme.accent}; --theme-border: {theme.borderActive}; --theme-bg: {theme.bgActive}; --pill-bg: {theme.pillBg}; --pill-text: {theme.pillText};"
 >
-  {#if selected}
-    <div class="selected-badge">
-      <Check size={13} strokeWidth={3} />
-      <span>ATIVO</span>
-    </div>
-  {/if}
-
   <div class="diff-card-top">
-    <div class="emoji-capsule">
+    <div class="emoji-box">
       <span class="diff-emoji">{config.emoji}</span>
     </div>
     <div class="title-group">
@@ -66,7 +59,7 @@
   <div class="diff-pills-row">
     <div class="pill meta-time">
       <Clock size={12} strokeWidth={2.5} />
-      <span>{Math.round(config.timeLimitMs / 1000)}s / questão</span>
+      <span>{Math.round(config.timeLimitMs / 1000)}s</span>
     </div>
     <div class="pill meta-points">
       <Award size={12} strokeWidth={2.5} />
@@ -78,145 +71,111 @@
 <style>
   .diff-card {
     position: relative;
-    background: #1e293b;
-    border: 2px solid #334155;
-    border-radius: 18px;
-    padding: 1.25rem 1.1rem;
+    background: #FFFFFF;
+    border: 2px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.1rem 1rem;
     text-align: left;
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.15s ease;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 1rem;
-    color: #f8fafc;
+    gap: 0.9rem;
+    color: #0F172A;
     width: 100%;
     box-sizing: border-box;
-    min-height: 148px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
   }
 
   .diff-card:hover {
+    border-color: #CBD5E1;
+    background: #F8FAFC;
     transform: translateY(-2px);
-    border-color: #475569;
-    background: #232f42;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
   }
 
   .diff-card.is-selected {
     border-color: var(--theme-border);
-    background: linear-gradient(145deg, #1e293b, #172338);
-    box-shadow: 0 0 0 1px var(--theme-border), 0 8px 24px var(--theme-glow);
-  }
-
-  .selected-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: var(--theme-accent);
-    color: #0f172a;
-    font-size: 0.65rem;
-    font-weight: 900;
-    letter-spacing: 0.05em;
-    padding: 3px 8px;
-    border-radius: 9999px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    animation: popIn 0.2s ease-out;
+    background: var(--theme-bg);
+    box-shadow: 0 0 0 1px var(--theme-border), 0 4px 14px rgba(0, 0, 0, 0.08);
   }
 
   .diff-card-top {
     display: flex;
     align-items: flex-start;
-    gap: 0.85rem;
+    gap: 0.75rem;
   }
 
-  .emoji-capsule {
-    width: 46px;
-    height: 46px;
+  .emoji-box {
+    width: 42px;
+    height: 42px;
     border-radius: 12px;
-    background: #0f172a;
-    border: 1px solid #334155;
+    background: #F1F5F9;
+    border: 1px solid #E2E8F0;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    transition: transform 0.2s ease;
   }
 
-  .diff-card.is-selected .emoji-capsule {
-    background: var(--badge-bg);
-    border-color: var(--theme-accent);
-    transform: scale(1.05);
+  .diff-card.is-selected .emoji-box {
+    background: #FFFFFF;
+    border-color: var(--theme-border);
   }
 
   .diff-emoji {
-    font-size: 1.55rem;
+    font-size: 1.45rem;
   }
 
   .title-group {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: 0.15rem;
     flex: 1;
     min-width: 0;
   }
 
   .diff-label {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 850;
-    color: #f8fafc;
+    color: #0F172A;
     margin: 0;
     letter-spacing: -0.01em;
   }
 
   .diff-card.is-selected .diff-label {
-    color: var(--theme-border);
+    color: var(--theme-accent);
   }
 
   .diff-subtitle {
-    font-size: 0.82rem;
-    color: #94a3b8;
-    line-height: 1.35;
+    font-size: 0.8rem;
+    color: #64748B;
+    line-height: 1.3;
     font-weight: 500;
   }
 
   .diff-pills-row {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-top: auto;
+    gap: 0.45rem;
   }
 
   .pill {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     font-size: 0.74rem;
-    font-weight: 750;
-    padding: 4px 9px;
+    font-weight: 800;
+    padding: 3px 8px;
     border-radius: 8px;
-    background: #0f172a;
-    color: #cbd5e1;
-    border: 1px solid #334155;
-    white-space: nowrap;
+    background: #F1F5F9;
+    color: #475569;
+    border: 1px solid #E2E8F0;
   }
 
   .diff-card.is-selected .pill {
-    background: rgba(15, 23, 42, 0.7);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .diff-card.is-selected .meta-points {
-    color: var(--badge-text);
-  }
-
-  @keyframes popIn {
-    from { transform: scale(0.7); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    background: var(--pill-bg);
+    color: var(--pill-text);
+    border-color: transparent;
   }
 </style>

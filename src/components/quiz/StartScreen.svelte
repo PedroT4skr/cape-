@@ -7,7 +7,7 @@
     startQuiz,
     isTeacherGateOpen
   } from '../../stores/quiz.store'
-  import { User, Play, Lock, Sparkles, Brain } from '@lucide/svelte'
+  import { User, Play, Lock } from '@lucide/svelte'
 
   let localName = $state($playerName || '')
   let selectedDiff = $state<Difficulty>($currentDifficulty)
@@ -21,40 +21,26 @@
 </script>
 
 <div class="start-container">
-  <!-- Cabeçalho Principal -->
+  <!-- Cabeçalho Limpo e Direto -->
   <header class="start-header">
-    <div class="header-pill">
-      <Sparkles size={14} color="#10b981" />
-      <span>TECNOLOGIA ASSISTIVA • CAPE</span>
-    </div>
-
-    <h1 class="start-title">
-      Quiz Matemático <span class="highlight-gradient">TDAH</span>
-    </h1>
-
+    <h1 class="start-title">Quiz Matemático TDAH</h1>
     <p class="start-subtitle">
-      Cálculo rápido gamificado com foco atencional, tempo adaptado e mecânica acolhedora sem bloqueios cognitivos.
+      Treino de raciocínio rápido com tempo adaptativo e sem bloqueios.
     </p>
   </header>
 
-  <!-- Formulário de Inicialização -->
-  <form class="start-card-panel" onsubmit={handleStart}>
+  <!-- Painel do Formulário em Tema Branco -->
+  <form class="start-card" onsubmit={handleStart}>
     <!-- Campo do Aluno -->
     <div class="field-block">
-      <label for="student-name" class="field-label">
-        <span>QUEM VAI JOGAR?</span>
-        <span class="label-hint">Identificação para premiação</span>
-      </label>
-
+      <label for="student-name" class="field-label">NOME DO ALUNO</label>
       <div class="input-wrapper">
-        <div class="input-icon">
-          <User size={18} color="#94a3b8" />
-        </div>
+        <User size={18} class="input-icon" color="#94A3B8" />
         <input
           id="student-name"
           type="text"
           class="name-input"
-          placeholder="Digite seu nome ou apelido..."
+          placeholder="Digite seu nome..."
           bind:value={localName}
           maxlength="28"
           autocomplete="off"
@@ -62,13 +48,9 @@
       </div>
     </div>
 
-    <!-- Seletor de Dificuldade -->
+    <!-- Dificuldade -->
     <div class="field-block">
-      <div class="field-label">
-        <span>ESCOLHA A DIFICULDADE</span>
-        <span class="label-hint">Selecione o nível desejado</span>
-      </div>
-
+      <span class="field-label">DIFICULDADE</span>
       <div class="difficulty-grid">
         {#each difficulties as diff}
           <DifficultyCard
@@ -80,40 +62,36 @@
       </div>
     </div>
 
-    <!-- CTA de Ação Principal -->
-    <button type="submit" class="start-action-btn">
-      <div class="btn-content">
-        <span class="btn-text">COMEÇAR O DESAFIO</span>
-        <div class="btn-icon-capsule">
-          <Play size={18} fill="currentColor" />
-        </div>
-      </div>
+    <!-- Botão Principal -->
+    <button type="submit" class="start-btn">
+      <Play size={18} fill="currentColor" />
+      <span>INICIAR DESAFIO</span>
     </button>
   </form>
 
-  <!-- Rodapé / Modo Professor -->
+  <!-- Acesso ao Ranking -->
   <footer class="start-footer">
     <button
       type="button"
-      class="teacher-gate-btn"
+      class="teacher-btn"
       onclick={() => isTeacherGateOpen.set(true)}
     >
       <Lock size={14} />
-      <span>Acesso do Professor & Ranking</span>
+      <span>Ranking & Acesso do Professor</span>
     </button>
   </footer>
 </div>
 
 <style>
   .start-container {
-    max-width: 820px;
+    max-width: 760px;
     margin: 0 auto;
-    padding: 2rem 1.25rem 3.5rem;
+    padding: 1.5rem 1rem 3rem;
     display: flex;
     flex-direction: column;
-    gap: 1.75rem;
-    animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    gap: 1.25rem;
     box-sizing: border-box;
+    animation: fadeIn 0.2s ease-out;
   }
 
   .start-header {
@@ -121,78 +99,46 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.6rem;
-  }
-
-  .header-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(16, 185, 129, 0.12);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    color: #34d399;
-    padding: 0.3rem 0.85rem;
-    border-radius: 9999px;
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
+    gap: 0.35rem;
   }
 
   .start-title {
-    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-size: clamp(1.8rem, 4vw, 2.3rem);
     font-weight: 900;
-    color: #f8fafc;
+    color: #0F172A;
     margin: 0;
-    line-height: 1.15;
     letter-spacing: -0.02em;
   }
 
-  .highlight-gradient {
-    background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
   .start-subtitle {
-    font-size: 0.98rem;
-    color: #94a3b8;
+    font-size: 0.95rem;
+    color: #64748B;
     margin: 0;
-    max-width: 580px;
-    line-height: 1.5;
+    font-weight: 500;
   }
 
-  .start-card-panel {
-    background: #0f172a;
-    border: 1px solid #1e293b;
-    border-radius: 24px;
-    padding: 1.75rem;
+  .start-card {
+    background: #FFFFFF;
+    border: 2px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1.75rem;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    gap: 1.4rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
   }
 
   .field-block {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
 
   .field-label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     font-size: 0.78rem;
     font-weight: 850;
-    color: #cbd5e1;
-    letter-spacing: 0.06em;
-  }
-
-  .label-hint {
-    font-size: 0.72rem;
-    color: #64748b;
-    font-weight: 600;
-    letter-spacing: normal;
+    color: #475569;
+    letter-spacing: 0.05em;
   }
 
   .input-wrapper {
@@ -201,96 +147,75 @@
     align-items: center;
   }
 
-  .input-icon {
+  :global(.input-wrapper .input-icon) {
     position: absolute;
     left: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     pointer-events: none;
   }
 
   .name-input {
     width: 100%;
-    background: #1e293b;
-    border: 2px solid #334155;
-    border-radius: 14px;
-    color: #f8fafc;
-    font-size: 1.1rem;
+    background: #F8FAFC;
+    border: 2px solid #CBD5E1;
+    border-radius: 12px;
+    color: #0F172A;
+    font-size: 1.05rem;
     font-weight: 700;
-    padding: 0.95rem 1rem 0.95rem 2.75rem;
+    padding: 0.85rem 1rem 0.85rem 2.6rem;
     outline: none;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
     box-sizing: border-box;
   }
 
   .name-input:focus {
-    border-color: #10b981;
-    background: #223046;
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    border-color: #059669;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
   }
 
   .name-input::placeholder {
-    color: #64748b;
+    color: #94A3B8;
     font-weight: 500;
   }
 
   .difficulty-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 0.75rem;
   }
 
-  @media (max-width: 680px) {
+  @media (max-width: 640px) {
     .difficulty-grid {
       grid-template-columns: 1fr;
-      gap: 0.75rem;
     }
   }
 
-  .start-action-btn {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    color: #022c22;
+  .start-btn {
+    background: #059669;
+    color: #FFFFFF;
     border: none;
-    border-radius: 16px;
-    padding: 1.15rem 1.5rem;
+    border-radius: 14px;
+    padding: 1rem 1.5rem;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    outline: none;
-  }
-
-  .start-action-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 28px rgba(16, 185, 129, 0.55);
-    filter: brightness(1.06);
-  }
-
-  .start-action-btn:active {
-    transform: translateY(1px) scale(0.99);
-  }
-
-  .btn-content {
+    font-size: 1.15rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 10px;
+    box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+    transition: all 0.15s ease;
   }
 
-  .btn-text {
-    font-size: 1.25rem;
-    font-weight: 950;
-    letter-spacing: 0.05em;
+  .start-btn:hover {
+    background: #047857;
+    box-shadow: 0 6px 18px rgba(5, 150, 105, 0.45);
+    transform: translateY(-1px);
   }
 
-  .btn-icon-capsule {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: rgba(2, 44, 34, 0.25);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .start-btn:active {
+    transform: scale(0.99);
   }
 
   .start-footer {
@@ -298,29 +223,29 @@
     justify-content: center;
   }
 
-  .teacher-gate-btn {
+  .teacher-btn {
     background: transparent;
-    border: 1px solid #334155;
-    color: #94a3b8;
-    font-size: 0.85rem;
-    font-weight: 700;
-    padding: 0.65rem 1.25rem;
-    border-radius: 12px;
+    border: 1px solid #CBD5E1;
+    color: #64748B;
+    font-size: 0.82rem;
+    font-weight: 750;
+    padding: 0.55rem 1rem;
+    border-radius: 10px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     transition: all 0.15s ease;
   }
 
-  .teacher-gate-btn:hover {
-    background: #1e293b;
-    color: #f8fafc;
-    border-color: #64748b;
+  .teacher-btn:hover {
+    background: #FFFFFF;
+    color: #0F172A;
+    border-color: #94A3B8;
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
+    from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: translateY(0); }
   }
 </style>

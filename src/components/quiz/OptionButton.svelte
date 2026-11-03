@@ -24,66 +24,71 @@
 
 <style>
   .option-btn {
-    background: #1e293b;
-    border: 3px solid #334155;
+    background: #FFFFFF;
+    border: 3px solid #E2E8F0;
     border-radius: 16px;
-    padding: 1.1rem 1.25rem;
+    padding: 1rem 1.25rem;
     display: flex;
     align-items: center;
     gap: 1rem;
-    color: #f8fafc;
+    color: #0F172A;
     cursor: pointer;
     transition: all 0.15s ease;
-    min-height: 72px;
+    min-height: 70px;
     box-sizing: border-box;
     width: 100%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
   }
 
   .option-btn:hover {
-    border-color: #64748b;
-    background: #242f44;
+    border-color: #CBD5E1;
+    background: #F8FAFC;
+    transform: translateY(-1px);
   }
 
   .option-btn.is-selected {
-    border-color: #10b981;
-    background: rgba(16, 185, 129, 0.15);
-    box-shadow: 0 0 16px rgba(16, 185, 129, 0.3);
+    border-color: #059669;
+    background: #ECFDF5;
+    box-shadow: 0 0 0 1px #059669, 0 4px 14px rgba(5, 150, 105, 0.15);
   }
 
   .option-badge {
     width: 38px;
     height: 38px;
     border-radius: 10px;
-    background: #0f172a;
-    color: #94a3b8;
+    background: #F1F5F9;
+    color: #475569;
+    border: 1px solid #E2E8F0;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.1rem;
-    font-weight: 800;
+    font-weight: 850;
     flex-shrink: 0;
   }
 
   .option-btn.is-selected .option-badge {
-    background: #10b981;
-    color: #022c22;
+    background: #059669;
+    color: #FFFFFF;
+    border-color: transparent;
   }
 
   .option-label {
     flex: 1;
     text-align: left;
-    font-size: clamp(1.2rem, 3.5vw, 1.6rem);
-    font-weight: 800;
+    font-size: clamp(1.2rem, 3.5vw, 1.55rem);
+    font-weight: 850;
     font-variant-numeric: tabular-nums;
   }
 
   .option-shortcut {
     font-size: 0.75rem;
-    font-weight: 700;
-    color: #64748b;
-    border: 1px solid #334155;
+    font-weight: 750;
+    color: #94A3B8;
+    border: 1px solid #E2E8F0;
     border-radius: 6px;
     padding: 0.15rem 0.45rem;
+    background: #F8FAFC;
   }
 
   @media (max-width: 540px) {

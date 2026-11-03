@@ -17,11 +17,11 @@
   <header class="quiz-top-nav">
     <div class="brand-group">
       <span class="badge-cape">CAPE MATH</span>
-      <span class="badge-sub">Módulo TDAH</span>
+      <span class="badge-sub">Quiz TDAH</span>
     </div>
 
     <button type="button" class="exit-btn" onclick={closeMathQuiz} aria-label="Voltar para a Prancha de Comunicação CAA">
-      ← Voltar à Prancha CAA
+      ← Voltar à Prancha
     </button>
   </header>
 
@@ -49,8 +49,8 @@
     width: 100vw;
     height: 100vh;
     height: 100dvh;
-    background: #0f172a;
-    color: #f8fafc;
+    background: #F8FAFC;
+    color: #0F172A;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -59,14 +59,15 @@
   }
 
   .quiz-top-nav {
-    height: 56px;
-    background: #1e293b;
-    border-bottom: 1px solid #334155;
-    padding: 0 1.25rem;
+    height: 54px;
+    background: #FFFFFF;
+    border-bottom: 2px solid #E2E8F0;
+    padding: 0 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   }
 
   .brand-group {
@@ -76,37 +77,36 @@
   }
 
   .badge-cape {
-    background: #10b981;
-    color: #022c22;
+    background: #059669;
+    color: #FFFFFF;
     font-weight: 900;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     padding: 0.25rem 0.65rem;
     border-radius: 6px;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
   }
 
   .badge-sub {
     font-size: 0.85rem;
-    color: #94a3b8;
+    color: #64748B;
     font-weight: 700;
   }
 
   .exit-btn {
-    background: #0f172a;
-    border: 1px solid #475569;
-    color: #cbd5e1;
-    font-weight: 700;
-    font-size: 0.85rem;
-    padding: 0.45rem 0.9rem;
+    background: #F1F5F9;
+    border: 1px solid #CBD5E1;
+    color: #334155;
+    font-weight: 800;
+    font-size: 0.82rem;
+    padding: 0.4rem 0.85rem;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.15s ease;
   }
 
   .exit-btn:hover {
-    background: #334155;
-    color: #f8fafc;
-    border-color: #64748b;
+    background: #E2E8F0;
+    color: #0F172A;
   }
 
   .quiz-viewport {

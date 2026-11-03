@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
   import type { Difficulty, LeaderboardEntry } from '../../types/quiz.types'
   import { DIFFICULTIES } from '../../config/quiz.config'
   import { leaderboardRepository } from '../../services/leaderboard.repository'
@@ -18,7 +17,6 @@
   }
 
   $effect(() => {
-    // Reage à mudança de filtro
     void filter
     void reloadData()
   })
@@ -55,10 +53,10 @@
 <div class="leaderboard-container">
   <header class="leaderboard-header">
     <div class="header-meta">
-      <span class="teacher-tag">MODO PROFESSOR • PAINEL ASSÍNCRONO</span>
-      <h1 class="leaderboard-title">Quadro de Líderes & Premiação</h1>
+      <span class="teacher-tag">MODO PROFESSOR</span>
+      <h1 class="leaderboard-title">Quadro de Líderes</h1>
       <p class="leaderboard-desc">
-        Visualização de desempenho dos alunos para premiação e acompanhamento pedagógico.
+        Acompanhamento pedagógico de desempenho por nível.
       </p>
     </div>
 
@@ -103,7 +101,7 @@
         <span class="empty-icon">📊</span>
         <p class="empty-title">Nenhum resultado registrado ainda nesta categoria.</p>
         <p class="empty-sub">
-          Assim que os alunos concluírem o quiz de matemática, os resultados aparecerão aqui automaticamente.
+          Assim que os alunos concluírem o quiz, os resultados aparecerão aqui.
         </p>
       </div>
     {:else}
@@ -146,7 +144,7 @@
                 <td>{entry.correctCount} / {entry.totalQuestions}</td>
                 <td>
                   {#if entry.overtimeCount > 0}
-                    <span class="overtime-badge" title="Questões respondidas após o tempo zerar">
+                    <span class="overtime-badge" title="Questões respondidas após o tempo">
                       ⚠️ {entry.overtimeCount}
                     </span>
                   {:else}
@@ -171,8 +169,8 @@
     padding: 1.5rem 1rem 3rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    animation: fadeIn 0.3s ease-out;
+    gap: 1.25rem;
+    animation: fadeIn 0.2s ease-out;
   }
 
   .leaderboard-header {
@@ -181,34 +179,34 @@
     justify-content: space-between;
     gap: 1.5rem;
     flex-wrap: wrap;
-    border-bottom: 1px solid #334155;
-    padding-bottom: 1.25rem;
+    border-bottom: 2px solid #E2E8F0;
+    padding-bottom: 1.1rem;
   }
 
   .teacher-tag {
     display: inline-block;
-    background: rgba(14, 165, 233, 0.15);
-    border: 1px solid #0284c7;
-    color: #38bdf8;
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    color: #1D4ED8;
     font-size: 0.75rem;
-    font-weight: 700;
+    font-weight: 800;
     padding: 0.2rem 0.6rem;
     border-radius: 9999px;
     letter-spacing: 0.05em;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.35rem;
   }
 
   .leaderboard-title {
-    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-    font-weight: 800;
-    color: #f8fafc;
+    font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+    font-weight: 900;
+    color: #0F172A;
     margin: 0;
   }
 
   .leaderboard-desc {
-    font-size: 0.95rem;
-    color: #94a3b8;
-    margin: 0.25rem 0 0;
+    font-size: 0.92rem;
+    color: #64748B;
+    margin: 0.2rem 0 0;
   }
 
   .leaderboard-top-actions {
@@ -219,39 +217,38 @@
   }
 
   .btn-secondary, .btn-danger, .btn-back {
-    padding: 0.65rem 1rem;
+    padding: 0.6rem 0.95rem;
     border-radius: 10px;
-    font-size: 0.85rem;
-    font-weight: 700;
+    font-size: 0.82rem;
+    font-weight: 800;
     cursor: pointer;
     border: 1px solid transparent;
     transition: all 0.15s ease;
-    min-height: 40px;
+    min-height: 38px;
   }
 
   .btn-secondary {
-    background: #334155;
-    color: #f8fafc;
-    border-color: #475569;
+    background: #FFFFFF;
+    color: #334155;
+    border-color: #CBD5E1;
   }
 
-  .btn-secondary:hover:not(:disabled) { background: #475569; }
+  .btn-secondary:hover:not(:disabled) { background: #F1F5F9; color: #0F172A; }
 
   .btn-danger {
-    background: rgba(239, 68, 68, 0.15);
-    color: #fca5a5;
-    border-color: #ef4444;
+    background: #FFF1F2;
+    color: #BE123C;
+    border-color: #FECDD3;
   }
 
-  .btn-danger:hover:not(:disabled) { background: #ef4444; color: #fff; }
+  .btn-danger:hover:not(:disabled) { background: #FFE4E6; }
 
   .btn-back {
-    background: #10b981;
-    color: #022c22;
-    border-color: #059669;
+    background: #059669;
+    color: #FFFFFF;
   }
 
-  .btn-back:hover { filter: brightness(1.1); }
+  .btn-back:hover { background: #047857; }
 
   .btn-secondary:disabled, .btn-danger:disabled {
     opacity: 0.4;
@@ -266,30 +263,31 @@
   }
 
   .filter-tab {
-    background: #1e293b;
-    border: 1px solid #334155;
-    color: #94a3b8;
-    padding: 0.55rem 1rem;
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    color: #64748B;
+    padding: 0.5rem 0.95rem;
     border-radius: 10px;
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-size: 0.82rem;
+    font-weight: 750;
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.15s ease;
   }
 
   .filter-tab.active {
-    background: #10b981;
-    color: #022c22;
+    background: #059669;
+    color: #FFFFFF;
     border-color: #059669;
-    font-weight: 700;
+    font-weight: 850;
   }
 
   .leaderboard-content {
-    background: #1e293b;
-    border: 1px solid #334155;
+    background: #FFFFFF;
+    border: 2px solid #E2E8F0;
     border-radius: 16px;
     overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
   }
 
   .leaderboard-empty {
@@ -301,19 +299,19 @@
     gap: 0.5rem;
   }
 
-  .empty-icon { font-size: 2.5rem; }
+  .empty-icon { font-size: 2.2rem; }
 
   .empty-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #cbd5e1;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #334155;
     margin: 0;
   }
 
   .empty-sub {
-    font-size: 0.9rem;
-    color: #64748b;
-    max-width: 460px;
+    font-size: 0.85rem;
+    color: #64748B;
+    max-width: 440px;
     margin: 0;
   }
 
@@ -326,55 +324,55 @@
     width: 100%;
     border-collapse: collapse;
     text-align: left;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
   }
 
   .leaderboard-table th {
-    background: #0f172a;
-    color: #94a3b8;
-    font-size: 0.75rem;
-    font-weight: 700;
+    background: #F8FAFC;
+    color: #475569;
+    font-size: 0.72rem;
+    font-weight: 850;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    padding: 0.85rem 1rem;
-    border-bottom: 2px solid #334155;
+    padding: 0.8rem 1rem;
+    border-bottom: 2px solid #E2E8F0;
     white-space: nowrap;
   }
 
   .leaderboard-table td {
-    padding: 0.85rem 1rem;
-    border-bottom: 1px solid #334155;
-    color: #cbd5e1;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #E2E8F0;
+    color: #334155;
     white-space: nowrap;
   }
 
   .leaderboard-table tr:hover td {
-    background: rgba(255, 255, 255, 0.02);
+    background: #F8FAFC;
   }
 
   .rank-indicator {
-    font-weight: 800;
-    color: #f8fafc;
+    font-weight: 850;
+    color: #0F172A;
   }
 
   .score-badge {
-    font-size: 1.05rem;
-    font-weight: 800;
-    color: #10b981;
+    font-size: 1rem;
+    font-weight: 900;
+    color: #059669;
     font-variant-numeric: tabular-nums;
   }
 
   .diff-pill {
     padding: 0.2rem 0.5rem;
     border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 700;
+    font-size: 0.72rem;
+    font-weight: 800;
   }
 
-  .pill-beginner { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-  .pill-intermediate { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-  .pill-advanced { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+  .pill-beginner { background: #ECFDF5; color: #065F46; }
+  .pill-intermediate { background: #FFFBEB; color: #92400E; }
+  .pill-advanced { background: #F5F3FF; color: #5B21B6; }
 
-  .overtime-badge { color: #f59e0b; font-weight: 700; }
-  .on-time-badge { color: #10b981; }
+  .overtime-badge { color: #D97706; font-weight: 800; }
+  .on-time-badge { color: #059669; }
 </style>

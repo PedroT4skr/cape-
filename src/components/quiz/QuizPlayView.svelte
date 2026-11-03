@@ -50,7 +50,7 @@
       <div class="progress-pill">
         QUESTÃO <strong class="q-highlight">{qNum}</strong> DE <strong>{total}</strong>
       </div>
-      <span class="diff-tag">{config.label.toUpperCase()}</span>
+      <span class="diff-tag pill-{$currentDifficulty}">{config.label.toUpperCase()}</span>
     </header>
 
     <TimerBar
@@ -100,7 +100,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    animation: fadeIn 0.25s ease-out;
+    animation: fadeIn 0.2s ease-out;
   }
 
   .play-header {
@@ -110,29 +110,45 @@
   }
 
   .progress-pill {
-    background: #1e293b;
-    border: 1px solid #334155;
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
     padding: 0.4rem 0.9rem;
     border-radius: 9999px;
     font-size: 0.85rem;
-    font-weight: 700;
-    color: #94a3b8;
+    font-weight: 800;
+    color: #64748B;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   }
 
   .q-highlight {
-    color: #10b981;
+    color: #059669;
     font-size: 1.05rem;
   }
 
   .diff-tag {
-    background: rgba(16, 185, 129, 0.15);
-    border: 1px solid #10b981;
-    color: #10b981;
-    padding: 0.25rem 0.65rem;
+    padding: 0.3rem 0.75rem;
     border-radius: 9999px;
     font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 0.05em;
+    font-weight: 850;
+    letter-spacing: 0.04em;
+  }
+
+  .pill-beginner {
+    background: #ECFDF5;
+    color: #065F46;
+    border: 1px solid #A7F3D0;
+  }
+
+  .pill-intermediate {
+    background: #FFFBEB;
+    color: #92400E;
+    border: 1px solid #FDE68A;
+  }
+
+  .pill-advanced {
+    background: #F5F3FF;
+    color: #5B21B6;
+    border: 1px solid #DDD6FE;
   }
 
   .play-main {
@@ -162,24 +178,24 @@
   }
 
   .prev-btn {
-    background: #1e293b;
-    border: 1px solid #334155;
-    color: #94a3b8;
+    background: #FFFFFF;
+    border: 2px solid #CBD5E1;
+    color: #475569;
     padding: 0.9rem 1.2rem;
     border-radius: 14px;
     font-size: 0.95rem;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
     transition: all 0.15s ease;
   }
 
   .prev-btn:hover:not(:disabled) {
-    background: #334155;
-    color: #f8fafc;
+    background: #F1F5F9;
+    color: #0F172A;
   }
 
   .prev-btn:disabled {
-    opacity: 0.3;
+    opacity: 0.35;
     cursor: not-allowed;
   }
 </style>

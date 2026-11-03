@@ -37,7 +37,7 @@
     <div class="score-main">
       <span class="score-label">PONTUAÇÃO FINAL</span>
       <span class="score-value">{summary?.totalScore ?? 0}</span>
-      <span class="score-subtext">pontos calculados com bônus e penalidades pedagógicas</span>
+      <span class="score-subtext">pontos com bônus e penalidades pedagógicas</span>
     </div>
 
     <div class="score-stats-grid">
@@ -50,7 +50,7 @@
       </div>
 
       <div class="stat-box">
-        <span class="stat-label">Com Penalidade</span>
+        <span class="stat-label">Pós-Tempo</span>
         <span class="stat-val text-warning">
           {summary?.overtimeCount ?? 0}
         </span>
@@ -62,7 +62,7 @@
         <span class="stat-val text-info">
           {totalDurationSec}s
         </span>
-        <span class="stat-sub">dedicação e foco</span>
+        <span class="stat-sub">dedicação</span>
       </div>
     </div>
   </section>
@@ -71,13 +71,13 @@
     <aside class="overtime-alert">
       <span class="alert-icon">⏱️</span>
       <div class="alert-text">
-        <strong>Mecânica TDAH Ativa:</strong> Você continuou respondendo após o tempo zerar em {summary.overtimeCount} {summary.overtimeCount === 1 ? 'questão' : 'questões'}! Acertos receberam penalidade pedagógica de 40% a 50%, valorizando a persistência sem bloqueios cognitivos.
+        <strong>Persistência Reconhecida:</strong> Você continuou respondendo após o tempo zerar em {summary.overtimeCount} {summary.overtimeCount === 1 ? 'questão' : 'questões'}! Acertos receberam a penalidade pedagógica de 40% a 50%.
       </div>
     </aside>
   {/if}
 
   <section class="results-review">
-    <h2 class="review-title">Revisão Rápida das Questões</h2>
+    <h2 class="review-title">Revisão das Questões</h2>
     <div class="review-list">
       {#each $quizQuestions as q, idx}
         {@const ans = $quizAnswers[idx]}
@@ -127,7 +127,7 @@
       class="action-btn teacher-rank"
       onclick={() => isTeacherGateOpen.set(true)}
     >
-      🏆 Ver Ranking (Professor)
+      🏆 Ver Ranking
     </button>
   </footer>
 </div>
@@ -148,41 +148,41 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
 
   .results-badge {
-    background: #1e293b;
-    border: 1px solid #10b981;
-    color: #10b981;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    color: #065F46;
     padding: 0.25rem 0.75rem;
     border-radius: 9999px;
     font-size: 0.8rem;
-    font-weight: 700;
+    font-weight: 800;
   }
 
   .results-title {
-    font-size: clamp(1.8rem, 4vw, 2.4rem);
-    font-weight: 800;
-    color: #f8fafc;
+    font-size: clamp(1.8rem, 4vw, 2.3rem);
+    font-weight: 900;
+    color: #0F172A;
     margin: 0;
   }
 
   .results-student {
-    font-size: 1.1rem;
-    color: #94a3b8;
+    font-size: 1rem;
+    color: #64748B;
     margin: 0;
   }
 
   .results-score-card {
-    background: #1e293b;
-    border: 2px solid #334155;
-    border-radius: 16px;
+    background: #FFFFFF;
+    border: 2px solid #E2E8F0;
+    border-radius: 20px;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
   }
 
   .score-main {
@@ -190,29 +190,28 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-bottom: 1px solid #334155;
+    border-bottom: 1px solid #E2E8F0;
     padding-bottom: 1.25rem;
   }
 
   .score-label {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #94a3b8;
+    font-size: 0.8rem;
+    font-weight: 850;
+    color: #64748B;
     letter-spacing: 0.08em;
   }
 
   .score-value {
-    font-size: clamp(3rem, 8vw, 4.5rem);
-    font-weight: 900;
-    color: #10b981;
+    font-size: clamp(3rem, 8vw, 4.2rem);
+    font-weight: 950;
+    color: #059669;
     line-height: 1.1;
     font-variant-numeric: tabular-nums;
-    text-shadow: 0 0 24px rgba(16, 185, 129, 0.35);
   }
 
   .score-subtext {
-    font-size: 0.85rem;
-    color: #64748b;
+    font-size: 0.82rem;
+    color: #94A3B8;
   }
 
   .score-stats-grid {
@@ -229,8 +228,8 @@
   }
 
   .stat-box {
-    background: #0f172a;
-    border: 1px solid #334155;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
     border-radius: 12px;
     padding: 1rem;
     display: flex;
@@ -242,41 +241,41 @@
 
   .stat-label {
     font-size: 0.75rem;
-    font-weight: 600;
-    color: #94a3b8;
+    font-weight: 800;
+    color: #64748B;
     text-transform: uppercase;
   }
 
   .stat-val {
-    font-size: 1.4rem;
-    font-weight: 800;
+    font-size: 1.35rem;
+    font-weight: 900;
     font-variant-numeric: tabular-nums;
   }
 
-  .text-correct { color: #10b981; }
-  .text-warning { color: #f59e0b; }
-  .text-info { color: #38bdf8; }
+  .text-correct { color: #059669; }
+  .text-warning { color: #D97706; }
+  .text-info { color: #0284C7; }
 
   .stat-sub {
     font-size: 0.75rem;
-    color: #64748b;
+    color: #94A3B8;
   }
 
   .overtime-alert {
-    background: rgba(245, 158, 11, 0.12);
-    border: 1px solid #f59e0b;
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
     border-radius: 12px;
     padding: 1rem 1.25rem;
     display: flex;
     align-items: flex-start;
     gap: 0.75rem;
-    color: #fef3c7;
-    font-size: 0.9rem;
+    color: #92400E;
+    font-size: 0.88rem;
     line-height: 1.45;
   }
 
   .alert-icon {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     flex-shrink: 0;
   }
 
@@ -287,9 +286,9 @@
   }
 
   .review-title {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #f8fafc;
+    font-size: 1.15rem;
+    font-weight: 850;
+    color: #0F172A;
     margin: 0;
   }
 
@@ -303,17 +302,17 @@
   }
 
   .review-card {
-    background: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 10px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
     padding: 0.9rem 1.1rem;
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
   }
 
-  .review-card.is-correct { border-left: 4px solid #10b981; }
-  .review-card.is-wrong { border-left: 4px solid #ef4444; }
+  .review-card.is-correct { border-left: 4px solid #059669; }
+  .review-card.is-wrong { border-left: 4px solid #E11D48; }
 
   .review-card-header {
     display: flex;
@@ -324,32 +323,32 @@
   }
 
   .review-q-num {
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #94a3b8;
-    background: #0f172a;
+    font-size: 0.78rem;
+    font-weight: 850;
+    color: #475569;
+    background: #F1F5F9;
     padding: 0.15rem 0.45rem;
     border-radius: 4px;
   }
 
   .review-prompt {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #f8fafc;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #0F172A;
     flex: 1;
     min-width: 140px;
   }
 
   .review-prompt code {
-    background: #0f172a;
+    background: #F1F5F9;
     padding: 0.1rem 0.4rem;
     border-radius: 4px;
-    color: #10b981;
+    color: #059669;
   }
 
   .review-status {
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-size: 0.82rem;
+    font-weight: 700;
   }
 
   .review-details {
@@ -357,19 +356,19 @@
     align-items: center;
     gap: 1.25rem;
     font-size: 0.85rem;
-    color: #cbd5e1;
+    color: #475569;
     flex-wrap: wrap;
   }
 
   .review-points {
-    font-weight: 700;
-    color: #10b981;
+    font-weight: 800;
+    color: #059669;
     margin-left: auto;
   }
 
   .review-explanation {
-    font-size: 0.85rem;
-    color: #94a3b8;
+    font-size: 0.82rem;
+    color: #64748B;
     margin: 0.25rem 0 0;
   }
 
@@ -388,40 +387,39 @@
   .action-btn {
     padding: 0.9rem 1.2rem;
     border-radius: 12px;
-    font-size: 0.95rem;
-    font-weight: 700;
+    font-size: 0.92rem;
+    font-weight: 850;
     cursor: pointer;
     border: 1px solid transparent;
-    transition: transform 0.15s ease, filter 0.15s ease;
-    min-height: 52px;
+    transition: all 0.15s ease;
+    min-height: 48px;
   }
 
   .action-btn:active { transform: scale(0.98); }
 
   .action-btn.play-again {
-    background: #10b981;
-    color: #022c22;
-    border-color: #059669;
+    background: #059669;
+    color: #FFFFFF;
   }
 
-  .action-btn.play-again:hover { filter: brightness(1.1); }
+  .action-btn.play-again:hover { background: #047857; }
 
   .action-btn.switch-level {
-    background: #334155;
-    color: #f8fafc;
-    border-color: #475569;
+    background: #F1F5F9;
+    color: #334155;
+    border-color: #CBD5E1;
   }
 
-  .action-btn.switch-level:hover { background: #475569; }
+  .action-btn.switch-level:hover { background: #E2E8F0; }
 
   .action-btn.teacher-rank {
-    background: #0f172a;
-    color: #cbd5e1;
-    border: 1px solid #475569;
+    background: #FFFFFF;
+    color: #475569;
+    border: 1px solid #CBD5E1;
   }
 
   .action-btn.teacher-rank:hover {
-    background: #1e293b;
-    color: #f8fafc;
+    background: #F8FAFC;
+    color: #0F172A;
   }
 </style>
