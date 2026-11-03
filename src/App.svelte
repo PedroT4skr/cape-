@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
+  import { onMount, onDestroy } from 'svelte'
   import Header from './components/common/Header.svelte'
   import HubPortal from './components/common/HubPortal.svelte'
   import SentenceBar from './components/sentence-bar/SentenceBar.svelte'
@@ -15,12 +15,23 @@
   import { isActivitiesPageOpen } from './stores/activity.store'
   import { isMathQuizOpen } from './stores/quiz.store'
   import { activeView } from './stores/navigation.store'
+  import { initGlobalClickSound } from './services/ui-sound-manager'
+
+  let cleanupAudioListener: (() => void) | null = null
 
   onMount(async () => {
+    // Ativa feedback auditivo tátil para toda interação de clique/toque no webapp
+    cleanupAudioListener = initGlobalClickSound()
     // Inicializa a prancha raiz com o seed do CAPE
     await initRootBoard()
     // Solicita persistência silenciosa no Android PWA
     await requestPersistentStorage()
+  })
+
+  onDestroy(() => {
+    if (cleanupAudioListener) {
+      cleanupAudioListener()
+    }
   })
 </script>
 

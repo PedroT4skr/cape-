@@ -4,7 +4,9 @@ class SoundEffectsService {
   private getAudioContext(): AudioContext | null {
     if (typeof window === 'undefined') return null
     if (!this.audioCtx) {
-      const AudioCtxClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+      const AudioCtxClass =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
       if (AudioCtxClass) {
         this.audioCtx = new AudioCtxClass()
       }
@@ -16,28 +18,60 @@ class SoundEffectsService {
   }
 
   /**
-   * Clique auditivo tátil suave de confirmação (40ms)
+   * Clique auditivo tátil moderno e agradável (pop/click de 35ms)
    */
   playTapSound(): void {
     try {
       const ctx = this.getAudioContext()
       if (!ctx) return
 
+      const now = ctx.currentTime
       const osc = ctx.createOscillator()
       const gain = ctx.createGain()
 
+      // Pop acústico moderno com pitch drop rápido
       osc.type = 'sine'
-      osc.frequency.setValueAtTime(600, ctx.currentTime)
-      osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.04)
+      osc.frequency.setValueAtTime(520, now)
+      osc.frequency.exponentialRampToValueAtTime(180, now + 0.035)
 
-      gain.gain.setValueAtTime(0.15, ctx.currentTime)
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04)
+      // Envelope com ataque instantâneo e decaimento exponencial
+      gain.gain.setValueAtTime(0.18, now)
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.035)
 
       osc.connect(gain)
       gain.connect(ctx.destination)
 
-      osc.start()
-      osc.stop(ctx.currentTime + 0.05)
+      osc.start(now)
+      osc.stop(now + 0.04)
+    } catch {
+      // Falha silenciosa caso áudio esteja indisponível
+    }
+  }
+
+  /**
+   * Som de clique alternativo com tom ligeiramente mais alto para ações primárias / confirmação
+   */
+  playActionSound(): void {
+    try {
+      const ctx = this.getAudioContext()
+      if (!ctx) return
+
+      const now = ctx.currentTime
+      const osc = ctx.createOscillator()
+      const gain = ctx.createGain()
+
+      osc.type = 'triangle'
+      osc.frequency.setValueAtTime(650, now)
+      osc.frequency.exponentialRampToValueAtTime(320, now + 0.045)
+
+      gain.gain.setValueAtTime(0.16, now)
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.045)
+
+      osc.connect(gain)
+      gain.connect(ctx.destination)
+
+      osc.start(now)
+      osc.stop(now + 0.05)
     } catch {
       // Falha silenciosa
     }
@@ -51,21 +85,22 @@ class SoundEffectsService {
       const ctx = this.getAudioContext()
       if (!ctx) return
 
+      const now = ctx.currentTime
       const osc = ctx.createOscillator()
       const gain = ctx.createGain()
 
       osc.type = 'triangle'
-      osc.frequency.setValueAtTime(320, ctx.currentTime)
-      osc.frequency.exponentialRampToValueAtTime(160, ctx.currentTime + 0.08)
+      osc.frequency.setValueAtTime(320, now)
+      osc.frequency.exponentialRampToValueAtTime(160, now + 0.08)
 
-      gain.gain.setValueAtTime(0.12, ctx.currentTime)
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08)
+      gain.gain.setValueAtTime(0.12, now)
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08)
 
       osc.connect(gain)
       gain.connect(ctx.destination)
 
-      osc.start()
-      osc.stop(ctx.currentTime + 0.09)
+      osc.start(now)
+      osc.stop(now + 0.09)
     } catch {
       // Falha silenciosa
     }
@@ -111,21 +146,22 @@ class SoundEffectsService {
       const ctx = this.getAudioContext()
       if (!ctx) return
 
+      const now = ctx.currentTime
       const osc = ctx.createOscillator()
       const gain = ctx.createGain()
 
       osc.type = 'sine'
-      osc.frequency.setValueAtTime(350, ctx.currentTime)
-      osc.frequency.setValueAtTime(300, ctx.currentTime + 0.08)
+      osc.frequency.setValueAtTime(350, now)
+      osc.frequency.setValueAtTime(300, now + 0.08)
 
-      gain.gain.setValueAtTime(0.10, ctx.currentTime)
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2)
+      gain.gain.setValueAtTime(0.10, now)
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2)
 
       osc.connect(gain)
       gain.connect(ctx.destination)
 
-      osc.start()
-      osc.stop(ctx.currentTime + 0.21)
+      osc.start(now)
+      osc.stop(now + 0.21)
     } catch {
       // Falha silenciosa
     }
