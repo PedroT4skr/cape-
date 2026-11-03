@@ -1,0 +1,110 @@
+.setup {
+  justify-content: center;
+}
+
+.setup-header h1 {
+  font-size: clamp(2rem, 6vw, 3rem);
+  margin: 0 0 8px;
+}
+
+.setup-header p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.setup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.field input {
+  font: inherit;
+  font-size: 1.3rem;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.difficulty-grid {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.difficulty-grid legend {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.difficulty-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 18px;
+  text-align: left;
+  border-radius: var(--radius);
+  border: 3px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+
+.difficulty-card.is-selected {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 16%, var(--surface));
+  transform: translateY(-2px);
+}
+
+.difficulty-emoji {
+  font-size: 2rem;
+}
+
+.difficulty-card strong {
+  font-size: 1.25rem;
+}
+
+.difficulty-desc {
+  color: var(--text-muted);
+}
+
+.difficulty-meta {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.start-btn {
+  font-size: 1.4rem;
+  padding: 18px;
+  background: var(--disabled);
+  color: #d1d5db;
+}
+
+.start-btn.is-ready {
+  background: var(--success-strong);
+  color: #fff;
+}
+
+.teacher-link {
+  align-self: center;
+}
+
+@media (max-width: 640px) {
+  .difficulty-grid {
+    grid-template-columns: 1fr;
+  }
+}

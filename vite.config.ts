@@ -1,21 +1,19 @@
 import { defineConfig } from 'vite'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
+import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
-import { edgeTtsPlugin } from './src/server/edge-tts-plugin'
 
 export default defineConfig({
   plugins: [
-    svelte(),
-    edgeTtsPlugin(),
+    react(),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg'],
       manifest: {
-        name: 'CAPE CAA - Prancha de Comunicação',
-        short_name: 'CAPE CAA',
-        description: 'Plataforma PWA de Comunicação Alternativa e Ampliada para o CAPE Vitória da Conquista',
-        theme_color: '#0F172A',
-        background_color: '#F8FAFC',
+        name: 'CAPE Math - Quiz Matemático TDAH',
+        short_name: 'CAPE Math',
+        description: 'Quiz Matemático gamificado e adaptado para crianças e adolescentes com TDAH',
+        theme_color: '#0f172a',
+        background_color: '#0f172a',
         display: 'standalone',
         orientation: 'any',
         icons: [
