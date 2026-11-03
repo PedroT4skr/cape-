@@ -1,16 +1,20 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import Header from './components/common/Header.svelte'
+  import HubPortal from './components/common/HubPortal.svelte'
   import SentenceBar from './components/sentence-bar/SentenceBar.svelte'
   import BoardGrid from './components/board/BoardGrid.svelte'
   import PinChallengeModal from './components/admin/PinChallengeModal.svelte'
   import TherapistDashboardPage from './components/admin/TherapistDashboardPage.svelte'
   import ActivitiesPage from './components/activities/ActivitiesPage.svelte'
   import DyscalculiaPlayer from './components/activities/DyscalculiaPlayer.svelte'
+  import MathQuizView from './components/quiz/MathQuizView.svelte'
   import { initRootBoard } from './stores/board.store'
   import { requestPersistentStorage } from './db/storage.manager'
   import { isAdminDashboardOpen } from './stores/admin.store'
   import { isActivitiesPageOpen } from './stores/activity.store'
+  import { isMathQuizOpen } from './stores/quiz.store'
+  import { activeView } from './stores/navigation.store'
 
   onMount(async () => {
     // Inicializa a prancha raiz com o seed do CAPE
@@ -20,14 +24,20 @@
   })
 </script>
 
-{#if $isAdminDashboardOpen}
+{#if $activeView === 'hub'}
+  <!-- Portal Central da Suíte CAPE -->
+  <HubPortal />
+{:else if $isAdminDashboardOpen}
   <!-- Página de Configurações & Ajustes do Painel -->
   <TherapistDashboardPage />
 {:else if $isActivitiesPageOpen}
   <!-- Página Dedicada de Atividades Didáticas -->
   <ActivitiesPage />
+{:else if $isMathQuizOpen}
+  <!-- Quiz Matemático Gamificado para TDAH -->
+  <MathQuizView />
 {:else}
-  <!-- Modo Aluno (Prancha e Comunicação Alternativa) -->
+  <!-- Modo Aluno (Prancha e Comunicação Alternativa CAA) -->
   <div class="app-layout">
     <Header />
     <SentenceBar />
@@ -35,7 +45,7 @@
   </div>
 {/if}
 
-<!-- Modal de Autenticação Estrita por PIN -->
+<!-- Modal de Autenticação Estrita por PIN (Painel Terapeuta) -->
 <PinChallengeModal />
 
 <!-- Player de Atividades Didáticas (Discalculia / CPA) -->
