@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onMount } from 'svelte'
+  import type { LeaderboardEntry } from '../../types/quiz.types'
   import {
     playerName,
     currentDifficulty,
@@ -10,6 +12,7 @@
     isTeacherGateOpen
   } from '../../stores/quiz.store'
   import { DIFFICULTIES } from '../../config/quiz.config'
+  import { leaderboardRepository } from '../../services/leaderboard.repository'
 
   let config = $derived(DIFFICULTIES[$currentDifficulty])
   let total = $derived($quizQuestions.length)
@@ -21,6 +24,19 @@
     Math.round($quizAnswers.reduce((acc, a) => acc + (a.elapsedMs || 0), 0) / 1000)
   )
 
+  let rankingEntries = $state<LeaderboardEntry[]>([])
+
+  onMount(async () => {
+    rankingEntries = await leaderboardRepository.list()
+  })
+
+  function getRankBadge(index: number) {
+    if (index === 0) return '🥇 1º'
+    if (index === 1) return '🥈 2º'
+    if (index === 2) return '🥉 3º'
+    return `${index + 1}º`
+  }
+
   function handlePlayAgain() {
     startQuiz($playerName, $currentDifficulty)
   }
@@ -28,7 +44,7 @@
 
 <div class="results-container">
   <header class="results-header">
-    <span class="results-badge">{config.label.toUpperCase()}</span>
+    <span class="results-badge">NÍVEL: {config.label.toUpperCase()}</span>
     <h1 class="results-title">Quiz Concluído! 🎉</h1>
     <p class="results-student">Parabéns pelo esforço, <strong>{$playerName}</strong>!</p>
   </header>
@@ -50,11 +66,11 @@
       </div>
 
       <div class="stat-box">
-        <span class="stat-label">Pós-Tempo</span>
-        <span class="stat-val text-warning">
-          {summary?.overtimeCount ?? 0}
+        <span class="stat-label">Nível Selecionado</span>
+        <span class="stat-val text-level">
+          {config.emoji} {config.label}
         </span>
-        <span class="stat-sub">respondidas após o tempo</span>
+        <span class="stat-sub">{config.basePoints} pts base</span>
       </div>
 
       <div class="stat-box">
@@ -67,14 +83,64 @@
     </div>
   </section>
 
-  {#if summary && summary.overtimeCount > 0}
+  {#if summary && (summary.overtimeCount > 0 || summary.retrocededCount > 0)}
     <aside class="overtime-alert">
       <span class="alert-icon">⏱️</span>
       <div class="alert-text">
-        <strong>Persistência Reconhecida:</strong> Você continuou respondendo após o tempo zerar em {summary.overtimeCount} {summary.overtimeCount === 1 ? 'questão' : 'questões'}! Acertos receberam a penalidade pedagógica de 40% a 50%.
+        {#if summary.retrocededCount > 0}
+          <div>
+            <strong>Questões Revisitadas:</strong> Você retrocedeu e acertou {summary.retrocededCount} {summary.retrocededCount === 1 ? 'questão' : 'questões'} recebendo <strong>50% da pontuação</strong>.
+          </div>
+        {/if}
+        {#if summary.overtimeCount > 0}
+          <div>
+            <strong>Persistência Reconhecida:</strong> Você continuou respondendo após o tempo zerar em {summary.overtimeCount} {summary.overtimeCount === 1 ? 'questão' : 'questões'}!
+          </div>
+        {/if}
       </div>
     </aside>
   {/if}
+
+  <section class="results-ranking">
+    <div class="ranking-header-row">
+      <h2 class="review-title">🏆 Ranking Final da Turma</h2>
+      <span class="ranking-count">{rankingEntries.length} {rankingEntries.length === 1 ? 'participação' : 'participações'}</span>
+    </div>
+
+    {#if rankingEntries.length > 0}
+      <div class="ranking-table-wrap">
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th>Posição</th>
+              <th>Aluno</th>
+              <th>Nível Selecionado</th>
+              <th>Acertos</th>
+              <th>Pontos</th>
+            </tr>
+          </thead>
+          <tbody>
+            {#each rankingEntries as entry, idx}
+              {@const diffCfg = DIFFICULTIES[entry.difficulty]}
+              <tr class={entry.playerName === $playerName && entry.score === (summary?.totalScore ?? -1) ? 'is-current-player' : ''}>
+                <td class="rank-col">{getRankBadge(idx)}</td>
+                <td class="name-col"><strong>{entry.playerName}</strong></td>
+                <td>
+                  <span class="rank-diff-pill pill-{entry.difficulty}">
+                    {diffCfg?.emoji ?? ''} {diffCfg?.label ?? entry.difficulty}
+                  </span>
+                </td>
+                <td class="hits-col">
+                  <strong>{entry.correctCount}</strong> / {entry.totalQuestions}
+                </td>
+                <td class="pts-col">{entry.score} pts</td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      </div>
+    {/if}
+  </section>
 
   <section class="results-review">
     <h2 class="review-title">Revisão das Questões</h2>
@@ -84,6 +150,7 @@
         {@const breakdown = summary?.breakdowns[idx]}
         {@const isCorrect = breakdown?.isCorrect ?? false}
         {@const isOvertime = breakdown?.isOvertime ?? false}
+        {@const wasRetroceded = breakdown?.wasRetroceded ?? false}
         {@const selectedIdx = ans?.selectedIndex}
 
         <div class="review-card {isCorrect ? 'is-correct' : 'is-wrong'}">
@@ -93,7 +160,17 @@
               {q.prompt} {#if q.expression}<code>{q.expression}</code>{/if}
             </span>
             <span class="review-status">
-              {isCorrect ? (isOvertime ? '⚠️ Acertou c/ Penalidade' : '✅ Acertou') : '❌ Errou'}
+              {#if isCorrect}
+                {#if wasRetroceded}
+                  ↩ Acertou ao retroceder (50% pts)
+                {:else if isOvertime}
+                  ⚠️ Acertou c/ Penalidade
+                {:else}
+                  ✅ Acertou
+                {/if}
+              {:else}
+                ❌ Errou
+              {/if}
             </span>
           </div>
           <div class="review-details">
@@ -127,7 +204,7 @@
       class="action-btn teacher-rank"
       onclick={() => isTeacherGateOpen.set(true)}
     >
-      🏆 Ver Ranking
+      🔐 Gestão do Professor
     </button>
   </footer>
 </div>
@@ -255,10 +332,116 @@
   .text-correct { color: #059669; }
   .text-warning { color: #D97706; }
   .text-info { color: #0284C7; }
+  .text-level { color: #7C3AED; font-size: 1.15rem; }
 
   .stat-sub {
     font-size: 0.75rem;
     color: #94A3B8;
+  }
+
+  .results-ranking {
+    background: #FFFFFF;
+    border: 2px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  }
+
+  .ranking-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .ranking-count {
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: #64748B;
+    background: #F1F5F9;
+    padding: 0.25rem 0.65rem;
+    border-radius: 9999px;
+  }
+
+  .ranking-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    max-height: 280px;
+    overflow-y: auto;
+  }
+
+  .ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+  }
+
+  .ranking-table th {
+    background: #F8FAFC;
+    color: #475569;
+    font-size: 0.72rem;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.65rem 0.85rem;
+    border-bottom: 2px solid #E2E8F0;
+    white-space: nowrap;
+  }
+
+  .ranking-table td {
+    padding: 0.7rem 0.85rem;
+    border-bottom: 1px solid #E2E8F0;
+    color: #334155;
+    white-space: nowrap;
+  }
+
+  .ranking-table tr.is-current-player td {
+    background: #ECFDF5;
+  }
+
+  .rank-col {
+    font-weight: 900;
+    color: #0F172A;
+  }
+
+  .hits-col {
+    color: #059669;
+  }
+
+  .pts-col {
+    font-weight: 900;
+    color: #059669;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .rank-diff-pill {
+    display: inline-block;
+    padding: 0.2rem 0.55rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 850;
+  }
+
+  .rank-diff-pill.pill-beginner {
+    background: #ECFDF5;
+    color: #065F46;
+    border: 1px solid #A7F3D0;
+  }
+
+  .rank-diff-pill.pill-intermediate {
+    background: #FFFBEB;
+    color: #92400E;
+    border: 1px solid #FDE68A;
+  }
+
+  .rank-diff-pill.pill-advanced {
+    background: #F5F3FF;
+    color: #5B21B6;
+    border: 1px solid #DDD6FE;
   }
 
   .overtime-alert {

@@ -59,7 +59,10 @@
     />
 
     <main class="play-main">
-      <QuestionCard question={$currentQuestion} />
+      <QuestionCard
+        question={$currentQuestion}
+        wasRetroceded={Boolean($currentAnswer?.wasRetroceded)}
+      />
 
       <div class="options-grid">
         {#each $currentQuestion.options as option, idx}
@@ -79,8 +82,9 @@
         class="prev-btn"
         disabled={$currentIndex === 0}
         onclick={previousQuestion}
+        title="Voltar para a questão anterior (vale 50% da pontuação)"
       >
-        ← Anterior
+        ← Anterior (50% pts)
       </button>
 
       <NextButton

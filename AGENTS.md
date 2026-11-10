@@ -28,10 +28,11 @@
    - Currículos modulares para Alfabetização Fonológica, Percepção Visual e Discalculia (Método CPA).
    - Telas dedicadas e feedback de reforço positivo com comemorações.
 7. **Módulo 3: Quiz Matemático Adaptado para TDAH:**
-   - **3 Dificuldades Modulares:** Iniciante (soma/subtração), Intermediário (4 operações mistas e ordem) e Difícil (equações de 1º grau, %, potências, PA e funções).
-   - **Mecânica sem Bloqueio Cognitivo:** O aluno nunca é travado ao zerar o tempo; acertos após o tempo zerar sofrem decréscimo progressivo de 40% a 50%.
+   - **3 Dificuldades Modulares:** Iniciante (soma/subtração - 45s), Intermediário (4 operações mistas e ordem - 60s) e Difícil (equações de 1º grau, %, potências, PA e funções - 90s).
+   - **Enunciado Acessível de Alto Contraste:** Tipografia ampliada com destaque colorido automático para números, operadores e palavras-chave no enunciado.
+   - **Mecânica sem Bloqueio Cognitivo & Retrocesso com 50% dos Pontos:** O aluno nunca é travado ao zerar o tempo (decréscimo progressivo de 40% a 50%); ao retroceder uma questão (`← Anterior`), a questão revisitada passa a valer exatamente metade da pontuação base (50%).
    - **Direcionamento de Ação (UI):** O botão "PRÓXIMA QUESTÃO" permanece inativo (cinza) até que uma alternativa seja marcada, passando a pulsar continuamente em verde (`@keyframes pulse-cta`).
-   - **Leaderboard Assíncrono do Professor:** Quadro de líderes protegido por PIN, filtros por categoria e exportação CSV.
+   - **Ranking Final & Leaderboard do Professor:** Exibição direta do Ranking Final na tela de conclusão (mostrando posição, aluno, nível selecionado, acertos e pontos), além do painel completo do professor protegido por PIN com filtros e exportação CSV.
 8. **Módulo 4: Segurança & Gestão de PIN do Painel:**
    - O PIN de acesso ao painel pode ser alterado a qualquer momento em **Sistema & Ajustes** (`PinSettings.svelte`).
    - Exige autenticação com o PIN atual antes de gravar o novo PIN (4 a 8 dígitos numéricos).

@@ -21,11 +21,14 @@ export interface AnswerRecord {
   elapsedMs: number
   /** Tempo (ms) no momento da última seleção — base do cálculo de penalidade. */
   answeredAtMs: number | null
+  /** Indica se o aluno retrocedeu para esta questão (penalidade de 50% da pontuação). */
+  wasRetroceded?: boolean
 }
 
 export interface ScoreBreakdown {
   isCorrect: boolean
   isOvertime: boolean
+  wasRetroceded?: boolean
   basePoints: number
   speedBonus: number
   penaltyRate: number

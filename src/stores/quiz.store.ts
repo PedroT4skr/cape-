@@ -68,7 +68,8 @@ export function startQuiz(name: string, difficulty: Difficulty) {
   const initialAnswers: AnswerRecord[] = questions.map(() => ({
     selectedIndex: null,
     elapsedMs: 0,
-    answeredAtMs: null
+    answeredAtMs: null,
+    wasRetroceded: false
   }))
 
   playerName.set(name.trim() || 'Aluno')
@@ -110,13 +111,23 @@ export function nextQuestion() {
 export function previousQuestion() {
   const idx = get(currentIndex)
   if (idx > 0) {
-    currentIndex.set(idx - 1)
+    const prevIdx = idx - 1
+    quizAnswers.update((answers) => {
+      const target = answers[prevIdx]
+      if (!target) return answers
+      const updated = [...answers]
+      updated[prevIdx] = {
+        ...target,
+        wasRetroceded: true
+      }
+      return updated
+    })
+    currentIndex.set(prevIdx)
   }
 }
 
 export async function finishQuiz() {
   stopTimer()
-  quizPhase.set('finished')
 
   const questions = get(quizQuestions)
   const answers = get(quizAnswers)
@@ -126,7 +137,7 @@ export async function finishQuiz() {
   const summary = summarizeQuiz(questions, answers, diff)
   const durationMs = answers.reduce((acc, a) => acc + (a.elapsedMs || 0), 0)
 
-  // Salva no ranking do professor de forma assíncrona
+  // Salva no ranking antes de exibir a tela final
   await leaderboardRepository.save({
     id: crypto.randomUUID(),
     playerName: name,
@@ -138,6 +149,8 @@ export async function finishQuiz() {
     durationMs,
     finishedAt: new Date().toISOString()
   })
+
+  quizPhase.set('finished')
 }
 
 export function resetQuiz() {
