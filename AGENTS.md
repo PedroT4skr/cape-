@@ -78,6 +78,10 @@
 
 ## 3. Histórico de Versões
 
+- **v5.3.1 (Correção de Build CI/CD no Vercel & Sincronização do Lockfile):**
+  - Removido `package-lock.json` conflitante que causou o erro `ERR_PNPM_OUTDATED_LOCKFILE`.
+  - Sincronizado `pnpm-lock.yaml` com as versões do `package.json` atualizado.
+  - Adicionado `package-lock.json` e `yarn.lock` ao `.gitignore` para prevenir commits acidentais de outros gerenciadores de pacote.
 - **v5.3.0 (Responsividade Universal em Dispositivos Móveis):**
   - Otimização responsiva nos modais de PIN (`TeacherGate.svelte`, `PinChallengeModal.svelte`) com botões reduzidos (40px) e controle de altura (`94dvh`).
   - Redimensionamento e layout em grade responsiva no Quiz TDAH (`StartScreen.svelte`, `DifficultyCard.svelte`, `QuestionCard.svelte`, `OptionButton.svelte`, `QuizPlayView.svelte`, `ResultScreen.svelte`, `LeaderboardView.svelte`).
