@@ -29,7 +29,7 @@
       <span class="btn-label">ATIVIDADES</span>
     </button>
 
-    <button class="panel-trigger-btn" onclick={openAdminLock} aria-label="Abrir Painel de Ajustes e Configurações">
+    <button class="panel-trigger-btn" onclick={() => openAdminLock('boards', 'board')} aria-label="Abrir Painel de Ajustes e Configurações">
       <Lock size={18} strokeWidth={2.5} />
       <span class="btn-label">PAINEL</span>
     </button>

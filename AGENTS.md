@@ -78,6 +78,11 @@
 
 ## 3. Histórico de Versões
 
+- **v5.3.2 (Redirecionamento ao Painel de Sistema & Ajustes a partir do Hub):**
+  - Corrigida a precedência de renderização no [`App.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/App.svelte) para abrir o painel do terapeuta (`$isAdminDashboardOpen`) mesmo quando na tela do Hub Portal.
+  - Atualizado [`openAdminLock`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/stores/admin.store.ts) para aceitar aba inicial (`boards` | `system`) e rota de retorno (`hub` | `board`).
+  - No [`HubPortal.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/common/HubPortal.svelte), o card "Painel do Terapeuta & Gestão" redireciona diretamente para a aba **SISTEMA & AJUSTES** após validação do PIN.
+  - Atualizado o botão de voltar no [`TherapistDashboardPage.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/admin/TherapistDashboardPage.svelte) para retornar contextualmente para a Suíte CAPE quando acionado do Hub.
 - **v5.3.1 (Correção de Build CI/CD no Vercel & Sincronização do Lockfile):**
   - Removido `package-lock.json` conflitante que causou o erro `ERR_PNPM_OUTDATED_LOCKFILE`.
   - Sincronizado `pnpm-lock.yaml` com as versões do `package.json` atualizado.

@@ -35,12 +35,12 @@
   })
 </script>
 
-{#if $activeView === 'hub'}
-  <!-- Portal Central da Suíte CAPE -->
-  <HubPortal />
-{:else if $isAdminDashboardOpen}
+{#if $isAdminDashboardOpen}
   <!-- Página de Configurações & Ajustes do Painel -->
   <TherapistDashboardPage />
+{:else if $activeView === 'hub'}
+  <!-- Portal Central da Suíte CAPE -->
+  <HubPortal />
 {:else if $isActivitiesPageOpen}
   <!-- Página Dedicada de Atividades Didáticas -->
   <ActivitiesPage />

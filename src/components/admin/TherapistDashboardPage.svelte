@@ -1,20 +1,39 @@
 <script lang="ts">
-  import { closeAdminDashboard } from '../../stores/admin.store'
+  import { closeAdminDashboard, adminActiveTab, adminReturnTarget, type AdminTab } from '../../stores/admin.store'
+  import { navigateTo } from '../../stores/navigation.store'
   import TherapistBoardsTab from './TherapistBoardsTab.svelte'
   import TherapistSystemTab from './TherapistSystemTab.svelte'
   import { LayoutGrid, HardDrive, ArrowLeft } from '@lucide/svelte'
 
-  type TabId = 'boards' | 'system'
-  let activeTab = $state<TabId>('boards')
+  let activeTab = $state<AdminTab>($adminActiveTab)
+
+  $effect(() => {
+    activeTab = $adminActiveTab
+  })
+
+  function handleBack() {
+    closeAdminDashboard()
+    if ($adminReturnTarget === 'hub') {
+      navigateTo('hub')
+    } else {
+      navigateTo('board')
+    }
+  }
+
+  function handleGoToHub() {
+    closeAdminDashboard()
+    navigateTo('hub')
+  }
 </script>
 
 <div class="therapist-layout">
   <!-- Cabeçalho Idêntico ao Header da Aplicação Principal -->
   <header class="app-header">
     <div class="left-section">
-      <div class="brand-badge">
-        <span class="brand-name">CAPE CAA</span>
-      </div>
+      <button class="brand-badge-btn" onclick={handleGoToHub} aria-label="Abrir Portal Central da Suíte CAPE">
+        <LayoutGrid size={15} />
+        <span class="brand-name">SUÍTE CAPE</span>
+      </button>
       <h1 class="board-title">
         <span class="full-title">PAINEL DE CONFIGURAÇÕES & AJUSTES</span>
         <span class="short-title">AJUSTES</span>
@@ -22,10 +41,15 @@
     </div>
 
     <div class="right-section">
-      <button class="back-student-btn" onclick={closeAdminDashboard} aria-label="Voltar para a prancha de comunicação">
+      <button class="back-student-btn" onclick={handleBack} aria-label="Voltar">
         <ArrowLeft size={18} strokeWidth={2.4} />
-        <span class="back-label-full">VOLTAR À PRANCHA</span>
-        <span class="back-label-short">VOLTAR</span>
+        {#if $adminReturnTarget === 'hub'}
+          <span class="back-label-full">VOLTAR À SUÍTE</span>
+          <span class="back-label-short">SUÍTE</span>
+        {:else}
+          <span class="back-label-full">VOLTAR À PRANCHA</span>
+          <span class="back-label-short">VOLTAR</span>
+        {/if}
       </button>
     </div>
   </header>
@@ -34,7 +58,10 @@
   <nav class="sub-navbar" aria-label="Navegação de Configurações">
     <button
       class="sub-tab-btn {activeTab === 'boards' ? 'active' : ''}"
-      onclick={() => (activeTab = 'boards')}
+      onclick={() => {
+        activeTab = 'boards'
+        adminActiveTab.set('boards')
+      }}
     >
       <LayoutGrid size={18} />
       <span>PRANCHAS & GRADE</span>
@@ -42,7 +69,10 @@
 
     <button
       class="sub-tab-btn {activeTab === 'system' ? 'active' : ''}"
-      onclick={() => (activeTab = 'system')}
+      onclick={() => {
+        activeTab = 'system'
+        adminActiveTab.set('system')
+      }}
     >
       <HardDrive size={18} />
       <span>SISTEMA & AJUSTES</span>
@@ -96,16 +126,30 @@
     min-width: 0;
   }
 
-  .brand-badge {
+  .brand-badge-btn {
     background: #2563EB;
     color: #FFFFFF;
+    border: none;
     font-weight: 800;
-    font-size: 0.85rem;
-    padding: 4px 10px;
-    border-radius: 6px;
+    font-size: 0.8rem;
+    padding: 5px 9px;
+    border-radius: 8px;
     letter-spacing: 0.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
     white-space: nowrap;
     flex-shrink: 0;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .brand-badge-btn:hover {
+    background: #1d4ed8;
+  }
+
+  .brand-badge-btn:active {
+    transform: scale(0.96);
   }
 
   .board-title {
@@ -225,7 +269,7 @@
       gap: 8px;
     }
 
-    .brand-badge {
+    .brand-badge-btn {
       font-size: 0.72rem;
       padding: 3px 6px;
     }

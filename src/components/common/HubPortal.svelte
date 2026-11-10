@@ -69,7 +69,7 @@
     </button>
 
     <!-- Card 4: Painel Terapeuta -->
-    <button class="hub-card card-admin" onclick={() => openAdminLock()}>
+    <button class="hub-card card-admin" onclick={() => openAdminLock('system', 'hub')}>
       <div class="card-icon-wrapper icon-admin">
         <Settings size={36} />
       </div>
