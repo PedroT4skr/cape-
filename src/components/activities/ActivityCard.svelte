@@ -1,14 +1,19 @@
 <script lang="ts">
-  import type { ActivityLevelConfig } from '../../types/activity.types'
+  import type { ActivityDefinition, ActivityLevelConfig } from '../../types/activity.types'
   import { startActivity } from '../../stores/activity.store'
   import { closeAdminDashboard } from '../../stores/admin.store'
-  import { Play } from '@lucide/svelte'
+  import { resolveActivityEvidence } from '../../constants/curriculum/evidence-references.constants'
+  import { Play, ShieldCheck } from '@lucide/svelte'
 
   interface Props {
-    level: ActivityLevelConfig
+    level: ActivityLevelConfig | ActivityDefinition
+    onShowEvidence?: (level: ActivityLevelConfig | ActivityDefinition) => void
   }
 
-  const { level }: Props = $props()
+  const { level, onShowEvidence }: Props = $props()
+
+  let evidenceId = $derived('evidenceId' in level ? level.evidenceId : undefined)
+  let evidence = $derived(resolveActivityEvidence(evidenceId, level.categoryId))
 
   function handleStart() {
     closeAdminDashboard()
@@ -26,6 +31,18 @@
       <h3 class="level-title">{level.title}</h3>
       <p class="level-subtitle">{level.subtitle}</p>
     </div>
+
+    {#if onShowEvidence}
+      <button
+        type="button"
+        class="evidence-chip"
+        onclick={() => onShowEvidence?.(level)}
+        title={evidence.citation}
+      >
+        <ShieldCheck size={13} />
+        <span>{evidence.badgeLabel}</span>
+      </button>
+    {/if}
   </div>
 
   <button class="start-btn" style="background: {level.badgeColor};" onclick={handleStart}>
@@ -105,6 +122,25 @@
     font-weight: 600;
     color: #64748B;
     margin: 0;
+  }
+
+  .evidence-chip {
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    color: #047857;
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    font-weight: 850;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    max-width: 100%;
+  }
+
+  .evidence-chip:hover {
+    background: #D1FAE5;
   }
 
   .start-btn {

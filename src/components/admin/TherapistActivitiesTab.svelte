@@ -11,7 +11,38 @@
   import { soundEffects } from '../../services/sound-effects.service'
   import ActivityCategoryCard from '../activities/ActivityCategoryCard.svelte'
   import ActivityCard from '../activities/ActivityCard.svelte'
-  import { ArrowLeft } from '@lucide/svelte'
+  import { ArrowLeft, BookOpen } from '@lucide/svelte'
+  import EvidenceModal from '../activities/evidence/EvidenceModal.svelte'
+  import { resolveActivityEvidence } from '../../constants/curriculum/evidence-references.constants'
+  import type {
+    ActivityCategory,
+    ActivityDefinition,
+    ActivityLevelConfig,
+    ScientificReference
+  } from '../../types/activity.types'
+
+  let isEvidenceOpen = $state(false)
+  let activeEvidenceRef = $state<ScientificReference | null>(null)
+  let evidenceContextTitle = $state('')
+
+  function openCategoryEvidence(cat: ActivityCategory) {
+    activeEvidenceRef = resolveActivityEvidence(cat.defaultEvidenceId, cat.id)
+    evidenceContextTitle = cat.title
+    isEvidenceOpen = true
+  }
+
+  function openLevelEvidence(lvl: ActivityLevelConfig | ActivityDefinition) {
+    const evidenceId = 'evidenceId' in lvl ? lvl.evidenceId : undefined
+    activeEvidenceRef = resolveActivityEvidence(evidenceId, lvl.categoryId)
+    evidenceContextTitle = lvl.title
+    isEvidenceOpen = true
+  }
+
+  function openAllEvidence() {
+    activeEvidenceRef = null
+    evidenceContextTitle = 'Diretrizes e Estudos Científicos do Banco'
+    isEvidenceOpen = true
+  }
 
   let activeCategory = $derived(
     $selectedCategoryId
@@ -55,13 +86,19 @@
 
     <div class="levels-grid">
       {#each activeLevels as level (level.id)}
-        <ActivityCard {level} />
+        <ActivityCard {level} onShowEvidence={openLevelEvidence} />
       {/each}
     </div>
   {:else}
     <!-- Catálogo de Pastas / Categorias Pedagógicas -->
     <div class="tab-header">
-      <h2 class="tab-title">CATEGORIAS DE EXERCÍCIOS PEDAGÓGICOS</h2>
+      <div class="tab-header-top">
+        <h2 class="tab-title">CATEGORIAS DE EXERCÍCIOS PEDAGÓGICOS</h2>
+        <button type="button" class="evidence-library-btn" onclick={openAllEvidence}>
+          <BookOpen size={17} strokeWidth={2.4} />
+          <span>Estudos &amp; Diretrizes</span>
+        </button>
+      </div>
       <p class="tab-subtitle">
         Selecione uma pasta temática para iniciar atividades de estimulação cognitiva com o aluno:
       </p>
@@ -77,12 +114,19 @@
     {:else}
       <div class="categories-grid">
         {#each $studentCategories as category (category.id)}
-          <ActivityCategoryCard {category} />
+          <ActivityCategoryCard {category} onShowEvidence={openCategoryEvidence} />
         {/each}
       </div>
     {/if}
   {/if}
 </div>
+
+<EvidenceModal
+  isOpen={isEvidenceOpen}
+  reference={activeEvidenceRef}
+  contextTitle={evidenceContextTitle}
+  onClose={() => (isEvidenceOpen = false)}
+/>
 
 <style>
   .activities-tab {
@@ -154,6 +198,36 @@
     border-radius: 14px;
     border: 1.5px solid;
     letter-spacing: 0.5px;
+  }
+
+  .tab-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+
+  .evidence-library-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: #EFF6FF;
+    color: #1D4ED8;
+    border: 2px solid #BFDBFE;
+    border-radius: 12px;
+    padding: 7px 14px;
+    font-size: 0.84rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .evidence-library-btn:hover {
+    background: #DBEAFE;
+    border-color: #93C5FD;
   }
 
   .tab-title {

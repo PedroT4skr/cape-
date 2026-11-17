@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { ActivityDefinition } from '../../../types/activity.types'
   import { CATEGORY_MAP } from '../../../constants/curriculum/activity-categories.constants'
-  import { Play, Pencil, Copy, Trash2, RotateCcw } from '@lucide/svelte'
+  import { resolveActivityEvidence } from '../../../constants/curriculum/evidence-references.constants'
+  import { Play, Pencil, Copy, Trash2, RotateCcw, ShieldCheck } from '@lucide/svelte'
 
   interface Props {
     activity: ActivityDefinition
@@ -10,6 +11,7 @@
     onDuplicate: (activity: ActivityDefinition) => void
     onPlay: (activity: ActivityDefinition) => void
     onDeleteOrRestore: (activity: ActivityDefinition) => void
+    onShowEvidence: (activity: ActivityDefinition) => void
   }
 
   const {
@@ -18,10 +20,12 @@
     onEdit,
     onDuplicate,
     onPlay,
-    onDeleteOrRestore
+    onDeleteOrRestore,
+    onShowEvidence
   }: Props = $props()
 
   let categoryInfo = $derived(CATEGORY_MAP[activity.categoryId])
+  let evidence = $derived(resolveActivityEvidence(activity.evidenceId, activity.categoryId))
 </script>
 
 <article
@@ -55,6 +59,15 @@
       <h3 class="act-title">{activity.title}</h3>
       <p class="act-sub">{activity.subtitle}</p>
       <span class="methodology-tag">{activity.methodology}</span>
+      <button
+        type="button"
+        class="evidence-pill-btn"
+        onclick={() => onShowEvidence(activity)}
+        title={evidence.citation}
+      >
+        <ShieldCheck size={13} />
+        <span>{evidence.badgeLabel}</span>
+      </button>
     </div>
 
     <!-- Controle de Seleção para o Aluno -->
@@ -248,6 +261,28 @@
     font-weight: 800;
     color: #475569;
     margin-top: 2px;
+  }
+
+  .evidence-pill-btn {
+    margin-top: 4px;
+    width: fit-content;
+    max-width: 100%;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    color: #047857;
+    border-radius: 7px;
+    padding: 3px 8px;
+    font-size: 0.7rem;
+    font-weight: 850;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .evidence-pill-btn:hover {
+    background: #D1FAE5;
   }
 
   .toggle-row {

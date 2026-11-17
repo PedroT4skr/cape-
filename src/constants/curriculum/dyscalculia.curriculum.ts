@@ -1,84 +1,28 @@
-import type { ActivityDefinition, ActivityOption } from '../../types/activity.types'
-
-function numOpts(
-  correct: number,
-  alts: [number, number],
-  emoji: string
-): ActivityOption[] {
-  const vals = [alts[0], correct, alts[1]].sort((a, b) => a - b)
-  return vals.map((v, idx) => ({
-    id: `opt_${idx + 1}`,
-    label: String(v),
-    numericValue: v,
-    emojiVisual: v <= 6 ? emoji.repeat(v) : `${emoji} (${v})`,
-    isCorrect: v === correct
-  }))
-}
+import type { ActivityDefinition } from '../../types/activity.types'
+import { buildActivity, qAdd, qComp, qCount } from './curriculum.helpers'
 
 export const DYSCALCULIA_ACTIVITIES: ActivityDefinition[] = [
-  {
+  buildActivity({
     id: 'level_1_subitizing',
     categoryId: 'dyscalculia',
     title: 'Contagem Básica (1 a 5)',
     subtitle: 'Reconhecimento visual imediato',
-    methodology: 'CPA / Subitização',
+    methodology: 'CPA / Subitização (Butterworth)',
     emoji: '🍎',
     badgeColor: '#16A34A',
     description: 'Contar objetos familiares de 1 a 5 com correspondência 1-a-1.',
     tags: ['iniciante', 'subitização', 'contagem'],
-    isEnabled: true,
-    isBuiltIn: true,
+    evidenceId: 'ev_dyscalculia_subitizing',
     order: 1,
-    updatedAt: 0,
     questions: [
-      {
-        id: 'l1_q1',
-        levelId: 'level_1_subitizing',
-        type: 'count',
-        prompt: 'QUANTAS MAÇÃS VOCÊ VÊ?',
-        ttsPrompt: 'Quantas maçãs você vê na tela?',
-        items: { emoji: '🍎', count: 2, label: 'MAÇÃS' },
-        options: numOpts(2, [1, 3], '🍎')
-      },
-      {
-        id: 'l1_q2',
-        levelId: 'level_1_subitizing',
-        type: 'count',
-        prompt: 'QUANTAS BANANAS VOCÊ VÊ?',
-        ttsPrompt: 'Quantas bananas você vê na tela?',
-        items: { emoji: '🍌', count: 3, label: 'BANANAS' },
-        options: numOpts(3, [2, 4], '🍌')
-      },
-      {
-        id: 'l1_q3',
-        levelId: 'level_1_subitizing',
-        type: 'count',
-        prompt: 'QUANTOS COPOS DE ÁGUA VOCÊ VÊ?',
-        ttsPrompt: 'Quantos copos de água você vê?',
-        items: { emoji: '🥤', count: 1, label: 'COPO' },
-        options: numOpts(1, [2, 3], '🥤')
-      },
-      {
-        id: 'l1_q4',
-        levelId: 'level_1_subitizing',
-        type: 'count',
-        prompt: 'QUANTOS PÃES VOCÊ VÊ?',
-        ttsPrompt: 'Quantos pães você vê na tela?',
-        items: { emoji: '🥖', count: 4, label: 'PÃES' },
-        options: numOpts(4, [3, 5], '🥖')
-      },
-      {
-        id: 'l1_q5',
-        levelId: 'level_1_subitizing',
-        type: 'count',
-        prompt: 'QUANTAS ESTRELAS VOCÊ VÊ?',
-        ttsPrompt: 'Quantas estrelas você vê?',
-        items: { emoji: '⭐', count: 5, label: 'ESTRELAS' },
-        options: numOpts(5, [3, 4], '⭐')
-      }
+      qCount('level_1_subitizing', 'l1_q1', 'QUANTAS MAÇÃS VOCÊ VÊ?', 'Quantas maçãs você vê na tela?', '🍎', 2, 'MAÇÃS', [1, 3]),
+      qCount('level_1_subitizing', 'l1_q2', 'QUANTAS BANANAS VOCÊ VÊ?', 'Quantas bananas você vê na tela?', '🍌', 3, 'BANANAS', [2, 4]),
+      qCount('level_1_subitizing', 'l1_q3', 'QUANTOS COPOS DE ÁGUA VOCÊ VÊ?', 'Quantos copos de água você vê?', '🥤', 1, 'COPO', [2, 3]),
+      qCount('level_1_subitizing', 'l1_q4', 'QUANTOS PÃES VOCÊ VÊ?', 'Quantos pães você vê na tela?', '🥖', 4, 'PÃES', [3, 5]),
+      qCount('level_1_subitizing', 'l1_q5', 'QUANTAS ESTRELAS VOCÊ VÊ?', 'Quantas estrelas você vê?', '⭐', 5, 'ESTRELAS', [3, 4])
     ]
-  },
-  {
+  }),
+  buildActivity({
     id: 'dysc_count_6_10',
     categoryId: 'dyscalculia',
     title: 'Contagem Ampliada (6 a 10)',
@@ -88,302 +32,166 @@ export const DYSCALCULIA_ACTIVITIES: ActivityDefinition[] = [
     badgeColor: '#059669',
     description: 'Desenvolver contagem sequencial de conjuntos maiores de 6 a 10 figuras.',
     tags: ['intermediário', 'contagem', '6 a 10'],
-    isEnabled: true,
-    isBuiltIn: true,
+    evidenceId: 'ev_dyscalculia_subitizing',
     order: 2,
-    updatedAt: 0,
     questions: [
-      {
-        id: 'd610_q1',
-        levelId: 'dysc_count_6_10',
-        type: 'count',
-        prompt: 'QUANTOS MORANGOS VOCÊ VÊ?',
-        ttsPrompt: 'Conte com atenção quantos morangos aparecem na tela.',
-        items: { emoji: '🍓', count: 6, label: 'MORANGOS' },
-        options: numOpts(6, [5, 7], '🍓')
-      },
-      {
-        id: 'd610_q2',
-        levelId: 'dysc_count_6_10',
-        type: 'count',
-        prompt: 'QUANTAS BORBOLETAS VOCÊ VÊ?',
-        ttsPrompt: 'Quantas borboletas você consegue contar?',
-        items: { emoji: '🦋', count: 7, label: 'BORBOLETAS' },
-        options: numOpts(7, [6, 8], '🦋')
-      },
-      {
-        id: 'd610_q3',
-        levelId: 'dysc_count_6_10',
-        type: 'count',
-        prompt: 'QUANTOS CORAÇÕES VOCÊ VÊ?',
-        ttsPrompt: 'Conte devagar quantos corações existem na tela.',
-        items: { emoji: '💙', count: 8, label: 'CORAÇÕES' },
-        options: numOpts(8, [7, 9], '💙')
-      },
-      {
-        id: 'd610_q4',
-        levelId: 'dysc_count_6_10',
-        type: 'count',
-        prompt: 'QUANTAS FLORES VOCÊ VÊ?',
-        ttsPrompt: 'Quantas flores estão no jardim?',
-        items: { emoji: '🌻', count: 9, label: 'FLORES' },
-        options: numOpts(9, [8, 10], '🌻')
-      },
-      {
-        id: 'd610_q5',
-        levelId: 'dysc_count_6_10',
-        type: 'count',
-        prompt: 'QUANTAS BOLAS VOCÊ VÊ?',
-        ttsPrompt: 'Conte quantas bolas temos ao todo.',
-        items: { emoji: '⚽', count: 10, label: 'BOLAS' },
-        options: numOpts(10, [8, 9], '⚽')
-      }
+      qCount('dysc_count_6_10', 'd610_q1', 'QUANTOS MORANGOS VOCÊ VÊ?', 'Conte quantos morangos aparecem.', '🍓', 6, 'MORANGOS', [5, 7]),
+      qCount('dysc_count_6_10', 'd610_q2', 'QUANTAS BORBOLETAS VOCÊ VÊ?', 'Quantas borboletas você conta?', '🦋', 7, 'BORBOLETAS', [6, 8]),
+      qCount('dysc_count_6_10', 'd610_q3', 'QUANTOS CORAÇÕES VOCÊ VÊ?', 'Conte os corações azuis.', '💙', 8, 'CORAÇÕES', [7, 9]),
+      qCount('dysc_count_6_10', 'd610_q4', 'QUANTAS FLORES VOCÊ VÊ?', 'Quantas flores estão no jardim?', '🌻', 9, 'FLORES', [8, 10]),
+      qCount('dysc_count_6_10', 'd610_q5', 'QUANTAS BOLAS VOCÊ VÊ?', 'Conte quantas bolas temos ao todo.', '⚽', 10, 'BOLAS', [8, 9])
     ]
-  },
-  {
+  }),
+  buildActivity({
     id: 'level_2_addition',
     categoryId: 'dyscalculia',
     title: 'Adição Visual Iniciante',
     subtitle: 'Juntar conjuntos pequenos (até 5)',
-    methodology: 'Numicon / Soma Pictórica',
+    methodology: 'Numicon / Soma Pictórica CPA',
     emoji: '➕',
     badgeColor: '#2563EB',
     description: 'Somar dois grupos visuais de alimentos com apoio concreto.',
     tags: ['adição', 'iniciante', 'cpa'],
-    isEnabled: true,
-    isBuiltIn: true,
+    evidenceId: 'ev_dyscalculia_cpa',
     order: 3,
-    updatedAt: 0,
     questions: [
-      {
-        id: 'l2_q1',
-        levelId: 'level_2_addition',
-        type: 'addition',
-        prompt: 'VAMOS JUNTAR AS MAÇÃS! QUANTAS FICAM?',
-        ttsPrompt: 'Uma maçã mais uma maçã. Quantas maçãs temos ao todo?',
-        groupA: { emoji: '🍎', count: 1, label: '1 MAÇÃ' },
-        groupB: { emoji: '🍎', count: 1, label: '1 MAÇÃ' },
-        options: numOpts(2, [1, 3], '🍎')
-      },
-      {
-        id: 'l2_q2',
-        levelId: 'level_2_addition',
-        type: 'addition',
-        prompt: 'VAMOS JUNTAR AS LARANJAS! QUANTAS FICAM?',
-        ttsPrompt: 'Duas laranjas mais uma laranja. Quantas temos ao todo?',
-        groupA: { emoji: '🍊', count: 2, label: '2 LARANJAS' },
-        groupB: { emoji: '🍊', count: 1, label: '1 LARANJA' },
-        options: numOpts(3, [2, 4], '🍊')
-      },
-      {
-        id: 'l2_q3',
-        levelId: 'level_2_addition',
-        type: 'addition',
-        prompt: 'VAMOS JUNTAR OS SUCOS! QUANTOS FICAM?',
-        ttsPrompt: 'Dois sucos mais dois sucos. Quantos sucos temos ao todo?',
-        groupA: { emoji: '🧃', count: 2, label: '2 SUCOS' },
-        groupB: { emoji: '🧃', count: 2, label: '2 SUCOS' },
-        options: numOpts(4, [3, 5], '🧃')
-      },
-      {
-        id: 'l2_q4',
-        levelId: 'level_2_addition',
-        type: 'addition',
-        prompt: 'VAMOS JUNTAR AS BANANAS! QUANTAS FICAM?',
-        ttsPrompt: 'Três bananas mais duas bananas. Quantas bananas temos ao todo?',
-        groupA: { emoji: '🍌', count: 3, label: '3 BANANAS' },
-        groupB: { emoji: '🍌', count: 2, label: '2 BANANAS' },
-        options: numOpts(5, [4, 6], '🍌')
-      }
+      qAdd('level_2_addition', 'l2_q1', 'VAMOS JUNTAR AS MAÇÃS! QUANTAS FICAM?', 'Uma maçã mais uma maçã.', '🍎', 1, '1 MAÇÃ', 1, '1 MAÇÃ', [1, 3]),
+      qAdd('level_2_addition', 'l2_q2', 'VAMOS JUNTAR AS LARANJAS! QUANTAS FICAM?', 'Duas laranjas mais uma laranja.', '🍊', 2, '2 LARANJAS', 1, '1 LARANJA', [2, 4]),
+      qAdd('level_2_addition', 'l2_q3', 'VAMOS JUNTAR OS SUCOS! QUANTOS FICAM?', 'Dois sucos mais dois sucos.', '🧃', 2, '2 SUCOS', 2, '2 SUCOS', [3, 5]),
+      qAdd('level_2_addition', 'l2_q4', 'VAMOS JUNTAR AS BANANAS! QUANTAS FICAM?', 'Três bananas mais duas bananas.', '🍌', 3, '3 BANANAS', 2, '2 BANANAS', [4, 6])
     ]
-  },
-  {
+  }),
+  buildActivity({
     id: 'dysc_add_inter',
     categoryId: 'dyscalculia',
     title: 'Adição Visual Intermediária',
     subtitle: 'Juntar conjuntos maiores (até 8)',
-    methodology: 'Numicon / Soma Concreta',
+    methodology: 'IES / WWC — Representação CPA',
     emoji: '🧮',
     badgeColor: '#1D4ED8',
     description: 'Praticar somas de dois grupos visuais resultando de 5 a 8 elementos.',
     tags: ['adição', 'intermediário'],
-    isEnabled: true,
-    isBuiltIn: true,
+    evidenceId: 'ev_dyscalculia_cpa',
     order: 4,
-    updatedAt: 0,
     questions: [
-      {
-        id: 'dai_q1',
-        levelId: 'dysc_add_inter',
-        type: 'addition',
-        prompt: 'QUANTOS COOKIES TEMOS JUNTANDO OS DOIS GRUPOS?',
-        ttsPrompt: 'Três cookies mais três cookies. Quantos ficam ao todo?',
-        groupA: { emoji: '🍪', count: 3, label: '3 COOKIES' },
-        groupB: { emoji: '🍪', count: 3, label: '3 COOKIES' },
-        options: numOpts(6, [5, 7], '🍪')
-      },
-      {
-        id: 'dai_q2',
-        levelId: 'dysc_add_inter',
-        type: 'addition',
-        prompt: 'JUNTANDO OS LÁPIS, QUANTOS FICAM?',
-        ttsPrompt: 'Quatro lápis mais dois lápis. Quantos lápis temos?',
-        groupA: { emoji: '✏️', count: 4, label: '4 LÁPIS' },
-        groupB: { emoji: '✏️', count: 2, label: '2 LÁPIS' },
-        options: numOpts(6, [5, 8], '✏️')
-      },
-      {
-        id: 'dai_q3',
-        levelId: 'dysc_add_inter',
-        type: 'addition',
-        prompt: 'QUANTOS PEIXINHOS TEMOS AO TODO?',
-        ttsPrompt: 'Quatro peixinhos mais três peixinhos. Quantos temos ao todo?',
-        groupA: { emoji: '🐠', count: 4, label: '4 PEIXES' },
-        groupB: { emoji: '🐠', count: 3, label: '3 PEIXES' },
-        options: numOpts(7, [6, 8], '🐠')
-      },
-      {
-        id: 'dai_q4',
-        levelId: 'dysc_add_inter',
-        type: 'addition',
-        prompt: 'QUANTAS ESTRELAS BRILHAM NO TOTAL?',
-        ttsPrompt: 'Quatro estrelas mais quatro estrelas. Quantas estrelas ficam?',
-        groupA: { emoji: '⭐', count: 4, label: '4 ESTRELAS' },
-        groupB: { emoji: '⭐', count: 4, label: '4 ESTRELAS' },
-        options: numOpts(8, [6, 7], '⭐')
-      }
+      qAdd('dysc_add_inter', 'dai_q1', 'QUANTOS COOKIES TEMOS AO TODO?', 'Três cookies mais três cookies.', '🍪', 3, '3 COOKIES', 3, '3 COOKIES', [5, 7]),
+      qAdd('dysc_add_inter', 'dai_q2', 'JUNTANDO OS LÁPIS, QUANTOS FICAM?', 'Quatro lápis mais dois lápis.', '✏️', 4, '4 LÁPIS', 2, '2 LÁPIS', [5, 8]),
+      qAdd('dysc_add_inter', 'dai_q3', 'QUANTOS PEIXINHOS TEMOS AO TODO?', 'Quatro peixes mais três peixes.', '🐠', 4, '4 PEIXES', 3, '3 PEIXES', [6, 8]),
+      qAdd('dysc_add_inter', 'dai_q4', 'QUANTAS ESTRELAS BRILHAM NO TOTAL?', 'Quatro estrelas mais quatro estrelas.', '⭐', 4, '4 ESTRELAS', 4, '4 ESTRELAS', [6, 7])
     ]
-  },
-  {
+  }),
+  buildActivity({
     id: 'level_3_magnitude',
     categoryId: 'dyscalculia',
     title: 'Mais ou Menos (Grandeza)',
     subtitle: 'Comparar esquerda e direita',
-    methodology: 'Magnitude Visual',
+    methodology: 'Magnitude Visual & Lateralidade',
     emoji: '⚖️',
     badgeColor: '#EA580C',
     description: 'Identificar visualmente qual lado possui maior ou menor quantidade.',
     tags: ['comparação', 'lateralidade', 'grandeza'],
-    isEnabled: true,
-    isBuiltIn: true,
+    evidenceId: 'ev_dyscalculia_subitizing',
     order: 5,
-    updatedAt: 0,
     questions: [
-      {
-        id: 'l3_q1',
-        levelId: 'level_3_magnitude',
-        type: 'comparison',
-        prompt: 'ONDE TEM MAIS MAÇÃS?',
-        ttsPrompt: 'Toque no grupo que tem mais maçãs!',
-        targetComparison: 'more',
-        optionLeft: { emoji: '🍎', count: 4, label: '4 MAÇÃS' },
-        optionRight: { emoji: '🍎', count: 1, label: '1 MAÇÃ' },
-        options: [
-          { id: 'left', label: 'ESQUERDA', emojiVisual: '🍎 (4)', isCorrect: true },
-          { id: 'right', label: 'DIREITA', emojiVisual: '🍎 (1)', isCorrect: false }
-        ]
-      },
-      {
-        id: 'l3_q2',
-        levelId: 'level_3_magnitude',
-        type: 'comparison',
-        prompt: 'ONDE TEM MAIS BANANAS?',
-        ttsPrompt: 'Toque no grupo que tem mais bananas!',
-        targetComparison: 'more',
-        optionLeft: { emoji: '🍌', count: 2, label: '2 BANANAS' },
-        optionRight: { emoji: '🍌', count: 5, label: '5 BANANAS' },
-        options: [
-          { id: 'left', label: 'ESQUERDA', emojiVisual: '🍌 (2)', isCorrect: false },
-          { id: 'right', label: 'DIREITA', emojiVisual: '🍌 (5)', isCorrect: true }
-        ]
-      },
-      {
-        id: 'l3_q3',
-        levelId: 'level_3_magnitude',
-        type: 'comparison',
-        prompt: 'ONDE TEM MENOS PÃES?',
-        ttsPrompt: 'Toque no grupo que tem menos pães!',
-        targetComparison: 'less',
-        optionLeft: { emoji: '🥖', count: 1, label: '1 PÃO' },
-        optionRight: { emoji: '🥖', count: 4, label: '4 PÃES' },
-        options: [
-          { id: 'left', label: 'ESQUERDA', emojiVisual: '🥖 (1)', isCorrect: true },
-          { id: 'right', label: 'DIREITA', emojiVisual: '🥖 (4)', isCorrect: false }
-        ]
-      },
-      {
-        id: 'l3_q4',
-        levelId: 'level_3_magnitude',
-        type: 'comparison',
-        prompt: 'ONDE TEM MAIS SUCOS?',
-        ttsPrompt: 'Toque no grupo que tem mais sucos!',
-        targetComparison: 'more',
-        optionLeft: { emoji: '🧃', count: 5, label: '5 SUCOS' },
-        optionRight: { emoji: '🧃', count: 2, label: '2 SUCOS' },
-        options: [
-          { id: 'left', label: 'ESQUERDA', emojiVisual: '🧃 (5)', isCorrect: true },
-          { id: 'right', label: 'DIREITA', emojiVisual: '🧃 (2)', isCorrect: false }
-        ]
-      }
+      qComp('level_3_magnitude', 'l3_q1', 'ONDE TEM MAIS MAÇÃS?', 'Toque no grupo que tem mais maçãs!', 'more', '🍎', 4, '4 MAÇÃS', 1, '1 MAÇÃ'),
+      qComp('level_3_magnitude', 'l3_q2', 'ONDE TEM MAIS BANANAS?', 'Toque no grupo que tem mais bananas!', 'more', '🍌', 2, '2 BANANAS', 5, '5 BANANAS'),
+      qComp('level_3_magnitude', 'l3_q3', 'ONDE TEM MENOS PÃES?', 'Toque no grupo que tem menos pães!', 'less', '🥖', 1, '1 PÃO', 4, '4 PÃES'),
+      qComp('level_3_magnitude', 'l3_q4', 'ONDE TEM MAIS SUCOS?', 'Toque no grupo que tem mais sucos!', 'more', '🧃', 5, '5 SUCOS', 2, '2 SUCOS')
     ]
-  },
-  {
+  }),
+  buildActivity({
     id: 'dysc_functional_math',
     categoryId: 'dyscalculia',
     title: 'Matemática do Cotidiano',
     subtitle: 'Contar materiais escolares e brinquedos',
-    methodology: 'Matemática Funcional AVD',
+    methodology: 'Matemática Funcional / BNCC-DUA',
     emoji: '🎒',
     badgeColor: '#0284C7',
     description: 'Contagem e soma contextualizada com objetos reais da escola e casa.',
     tags: ['funcional', 'avd', 'escola'],
-    isEnabled: true,
-    isBuiltIn: true,
+    evidenceId: 'ev_dyscalculia_cpa',
     order: 6,
-    updatedAt: 0,
     questions: [
-      {
-        id: 'dfm_q1',
-        levelId: 'dysc_functional_math',
-        type: 'count',
-        prompt: 'QUANTOS LIVROS ESTÃO NA MESA?',
-        ttsPrompt: 'Quantos livros existem sobre a mesa?',
-        items: { emoji: '📚', count: 4, label: 'LIVROS' },
-        options: numOpts(4, [3, 5], '📚')
-      },
-      {
-        id: 'dfm_q2',
-        levelId: 'dysc_functional_math',
-        type: 'addition',
-        prompt: 'NA MOCHILA TINHA 2 LÁPIS E GANHOU 2. QUANTOS TEM?',
-        ttsPrompt: 'Dois lápis mais dois lápis na mochila. Quantos ficaram?',
-        groupA: { emoji: '✏️', count: 2, label: '2 LÁPIS' },
-        groupB: { emoji: '✏️', count: 2, label: '2 LÁPIS' },
-        options: numOpts(4, [3, 5], '✏️')
-      },
-      {
-        id: 'dfm_q3',
-        levelId: 'dysc_functional_math',
-        type: 'comparison',
-        prompt: 'ONDE TEM MENOS CARRINHOS?',
-        ttsPrompt: 'Olhe os dois grupos. Onde há menos carrinhos?',
-        targetComparison: 'less',
-        optionLeft: { emoji: '🚗', count: 5, label: '5 CARROS' },
-        optionRight: { emoji: '🚗', count: 2, label: '2 CARROS' },
-        options: [
-          { id: 'left', label: 'ESQUERDA', emojiVisual: '🚗 (5)', isCorrect: false },
-          { id: 'right', label: 'DIREITA', emojiVisual: '🚗 (2)', isCorrect: true }
-        ]
-      },
-      {
-        id: 'dfm_q4',
-        levelId: 'dysc_functional_math',
-        type: 'count',
-        prompt: 'QUANTOS DADOS VOCÊ VÊ?',
-        ttsPrompt: 'Conte quantos dados apareceram na tela.',
-        items: { emoji: '🎲', count: 6, label: 'DADOS' },
-        options: numOpts(6, [4, 5], '🎲')
-      }
+      qCount('dysc_functional_math', 'dfm_q1', 'QUANTOS LIVROS ESTÃO NA MESA?', 'Quantos livros existem na mesa?', '📚', 4, 'LIVROS', [3, 5]),
+      qAdd('dysc_functional_math', 'dfm_q2', '2 LÁPIS MAIS 2 LÁPIS. QUANTOS SÃO?', 'Dois lápis mais dois lápis na mochila.', '✏️', 2, '2 LÁPIS', 2, '2 LÁPIS', [3, 5]),
+      qComp('dysc_functional_math', 'dfm_q3', 'ONDE TEM MENOS CARRINHOS?', 'Olhe os dois grupos. Onde há menos carrinhos?', 'less', '🚗', 5, '5 CARROS', 2, '2 CARROS'),
+      qCount('dysc_functional_math', 'dfm_q4', 'QUANTOS DADOS VOCÊ VÊ?', 'Conte quantos dados apareceram na tela.', '🎲', 6, 'DADOS', [4, 5])
     ]
-  }
+  }),
+  buildActivity({
+    id: 'dysc_add_fruits',
+    categoryId: 'dyscalculia',
+    title: 'Adição com Frutas & Lanches',
+    subtitle: 'Somar quantidades até 10 na cozinha',
+    methodology: 'CPA / Ensino Explícito IES',
+    emoji: '🍉',
+    badgeColor: '#10B981',
+    description: 'Construir fluência aditiva somando conjuntos concretos de frutas.',
+    tags: ['adição', 'frutas', 'cpa'],
+    evidenceId: 'ev_dyscalculia_cpa',
+    order: 7,
+    questions: [
+      qAdd('dysc_add_fruits', 'daf_q1', 'JUNTANDO AS MELANCIAS, QUANTAS FICAM?', 'Três melancias mais uma melancia.', '🍉', 3, '3 MELANCIAS', 1, '1 MELANCIA', [3, 5]),
+      qAdd('dysc_add_fruits', 'daf_q2', 'QUANTOS MORANGOS TEMOS NO TOTAL?', 'Quatro morangos mais um morango.', '🍓', 4, '4 MORANGOS', 1, '1 MORANGO', [4, 6]),
+      qAdd('dysc_add_fruits', 'daf_q3', 'QUANTAS CEREJAS FICAM JUNTANDO TUDO?', 'Cinco cerejas mais duas cerejas.', '🍒', 5, '5 CEREJAS', 2, '2 CEREJAS', [6, 8]),
+      qAdd('dysc_add_fruits', 'daf_q4', 'JUNTANDO OS ABACAXIS, QUANTOS SÃO?', 'Cinco abacaxis mais quatro abacaxis.', '🍍', 5, '5 ABACAXIS', 4, '4 ABACAXIS', [8, 10])
+    ]
+  }),
+  buildActivity({
+    id: 'dysc_comp_animals',
+    categoryId: 'dyscalculia',
+    title: 'Comparação com Animais',
+    subtitle: 'Discriminar conjuntos maiores e menores',
+    methodology: 'Magnitude Espacial (Butterworth)',
+    emoji: '🐸',
+    badgeColor: '#F97316',
+    description: 'Comparar grupos de animais para consolidar noções de maior e menor.',
+    tags: ['comparação', 'animais', 'grandeza'],
+    evidenceId: 'ev_dyscalculia_subitizing',
+    order: 8,
+    questions: [
+      qComp('dysc_comp_animals', 'dca_q1', 'ONDE TEM MAIS SAPOS?', 'Qual lado tem mais sapos?', 'more', '🐸', 5, '5 SAPOS', 2, '2 SAPOS'),
+      qComp('dysc_comp_animals', 'dca_q2', 'ONDE TEM MENOS PATINHOS?', 'Toque no grupo com menos patinhos.', 'less', '🦆', 3, '3 PATOS', 6, '6 PATOS'),
+      qComp('dysc_comp_animals', 'dca_q3', 'ONDE TEM MAIS BORBOLETAS?', 'Qual grupo tem mais borboletas?', 'more', '🦋', 2, '2 BORBOLETAS', 6, '6 BORBOLETAS'),
+      qComp('dysc_comp_animals', 'dca_q4', 'ONDE TEM MENOS PEIXES?', 'Toque no lado com menos peixinhos.', 'less', '🐠', 5, '5 PEIXES', 1, '1 PEIXE')
+    ]
+  }),
+  buildActivity({
+    id: 'dysc_subitizing_objects',
+    categoryId: 'dyscalculia',
+    title: 'Subitização: Objetos da Casa',
+    subtitle: 'Percepção rápida de pequenas quantidades',
+    methodology: 'Subitização / Atenção Visual',
+    emoji: '🔑',
+    badgeColor: '#0D9488',
+    description: 'Reconhecer quantidades de objetos cotidianos sem sobrecarga cognitiva.',
+    tags: ['subitização', 'objetos', 'atenção'],
+    evidenceId: 'ev_dyscalculia_subitizing',
+    order: 9,
+    questions: [
+      qCount('dysc_subitizing_objects', 'dso_q1', 'QUANTAS CHAVES VOCÊ VÊ?', 'Quantas chaves aparecem na tela?', '🔑', 3, 'CHAVES', [2, 4]),
+      qCount('dysc_subitizing_objects', 'dso_q2', 'QUANTAS CAMISAS VOCÊ VÊ?', 'Conte quantas camisas há na tela.', '👕', 4, 'CAMISAS', [3, 5]),
+      qCount('dysc_subitizing_objects', 'dso_q3', 'QUANTOS ÓCULOS VOCÊ VÊ?', 'Quantos óculos estão aparecendo?', '👓', 2, 'ÓCULOS', [1, 3]),
+      qCount('dysc_subitizing_objects', 'dso_q4', 'QUANTOS BALÕES VOCÊ VÊ?', 'Conte todos os balões.', '🎈', 5, 'BALÕES', [4, 6])
+    ]
+  }),
+  buildActivity({
+    id: 'dysc_add_classroom',
+    categoryId: 'dyscalculia',
+    title: 'Soma Funcional na Sala de Aula',
+    subtitle: 'Problemas concretos com itens escolares',
+    methodology: 'IES / Instrução Sistemática CPA',
+    emoji: '✂️',
+    badgeColor: '#4F46E5',
+    description: 'Resolver adições visuais simples com materiais usados na escola.',
+    tags: ['adição', 'escola', 'cpa'],
+    evidenceId: 'ev_dyscalculia_cpa',
+    order: 10,
+    questions: [
+      qAdd('dysc_add_classroom', 'dac_q1', 'QUANTOS CADERNOS TEMOS NA MESA?', 'Dois cadernos mais três cadernos.', '📓', 2, '2 CADERNOS', 3, '3 CADERNOS', [4, 6]),
+      qAdd('dysc_add_classroom', 'dac_q2', 'JUNTANDO AS TESOURAS, QUANTAS FICAM?', 'Uma tesoura mais duas tesouras.', '✂️', 1, '1 TESOURA', 2, '2 TESOURAS', [2, 4]),
+      qAdd('dysc_add_classroom', 'dac_q3', 'QUANTAS MOCHILAS ESTÃO NA SALA?', 'Três mochilas mais três mochilas.', '🎒', 3, '3 MOCHILAS', 3, '3 MOCHILAS', [5, 7]),
+      qAdd('dysc_add_classroom', 'dac_q4', 'QUANTOS PINCÉIS TEMOS PARA PINTAR?', 'Cinco pincéis mais três pincéis.', '🖌️', 5, '5 PINCÉIS', 3, '3 PINCÉIS', [7, 9])
+    ]
+  })
 ]

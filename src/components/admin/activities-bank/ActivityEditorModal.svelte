@@ -4,6 +4,7 @@
   import EmojiPicker from '../EmojiPicker.svelte'
   import QuestionEditorPanel from './QuestionEditorPanel.svelte'
   import { BASE_ACTIVITY_CATEGORIES } from '../../../constants/curriculum/activity-categories.constants'
+  import { SCIENTIFIC_REFERENCES } from '../../../constants/curriculum/evidence-references.constants'
   import {
     QUESTION_TYPE_OPTIONS,
     createDefaultActivityDraft,
@@ -188,19 +189,28 @@
             <input type="text" class="text-input" bind:value={draft.description} placeholder="Detalhes do exercício..." />
           </label>
 
-          <div class="field-group">
-            <span class="field-label">Cor do Cartão</span>
-            <div class="swatches-row">
-              {#each COLOR_SWATCHES as col}
-                <button
-                  type="button"
-                  class="color-dot {draft.badgeColor === col ? 'active' : ''}"
-                  style="background: {col};"
-                  onclick={() => (draft.badgeColor = col)}
-                  aria-label="Cor {col}"
-                ></button>
+          <label class="field-group">
+            <span class="field-label">Base Científica / Diretriz (EBP)</span>
+            <select class="select-input" bind:value={draft.evidenceId}>
+              {#each SCIENTIFIC_REFERENCES as ref}
+                <option value={ref.id}>{ref.badgeLabel}</option>
               {/each}
-            </div>
+            </select>
+          </label>
+        </div>
+
+        <div class="field-group">
+          <span class="field-label">Cor do Cartão</span>
+          <div class="swatches-row">
+            {#each COLOR_SWATCHES as col}
+              <button
+                type="button"
+                class="color-dot {draft.badgeColor === col ? 'active' : ''}"
+                style="background: {col};"
+                onclick={() => (draft.badgeColor = col)}
+                aria-label="Cor {col}"
+              ></button>
+            {/each}
           </div>
         </div>
       </section>

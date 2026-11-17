@@ -5,6 +5,17 @@ export type ActivityCategoryId =
   | 'social_emotions'
   | 'daily_logic'
 
+export interface ScientificReference {
+  id: string
+  badgeLabel: string
+  framework: string
+  citation: string
+  recommendedBy: string
+  summary: string
+  docUrl: string
+  docTitle: string
+}
+
 export interface ActivityCategory {
   id: ActivityCategoryId
   title: string
@@ -14,6 +25,7 @@ export interface ActivityCategory {
   levelIds?: ActivityLevelId[]
   isAvailable: boolean
   countLabel: string
+  defaultEvidenceId?: string
 }
 
 export type ActivityLevelId = string
@@ -45,6 +57,7 @@ export interface ActivityDefinition extends ActivityLevelConfig {
   isBuiltIn: boolean
   order: number
   tags?: string[]
+  evidenceId?: string
   questions: ActivityQuestion[]
   updatedAt: number
 }

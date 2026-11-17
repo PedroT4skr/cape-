@@ -2,18 +2,27 @@
   import type { ActivityCategory } from '../../types/activity.types'
   import { selectCategory } from '../../stores/activity.store'
   import { soundEffects } from '../../services/sound-effects.service'
-  import { Folder, FolderOpen, Lock } from '@lucide/svelte'
+  import { resolveActivityEvidence } from '../../constants/curriculum/evidence-references.constants'
+  import { FolderOpen, Lock, ShieldCheck } from '@lucide/svelte'
 
   interface Props {
     category: ActivityCategory
+    onShowEvidence?: (category: ActivityCategory) => void
   }
 
-  const { category }: Props = $props()
+  const { category, onShowEvidence }: Props = $props()
+
+  let evidence = $derived(resolveActivityEvidence(category.defaultEvidenceId, category.id))
 
   function handleOpen() {
     if (!category.isAvailable) return
     soundEffects.playTapSound()
     selectCategory(category.id)
+  }
+
+  function handleEvidenceClick(e: MouseEvent) {
+    e.stopPropagation()
+    onShowEvidence?.(category)
   }
 </script>
 
@@ -40,6 +49,17 @@
   <div class="card-info">
     <h3 class="category-title">{category.title}</h3>
     <p class="category-subtitle">{category.subtitle}</p>
+    {#if onShowEvidence}
+      <button
+        type="button"
+        class="cat-evidence-pill"
+        onclick={handleEvidenceClick}
+        title={evidence.citation}
+      >
+        <ShieldCheck size={13} />
+        <span>{evidence.badgeLabel}</span>
+      </button>
+    {/if}
   </div>
 
   <button
@@ -151,6 +171,28 @@
     color: #64748B;
     margin: 0;
     line-height: 1.35;
+  }
+
+  .cat-evidence-pill {
+    margin-top: 4px;
+    width: fit-content;
+    max-width: 100%;
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    color: #047857;
+    border-radius: 8px;
+    padding: 3px 9px;
+    font-size: 0.72rem;
+    font-weight: 850;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .cat-evidence-pill:hover {
+    background: #D1FAE5;
   }
 
   .action-btn {

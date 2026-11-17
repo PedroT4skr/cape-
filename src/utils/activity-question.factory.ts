@@ -79,6 +79,7 @@ export function createDefaultActivityDraft(categoryId: ActivityCategoryId = 'dys
     badgeColor: cat?.color || '#2563EB',
     description: 'Atividade criada sob medida no painel do terapeuta.',
     tags: ['personalizada'],
+    evidenceId: cat?.defaultEvidenceId || 'ev_bncc_dua',
     isEnabled: true,
     isBuiltIn: false,
     order: Date.now(),

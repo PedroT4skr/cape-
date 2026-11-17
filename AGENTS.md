@@ -5,7 +5,7 @@
 > 1. **Comunicação Alternativa e Ampliada (CAA):** Pranchas de pictogramas, chave de Fitzgerald e voz neural.  
 > 2. **Atividades Cognitivas:** Alfabetização, percepção visual e apoio à discalculia.  
 > 3. **Quiz Matemático TDAH:** Cálculo rápido gamificado em 3 níveis com cronômetro sem bloqueio e penalidade positiva.  
-> **Versão:** 5.4.0 (Banco Extenso de Atividades Psicopedagógicas, Curadoria do Terapeuta e Editor Completo)
+> **Versão:** 5.5.0 (Banco com 50 Atividades Psicopedagógicas & Fundamentação Científica EBP)
 
 ---
 
@@ -25,9 +25,10 @@
    - Barra de frases com síntese de voz (Edge-TTS via WebSocket e fallback Web Speech).
    - Prevenção de toques involuntários com throttle de 300ms.
 6. **Módulo 2: Atividades Cognitivas & Banco Psicopedagógico:**
-   - **5 Categorias Modulares (25 atividades iniciais):** Discalculia, Alfabetização, Percepção Visual, Emoções & Social, e Lógica & Vida Diária.
-   - **Persistência Offline-First (`Dexie.js v2`):** Tabela `activities` populada automaticamente com preservação de customizações e integrada ao backup JSON.
-   - **Curadoria e Edição do Terapeuta (`BANCO DE ATIVIDADES`):** Busca, filtro por área/origem, ativação seletiva (`Ativa para o Aluno`), duplicação como modelo, criação de novas atividades e editor completo de questões com geração automática de alternativas.
+   - **5 Categorias Modulares (50 atividades iniciais — 10 por categoria):** Discalculia, Alfabetização, Percepção Visual, Emoções & Social, e Lógica & Vida Diária.
+   - **Fundamentação Científica & Práticas Baseadas em Evidência (EBP):** Cada categoria e atividade vincula-se a diretrizes/estudos verificados (`ScientificReference` em `evidence-references.constants.ts` — IES/WWC, Butterworth, NICHD/NRP, UNC NCAEP, AFIRM, CASEL, AOTA, MEC/BNCC), acessíveis via `EvidenceModal.svelte` no catálogo e painel do terapeuta, preservando a tela do aluno (`DyscalculiaPlayer.svelte`) livre de poluição visual.
+   - **Persistência Offline-First (`Dexie.js v2`):** Tabela `activities` populada e atualizada incrementalmente (`seedActivitiesIfNeeded`) preservando customizações locais e integrada ao backup JSON.
+   - **Curadoria e Edição do Terapeuta (`BANCO DE ATIVIDADES`):** Busca, filtro por área/origem, ativação seletiva (`Ativa para o Aluno`), duplicação como modelo, criação de novas atividades (com seleção da base científica) e editor completo de questões com geração automática de alternativas.
 7. **Módulo 3: Quiz Matemático Adaptado para TDAH:**
    - **3 Dificuldades Modulares:** Iniciante (soma/subtração - 45s), Intermediário (4 operações mistas e ordem - 60s) e Difícil (equações de 1º grau, %, potências, PA e funções - 90s).
    - **Enunciado Acessível de Alto Contraste:** Tipografia ampliada com destaque colorido automático para números, operadores e palavras-chave no enunciado.
@@ -68,8 +69,10 @@
 - [`activities.repository.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/db/activities.repository.ts): CRUD completo de atividades, ativação individual/em lote, clonagem e restauração de padrão.
 
 ### Camada de Currículo Modular (`src/constants/curriculum/`)
-- [`activity-categories.constants.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/activity-categories.constants.ts): Definições das 5 áreas psicopedagógicas.
-- [`dyscalculia.curriculum.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/dyscalculia.curriculum.ts), [`literacy.curriculum.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/literacy.curriculum.ts), [`visual.curriculum.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/visual.curriculum.ts), [`social-emotions.curriculum.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/social-emotions.curriculum.ts), [`daily-logic.curriculum.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/daily-logic.curriculum.ts): Banco inicial com 25 atividades curadas.
+- [`evidence-references.constants.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/evidence-references.constants.ts): Catálogo com 8 referências científicas verificadas (`SCIENTIFIC_REFERENCES`, `EVIDENCE_MAP`) e `resolveActivityEvidence()`.
+- [`curriculum.helpers.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/curriculum.helpers.ts): Construtores modulares reutilizáveis (`buildActivity`, `qCount`, `qAdd`, `qComp`, `qLetter`, `qSyllable`, `qWord`, `qMatch`, `qRoutine`, etc.) para padronizar as atividades sem duplicação de código.
+- [`activity-categories.constants.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/activity-categories.constants.ts): Definições das 5 áreas psicopedagógicas com `defaultEvidenceId`.
+- [`dyscalculia.curriculum.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/dyscalculia.curriculum.ts), [`literacy.curriculum.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/literacy.curriculum.ts), [`visual.curriculum.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/visual.curriculum.ts), [`social-emotions.curriculum.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/social-emotions.curriculum.ts), [`daily-logic.curriculum.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/daily-logic.curriculum.ts): Banco inicial com 50 atividades curadas (10 por categoria), todas vinculadas a diretrizes EBP.
 - [`activity-bank.seed.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/activity-bank.seed.ts): Agregador de semente do banco inicial.
 
 ### Camada de Utilidades de Segurança (`src/utils/`)
@@ -104,11 +107,17 @@
 - [`VisualPerceptionQuestionView.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/activities/VisualPerceptionQuestionView.svelte): Roteador enxuto entre pareamento e sequência de rotina.
 - [`visual/ModelMatchStage.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/activities/visual/ModelMatchStage.svelte): Cartão modelo com espaço superior para badge sem cortes.
 - [`visual/RoutineSequenceStage.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/activities/visual/RoutineSequenceStage.svelte): Passos de rotina flexíveis (`flex: 1 1 0`) sem estouro horizontal e badge multi-linha.
+- [`evidence/EvidenceModal.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/activities/evidence/EvidenceModal.svelte): Modal de consulta à fundamentação científica por atividade/categoria ou biblioteca completa com links oficiais de documentação.
 
 ---
 
 ## 3. Histórico de Versões
 
+- **v5.5.0 (50 Atividades Curadas & Fundamentação Científica EBP):**
+  - Expandido o banco de currículo modular para **50 atividades curadas** (**10 em cada** uma das 5 áreas: Discalculia, Alfabetização, Percepção Visual, Emoções & Social e Lógica & Vida Diária) via helpers modulares (`curriculum.helpers.ts`).
+  - Criado catálogo de **8 referências científicas e diretrizes oficiais verificadas** (`evidence-references.constants.ts`: IES/WWC 2021 & 2009, Butterworth *Science* 2011, NICHD National Reading Panel, UNC NCAEP 2020, UNC AFIRM Visual Supports & Task Analysis, CASEL SEL e MEC/BNCC).
+  - Implementado [`EvidenceModal.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/activities/evidence/EvidenceModal.svelte) integrado ao catálogo de atividades (`TherapistActivitiesTab`, `ActivityCategoryCard`, `ActivityCard`), ao banco do terapeuta (`TherapistActivityBankTab`, `BankActivityCard`) e ao seletor de diretriz EBP no `ActivityEditorModal.svelte`.
+  - Atualizada migração incremental em `seedActivitiesIfNeeded()` (`db.ts`) para inserir novas atividades e enriquecer registros built-in com `evidenceId` preservando edições locais.
 - **v5.4.0 (Banco Extenso de Atividades & Editor Completo do Terapeuta):**
   - Refatorado currículo estático para persistência reativa no `Dexie.js v2` (`activities.repository.ts`, `activity-bank.store.ts`) e backup unificado (`backup.service.ts`).
   - Criado banco inicial extenso com 25 atividades (~96 questões) organizadas em 5 categorias modulares (`dyscalculia`, `literacy`, `visual_perception`, `social_emotions`, `daily_logic`).

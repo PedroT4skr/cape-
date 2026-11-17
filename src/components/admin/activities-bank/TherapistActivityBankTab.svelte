@@ -13,7 +13,10 @@
   import { startActivity } from '../../../stores/activity.store'
   import BankActivityCard from './BankActivityCard.svelte'
   import ActivityEditorModal from './ActivityEditorModal.svelte'
-  import { Plus, Search, CheckSquare, Square, Sparkles } from '@lucide/svelte'
+  import EvidenceModal from '../../activities/evidence/EvidenceModal.svelte'
+  import { resolveActivityEvidence } from '../../../constants/curriculum/evidence-references.constants'
+  import type { ScientificReference } from '../../../types/activity.types'
+  import { Plus, Search, CheckSquare, Square, Sparkles, BookOpen } from '@lucide/svelte'
 
   type CategoryFilter = 'all' | ActivityCategoryId
   type StatusFilter = 'all' | 'enabled' | 'hidden' | 'custom'
@@ -24,6 +27,22 @@
 
   let isEditorOpen = $state(false)
   let editingActivity = $state<ActivityDefinition | null>(null)
+
+  let isEvidenceOpen = $state(false)
+  let activeEvidenceRef = $state<ScientificReference | null>(null)
+  let evidenceContextTitle = $state('')
+
+  function openActivityEvidence(act: ActivityDefinition) {
+    activeEvidenceRef = resolveActivityEvidence(act.evidenceId, act.categoryId)
+    evidenceContextTitle = act.title
+    isEvidenceOpen = true
+  }
+
+  function openAllScientificDocs() {
+    activeEvidenceRef = null
+    evidenceContextTitle = ''
+    isEvidenceOpen = true
+  }
 
   let filteredActivities = $derived.by(() => {
     const query = searchQuery.trim().toLowerCase()
@@ -91,6 +110,10 @@
     </div>
 
     <div class="header-actions">
+      <button type="button" class="docs-btn" onclick={openAllScientificDocs} title="Ver estudos científicos e diretrizes oficiais">
+        <BookOpen size={16} />
+        <span>Estudos & Diretrizes</span>
+      </button>
       <button type="button" class="batch-btn" onclick={() => setAllEnabledInBank(true)} title="Ativar todas as atividades para o aluno">
         <CheckSquare size={16} />
         <span>Ativar Todas</span>
@@ -177,6 +200,7 @@
           onDuplicate={handleDuplicate}
           onPlay={handlePlay}
           onDeleteOrRestore={handleDeleteOrRestore}
+          onShowEvidence={openActivityEvidence}
         />
       {/each}
     </div>
@@ -187,6 +211,13 @@
   isOpen={isEditorOpen}
   {editingActivity}
   onClose={() => (isEditorOpen = false)}
+/>
+
+<EvidenceModal
+  isOpen={isEvidenceOpen}
+  reference={activeEvidenceRef}
+  contextTitle={evidenceContextTitle}
+  onClose={() => (isEvidenceOpen = false)}
 />
 
 <style>
@@ -260,6 +291,24 @@
   .batch-btn:hover {
     background: #F1F5F9;
     color: #0F172A;
+  }
+
+  .docs-btn {
+    background: #ECFDF5;
+    border: 1.5px solid #A7F3D0;
+    color: #047857;
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 0.8rem;
+    font-weight: 850;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+
+  .docs-btn:hover {
+    background: #D1FAE5;
   }
 
   .create-btn {

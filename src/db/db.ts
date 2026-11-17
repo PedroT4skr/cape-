@@ -2,7 +2,7 @@ import Dexie, { type EntityTable } from 'dexie'
 import type { Board, Cell } from '../types/board.types'
 import type { ActivityDefinition } from '../types/activity.types'
 import { INITIAL_BOARDS, INITIAL_CELLS } from '../constants/seed-boards.constants'
-import { INITIAL_ACTIVITY_BANK } from '../constants/curriculum/activity-bank.seed'
+import { BUILT_IN_ACTIVITY_MAP, INITIAL_ACTIVITY_BANK } from '../constants/curriculum/activity-bank.seed'
 
 export interface MediaCacheItem {
   id: string
@@ -58,11 +58,29 @@ export class CapeDatabase extends Dexie {
 
   async seedActivitiesIfNeeded(): Promise<void> {
     const existingActivities = await this.activities.toArray()
-    const existingIds = new Set(existingActivities.map((a) => a.id))
-    const missingBuiltIns = INITIAL_ACTIVITY_BANK.filter((a) => !existingIds.has(a.id))
+    const existingById = new Map(existingActivities.map((a) => [a.id, a]))
 
-    if (missingBuiltIns.length > 0) {
-      await this.activities.bulkPut(missingBuiltIns.map((a) => structuredClone(a)))
+    const missingBuiltIns = INITIAL_ACTIVITY_BANK.filter((a) => !existingById.has(a.id))
+    const enrichExisting: ActivityDefinition[] = []
+
+    for (const existing of existingActivities) {
+      const seed = BUILT_IN_ACTIVITY_MAP[existing.id]
+      if (existing.isBuiltIn && seed && !existing.evidenceId) {
+        enrichExisting.push({
+          ...existing,
+          evidenceId: seed.evidenceId,
+          methodology: existing.methodology || seed.methodology
+        })
+      }
+    }
+
+    const toPut = [
+      ...missingBuiltIns.map((a) => JSON.parse(JSON.stringify(a)) as ActivityDefinition),
+      ...enrichExisting.map((a) => JSON.parse(JSON.stringify(a)) as ActivityDefinition)
+    ]
+
+    if (toPut.length > 0) {
+      await this.activities.bulkPut(toPut)
     }
   }
 

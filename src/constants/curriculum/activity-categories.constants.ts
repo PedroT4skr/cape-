@@ -7,7 +7,8 @@ export const BASE_ACTIVITY_CATEGORIES: Omit<ActivityCategory, 'countLabel'>[] = 
     subtitle: 'Subitização, contagem ampliada, adição pictórica CPA e grandeza',
     emoji: '🔢',
     color: '#2563EB',
-    isAvailable: true
+    isAvailable: true,
+    defaultEvidenceId: 'ev_dyscalculia_cpa'
   },
   {
     id: 'literacy',
@@ -15,7 +16,8 @@ export const BASE_ACTIVITY_CATEGORIES: Omit<ActivityCategory, 'countLabel'>[] = 
     subtitle: 'Letra inicial, segmentação silábica e pareamento imagem-palavra',
     emoji: '🔤',
     color: '#16A34A',
-    isAvailable: true
+    isAvailable: true,
+    defaultEvidenceId: 'ev_literacy_nrp'
   },
   {
     id: 'visual_perception',
@@ -23,7 +25,8 @@ export const BASE_ACTIVITY_CATEGORIES: Omit<ActivityCategory, 'countLabel'>[] = 
     subtitle: 'Cores, formas geométricas e sequências de rotina PECS',
     emoji: '🧩',
     color: '#9333EA',
-    isAvailable: true
+    isAvailable: true,
+    defaultEvidenceId: 'ev_visual_ncaep'
   },
   {
     id: 'social_emotions',
@@ -31,7 +34,8 @@ export const BASE_ACTIVITY_CATEGORIES: Omit<ActivityCategory, 'countLabel'>[] = 
     subtitle: 'Reconhecimento emocional, empatia, boas maneiras e sentidos',
     emoji: '💛',
     color: '#EC4899',
-    isAvailable: true
+    isAvailable: true,
+    defaultEvidenceId: 'ev_emotions_casel'
   },
   {
     id: 'daily_logic',
@@ -39,7 +43,8 @@ export const BASE_ACTIVITY_CATEGORIES: Omit<ActivityCategory, 'countLabel'>[] = 
     subtitle: 'Associações funcionais, segurança, ambientes, clima e autonomia',
     emoji: '🧠',
     color: '#EA580C',
-    isAvailable: true
+    isAvailable: true,
+    defaultEvidenceId: 'ev_daily_task_analysis'
   }
 ]
 

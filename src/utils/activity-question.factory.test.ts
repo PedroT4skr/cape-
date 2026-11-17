@@ -8,6 +8,9 @@ import {
   cloneActivityAsCustom,
   validateActivityDefinition
 } from './activity-question.factory'
+import { INITIAL_ACTIVITY_BANK } from '../constants/curriculum/activity-bank.seed'
+import { BASE_ACTIVITY_CATEGORIES } from '../constants/curriculum/activity-categories.constants'
+import { EVIDENCE_MAP, resolveActivityEvidence } from '../constants/curriculum/evidence-references.constants'
 
 describe('Activity Question Factory & Validation', () => {
   it('generates valid smart numeric options containing the exact target', () => {
@@ -61,5 +64,27 @@ describe('Activity Question Factory & Validation', () => {
     const noCorrect = createDefaultActivityDraft('daily_logic')
     noCorrect.questions[0].options.forEach((o) => (o.isCorrect = false))
     expect(validateActivityDefinition(noCorrect)).not.toBeNull()
+  })
+
+  it('provides 50 valid built-in activities (10 per category) backed by verified evidence references', () => {
+    expect(BASE_ACTIVITY_CATEGORIES).toHaveLength(5)
+    expect(INITIAL_ACTIVITY_BANK).toHaveLength(50)
+
+    for (const cat of BASE_ACTIVITY_CATEGORIES) {
+      const catActs = INITIAL_ACTIVITY_BANK.filter((a) => a.categoryId === cat.id)
+      expect(catActs).toHaveLength(10)
+    }
+
+    const ids = new Set<string>()
+    for (const act of INITIAL_ACTIVITY_BANK) {
+      expect(ids.has(act.id)).toBe(false)
+      ids.add(act.id)
+      expect(validateActivityDefinition(act)).toBeNull()
+      expect(act.evidenceId).toBeTruthy()
+      expect(EVIDENCE_MAP[act.evidenceId!]).toBeDefined()
+      const ref = resolveActivityEvidence(act.evidenceId, act.categoryId)
+      expect(ref.docUrl).toMatch(/^https:\/\//)
+      expect(ref.citation.length).toBeGreaterThan(15)
+    }
   })
 })
