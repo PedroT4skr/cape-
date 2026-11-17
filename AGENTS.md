@@ -5,7 +5,7 @@
 > 1. **Comunicação Alternativa e Ampliada (CAA):** Pranchas de pictogramas, chave de Fitzgerald e voz neural.  
 > 2. **Atividades Cognitivas:** Alfabetização, percepção visual e apoio à discalculia.  
 > 3. **Quiz Matemático TDAH:** Cálculo rápido gamificado em 3 níveis com cronômetro sem bloqueio e penalidade positiva.  
-> **Versão:** 5.3.0 (Otimização Completa de Responsividade Mobile em Toda a Suíte CAPE)
+> **Versão:** 5.3.3 (Modularização e Correção de Disposição/Responsividade dos Cards nas Atividades & Pranchas)
 
 ---
 
@@ -74,10 +74,27 @@
 - [`admin.store.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/stores/admin.store.ts): Modo terapeuta e validação reativa com PIN dinâmico.
 - [`quiz.store.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/stores/quiz.store.ts): Máquina de estados reativa do Quiz TDAH, cronômetro e ranking.
 
+### Camada de Atividades Cognitivas & Player Modular (`src/components/activities/`)
+- [`DyscalculiaPlayer.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/activities/DyscalculiaPlayer.svelte): Orquestrador responsivo do player de atividades (`margin: auto` + rolagem segura na área de palco sem cortes verticais).
+- [`player/PlayerHeader.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/activities/player/PlayerHeader.svelte): Barra superior com sair, progresso e repetição em áudio.
+- [`player/PlayerOptions.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/activities/player/PlayerOptions.svelte): Botões táteis em grade de largura igualitária (`minmax(0, 1fr)`) com quebra limpa de múltiplos emojis no hint.
+- [`ActivityQuestionView.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/activities/ActivityQuestionView.svelte): Roteador enxuto entre os cenários concretos.
+- [`dyscalculia/CountStage.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/activities/dyscalculia/CountStage.svelte): Nível 1 (Contagem 1-a-1) com densidade adaptativa (`low`/`medium`/`high`), moldura `aspect-ratio` e dimensionamento `min(vw, dvh)` mantendo todos os cards dentro da borda verde.
+- [`dyscalculia/DualGroupStage.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/activities/dyscalculia/DualGroupStage.svelte): Componente compartilhado parametrizado para Adição (`➕`) e Comparação (`VS`), mantendo Esquerda/Direita preservadas, tiles enquadrados e escala proporcional à quantidade de itens.
+- [`LiteracyQuestionView.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/activities/LiteracyQuestionView.svelte): Palco de alfabetização com escala proporcional à viewport (`min(vw, dvh)`).
+- [`VisualPerceptionQuestionView.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/activities/VisualPerceptionQuestionView.svelte): Roteador enxuto entre pareamento e sequência de rotina.
+- [`visual/ModelMatchStage.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/activities/visual/ModelMatchStage.svelte): Cartão modelo com espaço superior para badge sem cortes.
+- [`visual/RoutineSequenceStage.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/activities/visual/RoutineSequenceStage.svelte): Passos de rotina flexíveis (`flex: 1 1 0`) sem estouro horizontal e badge multi-linha.
+
 ---
 
 ## 3. Histórico de Versões
 
+- **v5.3.3 (Correção de Disposição, Enquadramento e Responsividade nas Atividades & Pranchas):**
+  - Modularizados `DyscalculiaPlayer.svelte`, `ActivityQuestionView.svelte` e `VisualPerceptionQuestionView.svelte` em subcomponentes pequenos e coesos (`CountStage`, `DualGroupStage`, `ModelMatchStage`, `RoutineSequenceStage`, `PlayerHeader`, `PlayerOptions`).
+  - Removidos limites rígidos `max-height: 46vh/48vh/50vh` que faziam cards escaparem pelas bordas e serem cortados por `overflow: hidden`.
+  - Adicionado dimensionamento por densidade (`low` / `medium` / `high` conforme quantidade de figuras) + escala `min(vw, dvh)` + molduras com `aspect-ratio` / `overflow: hidden` para conter todas as imagens dentro dos cards mesmo com muitos itens na tela.
+  - Preservada disposição horizontal Esquerda vs Direita na Comparação (`DualGroupStage`), ajustados grids de opções em `PlayerOptions` (largura igualitária sem corte de emojis), `TherapistActivitiesTab` (grid de 3/2/1 colunas com scroll natural) e `BoardGrid`/`BoardCell`/`IconRenderer` (`minmax(0, 1fr)` e contenção de ícones).
 - **v5.3.2 (Redirecionamento ao Painel de Sistema & Ajustes a partir do Hub):**
   - Corrigida a precedência de renderização no [`App.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/App.svelte) para abrir o painel do terapeuta (`$isAdminDashboardOpen`) mesmo quando na tela do Hub Portal.
   - Atualizado [`openAdminLock`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/stores/admin.store.ts) para aceitar aba inicial (`boards` | `system`) e rota de retorno (`hub` | `board`).

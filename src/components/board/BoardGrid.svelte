@@ -23,7 +23,7 @@
   {:else}
     <div
       class="board-grid"
-      style="grid-template-columns: repeat({cols}, 1fr); grid-template-rows: repeat({rows}, 1fr);"
+      style="grid-template-columns: repeat({cols}, minmax(0, 1fr)); grid-template-rows: repeat({rows}, minmax(0, 1fr));"
     >
       {#each $boardCells as cell (cell.id)}
         <div class="cell-wrapper">
@@ -58,6 +58,8 @@
     display: flex;
     width: 100%;
     height: 100%;
+    min-width: 0;
+    min-height: 0;
   }
 
   .grid-loading,

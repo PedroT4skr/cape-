@@ -52,25 +52,28 @@
     width: 100%;
     height: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 16px;
     background: #F8FAFC;
+    box-sizing: border-box;
   }
 
   .celebration-card {
+    margin: auto;
     background: #FFFFFF;
     border: 3px solid #E2E8F0;
     border-radius: 24px;
-    padding: 32px 24px;
+    padding: 28px 22px;
     max-width: 520px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 16px;
+    gap: 14px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
   }
 
   .trophy-badge {
@@ -155,5 +158,31 @@
   .exit-btn {
     background: #0F172A;
     color: #FFFFFF;
+  }
+
+  @media (max-width: 640px), (max-height: 580px) {
+    .celebration-card {
+      padding: 18px 14px;
+      gap: 10px;
+      border-radius: 18px;
+    }
+
+    .trophy-badge {
+      width: 68px;
+      height: 68px;
+    }
+
+    .celebration-title {
+      font-size: 1.25rem;
+    }
+
+    .celebration-subtitle {
+      font-size: 0.88rem;
+    }
+
+    .action-btn {
+      height: 46px;
+      font-size: 0.92rem;
+    }
   }
 </style>

@@ -89,7 +89,10 @@
     position: relative;
     width: 100%;
     height: 100%;
+    min-width: 0;
     min-height: 0;
+    overflow: hidden;
+    box-sizing: border-box;
     border-radius: 20px;
     border: 4.5px solid;
     display: flex;
@@ -131,10 +134,11 @@
     justify-content: center;
     width: 100%;
     min-height: 0;
+    overflow: hidden;
   }
 
   .cell-emoji {
-    font-size: clamp(3.6rem, 7.8vw, 6.4rem);
+    font-size: clamp(2.2rem, min(7.2vw, 10dvh), 6rem);
     line-height: 1;
     display: flex;
     align-items: center;
@@ -145,7 +149,7 @@
   }
 
   .cell-label {
-    font-size: clamp(1.35rem, 2.5vw, 2.2rem);
+    font-size: clamp(0.95rem, min(2.3vw, 2.8dvh), 2rem);
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 0.8px;
@@ -153,6 +157,7 @@
     line-height: 1.1;
     margin-top: 4px;
     width: 100%;
+    box-sizing: border-box;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

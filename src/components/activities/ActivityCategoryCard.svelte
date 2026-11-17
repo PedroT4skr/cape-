@@ -73,7 +73,9 @@
     box-sizing: border-box;
     cursor: pointer;
     user-select: none;
-    min-height: 250px;
+    min-height: 220px;
+    min-width: 0;
+    overflow: hidden;
   }
 
   .category-card:hover:not(.is-disabled) {

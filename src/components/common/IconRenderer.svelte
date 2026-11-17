@@ -109,7 +109,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
+    flex-shrink: 1;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
     pointer-events: none;
   }
 
@@ -123,6 +126,8 @@
   .icon-image {
     width: 100%;
     height: 100%;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
     border-radius: 4px;
   }
@@ -133,5 +138,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+  }
+
+  :global(.icon-svg-wrapper svg) {
+    max-width: 100%;
+    max-height: 100%;
   }
 </style>

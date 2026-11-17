@@ -63,8 +63,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100%;
-    padding: 6px 12px;
+    padding: 4px 8px;
     box-sizing: border-box;
   }
 
@@ -73,10 +72,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: clamp(14px, 2.5vw, 24px);
+    gap: clamp(10px, min(2.2vw, 2.4dvh), 22px);
     width: 100%;
     max-width: 960px;
-    max-height: 50vh;
     box-sizing: border-box;
   }
 
@@ -84,48 +82,56 @@
   .picture-card {
     background: #FFFFFF;
     border: 4px solid #86EFAC;
-    border-radius: 32px;
-    padding: clamp(16px, 2.5vw, 32px) clamp(28px, 4.5vw, 54px);
+    border-radius: 28px;
+    padding: clamp(12px, min(2.2vw, 2.4dvh), 28px) clamp(22px, 4vw, 48px);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 10px 0 #22C55E, 0 14px 28px rgba(34, 197, 94, 0.15);
+    box-shadow: 0 8px 0 #22C55E, 0 12px 24px rgba(34, 197, 94, 0.15);
     transition: transform 0.2s ease;
+    overflow: hidden;
+    margin-bottom: 8px;
+    box-sizing: border-box;
   }
 
   .picture-card.enlarged {
     border-color: #FDBA74;
-    box-shadow: 0 10px 0 #EA580C, 0 14px 28px rgba(234, 88, 12, 0.15);
-    padding: clamp(20px, 3.2vw, 38px) clamp(36px, 5.5vw, 68px);
+    box-shadow: 0 8px 0 #EA580C, 0 12px 24px rgba(234, 88, 12, 0.15);
+    padding: clamp(14px, min(2.8vw, 3dvh), 34px) clamp(28px, 5vw, 58px);
   }
 
   .giant-emoji {
-    font-size: clamp(5.2rem, 11vw, 8.5rem);
+    font-size: clamp(3rem, min(10vw, 13.5dvh), 7.5rem);
     line-height: 1;
     filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.16));
     display: inline-block;
+    user-select: none;
   }
 
   /* Bloco de Letra Faltante (Nível 1) */
   .word-slot-card {
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
     background: #F0FDF4;
     border: 3.5px solid #4ADE80;
-    border-radius: 24px;
-    padding: 10px 28px;
-    box-shadow: 0 6px 18px rgba(34, 197, 94, 0.12);
+    border-radius: 22px;
+    padding: clamp(6px, 1.2dvh, 10px) clamp(14px, 3vw, 26px);
+    box-shadow: 0 6px 16px rgba(34, 197, 94, 0.12);
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .slot-letter-missing {
-    width: clamp(52px, 7vw, 70px);
-    height: clamp(52px, 7vw, 70px);
+    width: clamp(42px, min(6.5vw, 7.5dvh), 64px);
+    height: clamp(42px, min(6.5vw, 7.5dvh), 64px);
     background: #FEF08A;
     border: 3.5px solid #EAB308;
     color: #854D0E;
-    border-radius: 18px;
-    font-size: clamp(2rem, 4vw, 2.8rem);
+    border-radius: 16px;
+    font-size: clamp(1.6rem, min(3.6vw, 4.4dvh), 2.5rem);
     font-weight: 950;
     display: flex;
     align-items: center;
@@ -140,10 +146,10 @@
   }
 
   .slot-rest-of-word {
-    font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+    font-size: clamp(1.6rem, min(4.2vw, 5.2dvh), 3rem);
     font-weight: 950;
     color: #14532D;
-    letter-spacing: clamp(6px, 1.2vw, 12px);
+    letter-spacing: clamp(4px, 1vw, 10px);
     text-transform: uppercase;
   }
 
@@ -151,40 +157,44 @@
   .syllables-chain {
     display: flex;
     align-items: center;
-    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: clamp(8px, 1.8vw, 14px);
+    max-width: 100%;
   }
 
   .syllable-slot {
-    min-width: clamp(80px, 12vw, 120px);
-    height: clamp(64px, 9vw, 86px);
-    border-radius: 20px;
+    min-width: clamp(64px, 11vw, 110px);
+    height: clamp(50px, min(8vw, 9.5dvh), 78px);
+    border-radius: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 950;
-    font-size: clamp(2rem, 4.2vw, 3rem);
+    font-size: clamp(1.5rem, min(3.8vw, 4.8dvh), 2.8rem);
     text-transform: uppercase;
     box-sizing: border-box;
-    padding: 6px 16px;
+    padding: 4px 14px;
+    margin-bottom: 5px;
   }
 
   .syllable-slot.missing-slot {
     background: #FEF08A;
-    border: 4px solid #EAB308;
+    border: 3.5px solid #EAB308;
     color: #854D0E;
-    box-shadow: 0 6px 0 #CA8A04, 0 10px 20px rgba(234, 179, 8, 0.25);
+    box-shadow: 0 5px 0 #CA8A04, 0 8px 18px rgba(234, 179, 8, 0.25);
     animation: pulseSlot 1.5s infinite ease-in-out;
   }
 
   .syllable-slot.present-slot {
     background: #EFF6FF;
-    border: 4px solid #3B82F6;
+    border: 3.5px solid #3B82F6;
     color: #1E40AF;
-    box-shadow: 0 6px 0 #2563EB, 0 10px 20px rgba(37, 99, 235, 0.15);
+    box-shadow: 0 5px 0 #2563EB, 0 8px 18px rgba(37, 99, 235, 0.15);
   }
 
   .syllable-hyphen {
-    font-size: 2rem;
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
     font-weight: 900;
     color: #94A3B8;
   }
@@ -194,12 +204,15 @@
     background: #FFF7ED;
     border: 3px solid #F97316;
     color: #C2410C;
-    font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+    font-size: clamp(0.76rem, 1.6vw, 1.15rem);
     font-weight: 950;
-    padding: 8px 22px;
-    border-radius: 20px;
+    padding: clamp(5px, 1dvh, 8px) clamp(12px, 2.2vw, 22px);
+    border-radius: 18px;
     letter-spacing: 0.5px;
     box-shadow: 0 4px 12px rgba(249, 115, 22, 0.12);
+    text-align: center;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   @media (max-width: 640px) {
@@ -207,31 +220,34 @@
       padding: 12px 20px;
       border-radius: 20px;
       border-width: 3px;
+      box-shadow: 0 6px 0 #22C55E, 0 8px 16px rgba(34, 197, 94, 0.14);
+      margin-bottom: 6px;
     }
 
     .picture-card.enlarged {
       padding: 14px 24px;
+      box-shadow: 0 6px 0 #EA580C, 0 8px 16px rgba(234, 88, 12, 0.14);
     }
 
     .giant-emoji {
-      font-size: clamp(3.2rem, 11vw, 4.6rem);
+      font-size: clamp(2.8rem, 12vw, 4.4rem);
     }
 
     .word-slot-card {
-      padding: 8px 16px;
+      padding: 7px 14px;
       border-radius: 16px;
       gap: 8px;
     }
 
     .slot-letter-missing {
-      width: 44px;
-      height: 44px;
-      font-size: 1.8rem;
+      width: 40px;
+      height: 40px;
+      font-size: 1.6rem;
       border-radius: 12px;
     }
 
     .slot-rest-of-word {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       letter-spacing: 4px;
     }
 
@@ -240,16 +256,16 @@
     }
 
     .syllable-slot {
-      min-width: 58px;
-      height: 50px;
-      font-size: 1.5rem;
+      min-width: 54px;
+      height: 46px;
+      font-size: 1.4rem;
       border-radius: 14px;
       border-width: 2.5px;
       padding: 4px 10px;
     }
 
     .syllable-hyphen {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
     }
 
     .match-hint-badge {
