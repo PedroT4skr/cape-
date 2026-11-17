@@ -39,19 +39,24 @@
         </div>
         <div class="syllable-hyphen">―</div>
         <div class="syllable-slot present-slot">
-          <span>{question.targetItem.word.slice(2)}</span>
+          <span>
+            {question.targetItem.highlight &&
+            question.targetItem.word.toUpperCase().startsWith(question.targetItem.highlight.toUpperCase())
+              ? question.targetItem.word.slice(question.targetItem.highlight.length)
+              : question.targetItem.word.slice(2)}
+          </span>
         </div>
       </div>
     </div>
 
   {:else if question.type === 'word_match' && question.targetItem}
-    <!-- Nível 3: Pareamento Imagem-Palavra TEACCH / PECS -->
+    <!-- Nível 3: Pareamento Imagem-Palavra / Emoções / Vocabulário -->
     <div class="literacy-stage word-stage">
       <div class="picture-card enlarged">
         <span class="giant-emoji">{question.targetItem.emoji}</span>
       </div>
       <div class="match-hint-badge">
-        <span>ESCOLHA A PALAVRA CORRETA ABAIXO</span>
+        <span>{question.targetItem.hintBadge || 'ESCOLHA A PALAVRA CORRETA ABAIXO'}</span>
       </div>
     </div>
   {/if}

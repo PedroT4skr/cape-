@@ -1,9 +1,9 @@
 <script lang="ts">
   import {
-    ACTIVITY_CATEGORIES,
-    getLevelsByCategoryId,
-    getCategoryById
-  } from '../../constants/activity-curriculum.constants'
+    activityBank,
+    studentCategories,
+    getEnabledByCategory
+  } from '../../stores/activity-bank.store'
   import {
     selectedCategoryId,
     clearSelectedCategory
@@ -14,11 +14,15 @@
   import { ArrowLeft } from '@lucide/svelte'
 
   let activeCategory = $derived(
-    $selectedCategoryId ? getCategoryById($selectedCategoryId) : null
+    $selectedCategoryId
+      ? $studentCategories.find((c) => c.id === $selectedCategoryId) ?? null
+      : null
   )
 
   let activeLevels = $derived(
-    $selectedCategoryId ? getLevelsByCategoryId($selectedCategoryId) : []
+    $selectedCategoryId
+      ? getEnabledByCategory($activityBank, $selectedCategoryId)
+      : []
   )
 
   function handleBack() {
@@ -63,11 +67,20 @@
       </p>
     </div>
 
-    <div class="categories-grid">
-      {#each ACTIVITY_CATEGORIES as category (category.id)}
-        <ActivityCategoryCard {category} />
-      {/each}
-    </div>
+    {#if $studentCategories.length === 0}
+      <div class="empty-catalog">
+        <p class="empty-catalog-title">Nenhuma atividade habilitada para o aluno.</p>
+        <p class="empty-catalog-sub">
+          Acesse <strong>Painel → Banco de Atividades</strong> para selecionar ou criar exercícios.
+        </p>
+      </div>
+    {:else}
+      <div class="categories-grid">
+        {#each $studentCategories as category (category.id)}
+          <ActivityCategoryCard {category} />
+        {/each}
+      </div>
+    {/if}
   {/if}
 </div>
 
@@ -225,5 +238,29 @@
       font-size: 0.72rem;
       padding: 3px 8px;
     }
+  }
+
+  .empty-catalog {
+    background: #FFFFFF;
+    border: 2px dashed #CBD5E1;
+    border-radius: 16px;
+    padding: 32px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .empty-catalog-title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: #0F172A;
+  }
+
+  .empty-catalog-sub {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #64748B;
   }
 </style>

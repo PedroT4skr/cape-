@@ -1,6 +1,7 @@
 <script lang="ts">
   import { downloadBackupJson, importBackupData } from '../../services/backup.service'
   import { currentBoard, loadBoard } from '../../stores/board.store'
+  import { loadActivityBank } from '../../stores/activity-bank.store'
   import { Download, Upload, CheckCircle2, AlertCircle } from '@lucide/svelte'
 
   let fileInput: HTMLInputElement | null = $state(null)
@@ -43,8 +44,12 @@
       if ($currentBoard) {
         await loadBoard($currentBoard.id)
       }
+      await loadActivityBank()
 
-      statusMessage = `Sucesso! Restauradas ${res.boardsCount} pranchas e ${res.cellsCount} cartões.`
+      statusMessage =
+        res.activitiesCount > 0
+          ? `Sucesso! Restauradas ${res.boardsCount} pranchas, ${res.cellsCount} cartões e ${res.activitiesCount} atividades.`
+          : `Sucesso! Restauradas ${res.boardsCount} pranchas e ${res.cellsCount} cartões.`
       isError = false
     } catch (err: any) {
       statusMessage = 'Erro ao importar backup: ' + (err.message || 'Arquivo inválido')

@@ -4,9 +4,18 @@
     modelEmoji: string
     modelLabel: string
     modelColor?: string
+    badgeText?: string
+    guidanceText?: string
   }
 
-  const { type, modelEmoji, modelLabel, modelColor }: Props = $props()
+  const {
+    type,
+    modelEmoji,
+    modelLabel,
+    modelColor,
+    badgeText = 'MODELO DE REFERÊNCIA',
+    guidanceText = 'ENCONTRE A OPÇÃO IGUAL AO MODELO ABAIXO'
+  }: Props = $props()
 </script>
 
 <div class="model-stage">
@@ -15,7 +24,7 @@
     style={modelColor ? `--model-color: ${modelColor}` : ''}
   >
     <div class="model-badge">
-      <span>MODELO DE REFERÊNCIA</span>
+      <span>{badgeText}</span>
     </div>
     <div class="emoji-frame">
       <span class="giant-emoji">{modelEmoji}</span>
@@ -24,7 +33,7 @@
   </div>
 
   <div class="guidance-banner">
-    <span>ENCONTRE A OPÇÃO IGUAL AO MODELO ABAIXO</span>
+    <span>{guidanceText}</span>
   </div>
 </div>
 

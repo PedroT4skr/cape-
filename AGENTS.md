@@ -5,7 +5,7 @@
 > 1. **Comunicação Alternativa e Ampliada (CAA):** Pranchas de pictogramas, chave de Fitzgerald e voz neural.  
 > 2. **Atividades Cognitivas:** Alfabetização, percepção visual e apoio à discalculia.  
 > 3. **Quiz Matemático TDAH:** Cálculo rápido gamificado em 3 níveis com cronômetro sem bloqueio e penalidade positiva.  
-> **Versão:** 5.3.3 (Modularização e Correção de Disposição/Responsividade dos Cards nas Atividades & Pranchas)
+> **Versão:** 5.4.0 (Banco Extenso de Atividades Psicopedagógicas, Curadoria do Terapeuta e Editor Completo)
 
 ---
 
@@ -24,9 +24,10 @@
    - Chave de Fitzgerald semântica para categorização visual das células.
    - Barra de frases com síntese de voz (Edge-TTS via WebSocket e fallback Web Speech).
    - Prevenção de toques involuntários com throttle de 300ms.
-6. **Módulo 2: Atividades Cognitivas:**
-   - Currículos modulares para Alfabetização Fonológica, Percepção Visual e Discalculia (Método CPA).
-   - Telas dedicadas e feedback de reforço positivo com comemorações.
+6. **Módulo 2: Atividades Cognitivas & Banco Psicopedagógico:**
+   - **5 Categorias Modulares (25 atividades iniciais):** Discalculia, Alfabetização, Percepção Visual, Emoções & Social, e Lógica & Vida Diária.
+   - **Persistência Offline-First (`Dexie.js v2`):** Tabela `activities` populada automaticamente com preservação de customizações e integrada ao backup JSON.
+   - **Curadoria e Edição do Terapeuta (`BANCO DE ATIVIDADES`):** Busca, filtro por área/origem, ativação seletiva (`Ativa para o Aluno`), duplicação como modelo, criação de novas atividades e editor completo de questões com geração automática de alternativas.
 7. **Módulo 3: Quiz Matemático Adaptado para TDAH:**
    - **3 Dificuldades Modulares:** Iniciante (soma/subtração - 45s), Intermediário (4 operações mistas e ordem - 60s) e Difícil (equações de 1º grau, %, potências, PA e funções - 90s).
    - **Enunciado Acessível de Alto Contraste:** Tipografia ampliada com destaque colorido automático para números, operadores e palavras-chave no enunciado.
@@ -62,17 +63,35 @@
 - [`generators/intermediate.generator.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/domain/generators/intermediate.generator.ts): 4 operações e ordem das operações.
 - [`generators/advanced.generator.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/domain/generators/advanced.generator.ts): Equações, porcentagem, potências, P.A. e funções.
 
+### Camada de Persistência & Repositórios (`src/db/`)
+- [`db.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/db/db.ts): Banco IndexedDB (`Dexie v2`) com tabelas `boards`, `cells`, `mediaCache` e `activities`.
+- [`activities.repository.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/db/activities.repository.ts): CRUD completo de atividades, ativação individual/em lote, clonagem e restauração de padrão.
+
+### Camada de Currículo Modular (`src/constants/curriculum/`)
+- [`activity-categories.constants.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/activity-categories.constants.ts): Definições das 5 áreas psicopedagógicas.
+- [`dyscalculia.curriculum.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/dyscalculia.curriculum.ts), [`literacy.curriculum.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/literacy.curriculum.ts), [`visual.curriculum.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/visual.curriculum.ts), [`social-emotions.curriculum.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/social-emotions.curriculum.ts), [`daily-logic.curriculum.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/daily-logic.curriculum.ts): Banco inicial com 25 atividades curadas.
+- [`activity-bank.seed.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/constants/curriculum/activity-bank.seed.ts): Agregador de semente do banco inicial.
+
 ### Camada de Utilidades de Segurança (`src/utils/`)
 - [`pin.utils.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/utils/pin.utils.ts): Funções `getCurrentPin()`, `setCustomPin(newPin)`, `resetPinToDefault()`, `validatePin(inputPin)` e `generateMathChallenge()`.
 - [`pin.utils.test.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/utils/pin.utils.test.ts): Cobertura completa de testes unitários para ciclo de vida do PIN.
+- [`activity-question.factory.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/utils/activity-question.factory.ts): Templates de questões, geração automática de alternativas, clonagem e validação de integridade.
+- [`activity-question.factory.test.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/utils/activity-question.factory.test.ts): Testes unitários para geração, clonagem e validação.
 
 ### Camada de Gerenciamento de Estado (`src/stores/`)
 - [`navigation.store.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/stores/navigation.store.ts): Controla a visão ativa (`hub`, `board`, `activities`, `quiz`, `admin`).
 - [`board.store.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/stores/board.store.ts): Pranchas e navegação hierárquica.
 - [`sentence.store.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/stores/sentence.store.ts): Construção e vocalização de frases.
-- [`activity.store.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/stores/activity.store.ts): Sessões de exercícios didáticos.
+- [`activity-bank.store.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/stores/activity-bank.store.ts): Catálogo reativo, filtragem de atividades habilitadas para o aluno e operações CRUD no Dexie.
+- [`activity.store.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/stores/activity.store.ts): Sessões de exercícios didáticos carregadas dinamicamente do `$activityBank`.
 - [`admin.store.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/stores/admin.store.ts): Modo terapeuta e validação reativa com PIN dinâmico.
 - [`quiz.store.ts`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/stores/quiz.store.ts): Máquina de estados reativa do Quiz TDAH, cronômetro e ranking.
+
+### Camada do Banco & Editor do Terapeuta (`src/components/admin/activities-bank/`)
+- [`TherapistActivityBankTab.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/admin/activities-bank/TherapistActivityBankTab.svelte): Busca, filtros por categoria/status, seleção em lote e criação.
+- [`BankActivityCard.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/admin/activities-bank/BankActivityCard.svelte): Card com toggle "Ativa para o Aluno", aplicar, editar, duplicar e excluir/restaurar.
+- [`ActivityEditorModal.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/admin/activities-bank/ActivityEditorModal.svelte): Editor de metadados e lista reordenável de questões.
+- [`QuestionEditorPanel.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/admin/activities-bank/QuestionEditorPanel.svelte) & [`QuestionTemplateFields.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/admin/activities-bank/QuestionTemplateFields.svelte): Construtor por modelo de exercício e editor uniforme de alternativas.
 
 ### Camada de Atividades Cognitivas & Player Modular (`src/components/activities/`)
 - [`DyscalculiaPlayer.svelte`](file:///c:/Users/pedro/Downloads/CAPE%20PROJETO%20HACKATON/src/components/activities/DyscalculiaPlayer.svelte): Orquestrador responsivo do player de atividades (`margin: auto` + rolagem segura na área de palco sem cortes verticais).
@@ -90,6 +109,10 @@
 
 ## 3. Histórico de Versões
 
+- **v5.4.0 (Banco Extenso de Atividades & Editor Completo do Terapeuta):**
+  - Refatorado currículo estático para persistência reativa no `Dexie.js v2` (`activities.repository.ts`, `activity-bank.store.ts`) e backup unificado (`backup.service.ts`).
+  - Criado banco inicial extenso com 25 atividades (~96 questões) organizadas em 5 categorias modulares (`dyscalculia`, `literacy`, `visual_perception`, `social_emotions`, `daily_logic`).
+  - Adicionada aba `BANCO DE ATIVIDADES` em `TherapistDashboardPage.svelte` (com atalho protegido por PIN em `ActivitiesPage.svelte`) permitindo buscar, filtrar, selecionar para o aluno, aplicar imediatamente, duplicar, editar atividades/questões existentes e criar novas do zero.
 - **v5.3.3 (Correção de Disposição, Enquadramento e Responsividade nas Atividades & Pranchas):**
   - Modularizados `DyscalculiaPlayer.svelte`, `ActivityQuestionView.svelte` e `VisualPerceptionQuestionView.svelte` em subcomponentes pequenos e coesos (`CountStage`, `DualGroupStage`, `ModelMatchStage`, `RoutineSequenceStage`, `PlayerHeader`, `PlayerOptions`).
   - Removidos limites rígidos `max-height: 46vh/48vh/50vh` que faziam cards escaparem pelas bordas e serem cortados por `overflow: hidden`.

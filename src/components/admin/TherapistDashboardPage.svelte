@@ -3,7 +3,8 @@
   import { navigateTo } from '../../stores/navigation.store'
   import TherapistBoardsTab from './TherapistBoardsTab.svelte'
   import TherapistSystemTab from './TherapistSystemTab.svelte'
-  import { LayoutGrid, HardDrive, ArrowLeft } from '@lucide/svelte'
+  import TherapistActivityBankTab from './activities-bank/TherapistActivityBankTab.svelte'
+  import { LayoutGrid, HardDrive, ArrowLeft, Sparkles } from '@lucide/svelte'
 
   let activeTab = $state<AdminTab>($adminActiveTab)
 
@@ -15,6 +16,8 @@
     closeAdminDashboard()
     if ($adminReturnTarget === 'hub') {
       navigateTo('hub')
+    } else if ($adminReturnTarget === 'activities') {
+      navigateTo('activities')
     } else {
       navigateTo('board')
     }
@@ -46,6 +49,9 @@
         {#if $adminReturnTarget === 'hub'}
           <span class="back-label-full">VOLTAR À SUÍTE</span>
           <span class="back-label-short">SUÍTE</span>
+        {:else if $adminReturnTarget === 'activities'}
+          <span class="back-label-full">VOLTAR ÀS ATIVIDADES</span>
+          <span class="back-label-short">ATIVIDADES</span>
         {:else}
           <span class="back-label-full">VOLTAR À PRANCHA</span>
           <span class="back-label-short">VOLTAR</span>
@@ -57,14 +63,27 @@
   <!-- Barra de Abas Secundária de Ajustes -->
   <nav class="sub-navbar" aria-label="Navegação de Configurações">
     <button
+      class="sub-tab-btn {activeTab === 'activities' ? 'active' : ''}"
+      onclick={() => {
+        activeTab = 'activities'
+        adminActiveTab.set('activities')
+      }}
+    >
+      <Sparkles size={16} />
+      <span class="tab-label-full">BANCO DE ATIVIDADES</span>
+      <span class="tab-label-short">ATIVIDADES</span>
+    </button>
+
+    <button
       class="sub-tab-btn {activeTab === 'boards' ? 'active' : ''}"
       onclick={() => {
         activeTab = 'boards'
         adminActiveTab.set('boards')
       }}
     >
-      <LayoutGrid size={18} />
-      <span>PRANCHAS & GRADE</span>
+      <LayoutGrid size={16} />
+      <span class="tab-label-full">PRANCHAS & GRADE</span>
+      <span class="tab-label-short">PRANCHAS</span>
     </button>
 
     <button
@@ -74,14 +93,17 @@
         adminActiveTab.set('system')
       }}
     >
-      <HardDrive size={18} />
-      <span>SISTEMA & AJUSTES</span>
+      <HardDrive size={16} />
+      <span class="tab-label-full">SISTEMA & AJUSTES</span>
+      <span class="tab-label-short">SISTEMA</span>
     </button>
   </nav>
 
   <!-- Área Principal de Conteúdo (100% da Largura e Altura sem Margens Mortas) -->
   <main class="therapist-main-area">
-    {#if activeTab === 'boards'}
+    {#if activeTab === 'activities'}
+      <TherapistActivityBankTab />
+    {:else if activeTab === 'boards'}
       <TherapistBoardsTab />
     {:else if activeTab === 'system'}
       <TherapistSystemTab />
@@ -162,7 +184,8 @@
   }
 
   .short-title,
-  .back-label-short {
+  .back-label-short,
+  .tab-label-short {
     display: none;
   }
 
@@ -251,12 +274,14 @@
 
   @media (max-width: 640px) {
     .full-title,
-    .back-label-full {
+    .back-label-full,
+    .tab-label-full {
       display: none;
     }
 
     .short-title,
-    .back-label-short {
+    .back-label-short,
+    .tab-label-short {
       display: inline;
     }
 
@@ -289,21 +314,22 @@
     }
 
     .sub-navbar {
-      height: 44px;
-      padding: 4px 8px;
-      gap: 6px;
+      height: auto;
+      min-height: 44px;
+      padding: 4px 6px;
+      gap: 4px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       overflow-x: hidden;
     }
 
     .sub-tab-btn {
       width: 100%;
       justify-content: center;
-      padding: 4px 6px;
-      font-size: 0.74rem;
-      height: 34px;
-      gap: 5px;
+      padding: 4px 4px;
+      font-size: 0.7rem;
+      height: 36px;
+      gap: 4px;
     }
 
     .therapist-main-area {

@@ -1,8 +1,8 @@
 import { writable } from 'svelte/store'
 import { generateMathChallenge, validatePin, type MathChallenge } from '../utils/pin.utils'
 
-export type AdminTab = 'boards' | 'system'
-export type AdminReturnTarget = 'hub' | 'board'
+export type AdminTab = 'activities' | 'boards' | 'system'
+export type AdminReturnTarget = 'hub' | 'board' | 'activities'
 
 export const isPinModalOpen = writable<boolean>(false)
 export const isAdminDashboardOpen = writable<boolean>(false)

@@ -17,6 +17,8 @@
       modelEmoji={question.visualTarget.modelEmoji}
       modelLabel={question.visualTarget.modelLabel}
       modelColor={question.visualTarget.modelColor}
+      badgeText={question.visualTarget.badgeText}
+      guidanceText={question.visualTarget.guidanceText}
     />
   {:else if question.type === 'routine_sequence' && question.visualTarget?.sequenceSteps}
     <RoutineSequenceStage sequenceSteps={question.visualTarget.sequenceSteps} />

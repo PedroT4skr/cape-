@@ -5,17 +5,19 @@
   import BackupSettings from './BackupSettings.svelte'
   import { db } from '../../db/db'
   import { currentBoard, loadBoard } from '../../stores/board.store'
+  import { loadActivityBank } from '../../stores/activity-bank.store'
   import { RotateCcw, AlertTriangle } from '@lucide/svelte'
 
   async function handleResetDatabase() {
     const confirmReset = window.confirm(
-      'Tem certeza que deseja restaurar o vocabulário para o padrão original do CAPE?'
+      'Tem certeza que deseja restaurar pranchas, cartões e banco de atividades para o padrão original do CAPE?'
     )
     if (confirmReset) {
       await db.resetToDefaultSeed()
       if ($currentBoard) {
         await loadBoard($currentBoard.id)
       }
+      await loadActivityBank()
     }
   }
 </script>

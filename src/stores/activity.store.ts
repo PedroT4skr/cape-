@@ -1,6 +1,7 @@
 import { writable, get } from 'svelte/store'
-import type { ActivityCategoryId, ActivityLevelId, ActivityOption, ActivitySessionState, ActivityQuestion } from '../types/activity.types'
+import type { ActivityCategoryId, ActivityLevelId, ActivityOption, ActivitySessionState } from '../types/activity.types'
 import { ALL_QUESTIONS_BY_LEVEL } from '../constants/activity-curriculum.constants'
+import { activityBank } from './activity-bank.store'
 import { soundEffects } from '../services/sound-effects.service'
 import { speechService } from '../services/speech.service'
 import { isAdminDashboardOpen } from './admin.store'
@@ -42,7 +43,8 @@ const initialState: ActivitySessionState = {
 export const activitySession = writable<ActivitySessionState>(initialState)
 
 export function startActivity(levelId: ActivityLevelId): void {
-  const questions = ALL_QUESTIONS_BY_LEVEL[levelId] || []
+  const bankMatch = get(activityBank).find((a) => a.id === levelId)
+  const questions = bankMatch ? bankMatch.questions : (ALL_QUESTIONS_BY_LEVEL[levelId] || [])
   if (questions.length === 0) return
 
   activitySession.set({

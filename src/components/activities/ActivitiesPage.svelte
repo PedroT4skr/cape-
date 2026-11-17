@@ -1,7 +1,8 @@
 <script lang="ts">
   import { closeActivitiesPage } from '../../stores/activity.store'
+  import { openAdminLock } from '../../stores/admin.store'
   import TherapistActivitiesTab from '../admin/TherapistActivitiesTab.svelte'
-  import { ArrowLeft, Sparkles } from '@lucide/svelte'
+  import { ArrowLeft, Sparkles, Lock } from '@lucide/svelte'
 </script>
 
 <div class="activities-page-layout">
@@ -19,6 +20,16 @@
     </div>
 
     <div class="right-section">
+      <button
+        class="manage-bank-btn"
+        onclick={() => openAdminLock('activities', 'activities')}
+        aria-label="Gerenciar Banco de Atividades do Terapeuta"
+        title="Selecionar, editar ou criar atividades (PIN)"
+      >
+        <Lock size={16} strokeWidth={2.4} />
+        <span class="manage-label-full">GERENCIAR BANCO</span>
+      </button>
+
       <button class="back-board-btn" onclick={closeActivitiesPage} aria-label="Voltar para a prancha de comunicação">
         <ArrowLeft size={18} strokeWidth={2.4} />
         <span class="back-label-full">VOLTAR À PRANCHA</span>
@@ -112,6 +123,30 @@
     flex-shrink: 0;
   }
 
+  .manage-bank-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #1E293B;
+    color: #E2E8F0;
+    border: 2px solid #475569;
+    padding: 7px 14px;
+    border-radius: 10px;
+    font-size: 0.84rem;
+    font-weight: 900;
+    letter-spacing: 0.4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .manage-bank-btn:hover {
+    background: #334155;
+    color: #FFFFFF;
+    border-color: #64748B;
+  }
+
   .back-board-btn {
     display: inline-flex;
     align-items: center;
@@ -152,7 +187,8 @@
 
   @media (max-width: 640px) {
     .full-title,
-    .back-label-full {
+    .back-label-full,
+    .manage-label-full {
       display: none;
     }
 
@@ -189,6 +225,12 @@
 
     .right-section {
       flex-shrink: 0;
+      gap: 6px;
+    }
+
+    .manage-bank-btn {
+      padding: 6px 9px;
+      border-radius: 8px;
     }
 
     .back-board-btn {

@@ -10,6 +10,7 @@
   import DyscalculiaPlayer from './components/activities/DyscalculiaPlayer.svelte'
   import MathQuizView from './components/quiz/MathQuizView.svelte'
   import { initRootBoard } from './stores/board.store'
+  import { loadActivityBank } from './stores/activity-bank.store'
   import { requestPersistentStorage } from './db/storage.manager'
   import { isAdminDashboardOpen } from './stores/admin.store'
   import { isActivitiesPageOpen } from './stores/activity.store'
@@ -24,6 +25,8 @@
     cleanupAudioListener = initGlobalClickSound()
     // Inicializa a prancha raiz com o seed do CAPE
     await initRootBoard()
+    // Carrega e sincroniza o banco extensível de atividades no Dexie
+    await loadActivityBank()
     // Solicita persistência silenciosa no Android PWA
     await requestPersistentStorage()
   })

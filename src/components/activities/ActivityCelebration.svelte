@@ -41,7 +41,7 @@
 
       <button class="action-btn exit-btn" onclick={exitActivity}>
         <ArrowLeft size={22} />
-        <span>VOLTAR AO PAINEL DO TERAPEUTA</span>
+        <span>VOLTAR PARA ATIVIDADES</span>
       </button>
     </div>
   </div>
