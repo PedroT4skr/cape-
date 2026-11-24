@@ -136,8 +136,8 @@
   }
 
   .diff-label {
-    font-size: 1.1rem;
-    font-weight: 850;
+    font-size: 1.28rem;
+    font-weight: 900;
     color: #0F172A;
     margin: 0;
     letter-spacing: -0.01em;
@@ -148,28 +148,28 @@
   }
 
   .diff-subtitle {
-    font-size: 0.8rem;
-    color: #64748B;
-    line-height: 1.3;
-    font-weight: 500;
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.35;
+    font-weight: 600;
   }
 
   .diff-pills-row {
     display: flex;
     align-items: center;
-    gap: 0.45rem;
+    gap: 0.5rem;
   }
 
   .pill {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    font-size: 0.74rem;
-    font-weight: 800;
-    padding: 3px 8px;
+    gap: 5px;
+    font-size: 0.88rem;
+    font-weight: 850;
+    padding: 4px 10px;
     border-radius: 8px;
     background: #F1F5F9;
-    color: #475569;
+    color: #334155;
     border: 1px solid #E2E8F0;
   }
 

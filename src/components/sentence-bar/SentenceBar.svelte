@@ -80,9 +80,9 @@
   }
 
   .empty-text {
-    font-size: 1.15rem;
-    color: #64748B;
-    font-weight: 800;
+    font-size: 1.32rem;
+    color: #475569;
+    font-weight: 850;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     text-align: center;

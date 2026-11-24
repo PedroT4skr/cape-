@@ -70,8 +70,8 @@
   }
 
   .item-label {
-    font-size: 0.95rem;
-    font-weight: 900;
+    font-size: 1.1rem;
+    font-weight: 950;
     text-transform: uppercase;
     letter-spacing: 0.3px;
     margin-top: 2px;

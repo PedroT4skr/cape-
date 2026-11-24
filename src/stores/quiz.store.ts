@@ -4,22 +4,28 @@ import { DIFFICULTIES, SCORING, TIMER_TICK_MS } from '../config/quiz.config'
 import { createQuestionSet } from '../domain/questionFactory'
 import { summarizeQuiz, type QuizSummary } from '../domain/scoring'
 import { leaderboardRepository } from '../services/leaderboard.repository'
-import { activeView } from './navigation.store'
+import { activeView, previousMainView } from './navigation.store'
 
 export const isMathQuizOpen = writable<boolean>(false)
 export const isTeacherGateOpen = writable<boolean>(false)
 export const isLeaderboardOpen = writable<boolean>(false)
 
 export function openMathQuiz() {
+  const current = get(activeView)
+  if (current === 'board' || current === 'hub') {
+    previousMainView.set(current)
+  }
   activeView.set('quiz')
   isMathQuizOpen.set(true)
 }
 
 export function closeMathQuiz() {
+  stopTimer()
   isMathQuizOpen.set(false)
   isTeacherGateOpen.set(false)
   isLeaderboardOpen.set(false)
-  activeView.set('board')
+  const target = get(previousMainView) || 'board'
+  activeView.set(target)
 }
 
 // Estados do Quiz

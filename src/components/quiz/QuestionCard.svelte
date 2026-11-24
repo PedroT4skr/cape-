@@ -113,14 +113,14 @@
     background: #FEF3C7;
     border: 2px solid #F59E0B;
     color: #92400E;
-    font-size: 0.9rem;
-    font-weight: 800;
-    padding: 0.35rem 0.9rem;
+    font-size: 1.05rem;
+    font-weight: 850;
+    padding: 0.4rem 1.05rem;
     border-radius: 9999px;
   }
 
   .question-prompt {
-    font-size: clamp(1.65rem, 4.5vw, 2.45rem);
+    font-size: clamp(1.85rem, 5vw, 2.75rem);
     font-weight: 900;
     color: #1E293B;
     margin: 0;

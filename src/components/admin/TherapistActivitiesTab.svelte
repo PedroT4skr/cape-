@@ -155,12 +155,12 @@
   .back-btn {
     align-self: flex-start;
     background: #F1F5F9;
-    border: 2px solid #CBD5E1;
+    border: 2.5px solid #CBD5E1;
     border-radius: 12px;
-    padding: 8px 16px;
-    font-size: 0.9rem;
+    padding: 10px 18px;
+    font-size: 1.05rem;
     font-weight: 900;
-    color: #334155;
+    color: #1E293B;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -176,7 +176,7 @@
   .category-title-wrap {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
   }
 
   .title-row {
@@ -187,14 +187,14 @@
   }
 
   .category-emoji-badge {
-    font-size: 1.8rem;
+    font-size: 2rem;
     line-height: 1;
   }
 
   .count-badge {
-    font-size: 0.78rem;
+    font-size: 0.9rem;
     font-weight: 900;
-    padding: 4px 10px;
+    padding: 5px 12px;
     border-radius: 14px;
     border: 1.5px solid;
     letter-spacing: 0.5px;
@@ -231,7 +231,7 @@
   }
 
   .tab-title {
-    font-size: 1.25rem;
+    font-size: 1.45rem;
     font-weight: 900;
     text-transform: uppercase;
     color: #0F172A;
@@ -240,9 +240,9 @@
   }
 
   .tab-subtitle {
-    font-size: 0.95rem;
+    font-size: 1.12rem;
     font-weight: 600;
-    color: #64748B;
+    color: #475569;
     margin: 0;
   }
 

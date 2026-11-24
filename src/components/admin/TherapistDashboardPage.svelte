@@ -33,10 +33,20 @@
   <!-- Cabeçalho Idêntico ao Header da Aplicação Principal -->
   <header class="app-header">
     <div class="left-section">
-      <button class="brand-badge-btn" onclick={handleGoToHub} aria-label="Abrir Portal Central da Suíte CAPE">
-        <LayoutGrid size={15} />
-        <span class="brand-name">SUÍTE CAPE</span>
+      <button class="back-student-btn" onclick={handleBack} aria-label="Voltar">
+        <ArrowLeft size={18} strokeWidth={2.6} />
+        {#if $adminReturnTarget === 'hub'}
+          <span class="back-label-full">VOLTAR À SUÍTE</span>
+          <span class="back-label-short">VOLTAR</span>
+        {:else if $adminReturnTarget === 'activities'}
+          <span class="back-label-full">VOLTAR ÀS ATIVIDADES</span>
+          <span class="back-label-short">VOLTAR</span>
+        {:else}
+          <span class="back-label-full">VOLTAR À PRANCHA</span>
+          <span class="back-label-short">VOLTAR</span>
+        {/if}
       </button>
+
       <h1 class="board-title">
         <span class="full-title">PAINEL DE CONFIGURAÇÕES & AJUSTES</span>
         <span class="short-title">AJUSTES</span>
@@ -44,18 +54,9 @@
     </div>
 
     <div class="right-section">
-      <button class="back-student-btn" onclick={handleBack} aria-label="Voltar">
-        <ArrowLeft size={18} strokeWidth={2.4} />
-        {#if $adminReturnTarget === 'hub'}
-          <span class="back-label-full">VOLTAR À SUÍTE</span>
-          <span class="back-label-short">SUÍTE</span>
-        {:else if $adminReturnTarget === 'activities'}
-          <span class="back-label-full">VOLTAR ÀS ATIVIDADES</span>
-          <span class="back-label-short">ATIVIDADES</span>
-        {:else}
-          <span class="back-label-full">VOLTAR À PRANCHA</span>
-          <span class="back-label-short">VOLTAR</span>
-        {/if}
+      <button class="brand-badge-btn" onclick={handleGoToHub} aria-label="Abrir Portal Central da Suíte CAPE">
+        <LayoutGrid size={16} />
+        <span class="brand-name">SUÍTE CAPE</span>
       </button>
     </div>
   </header>

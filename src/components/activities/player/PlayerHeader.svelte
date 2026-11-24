@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Volume2, X } from '@lucide/svelte'
+  import { Volume2, ArrowLeft } from '@lucide/svelte'
 
   interface Props {
     currentIndex: number
@@ -16,9 +16,9 @@
 </script>
 
 <header class="player-header">
-  <button class="exit-btn" onclick={onExit} aria-label="Sair da atividade">
-    <X size={20} strokeWidth={2.4} />
-    <span>SAIR</span>
+  <button class="exit-btn" onclick={onExit} aria-label="Voltar para a lista de atividades">
+    <ArrowLeft size={22} strokeWidth={2.8} />
+    <span>VOLTAR</span>
   </button>
 
   <div class="progress-info">
@@ -31,7 +31,7 @@
   </div>
 
   <button class="audio-btn" onclick={onRepeatPrompt} aria-label="Repetir instrução em voz alta">
-    <Volume2 size={22} strokeWidth={2.4} />
+    <Volume2 size={24} strokeWidth={2.4} />
     <span>OUVIR</span>
   </button>
 </header>
@@ -50,10 +50,10 @@
     background: #F1F5F9;
     border: 2.5px solid #CBD5E1;
     border-radius: 14px;
-    padding: 7px 16px;
-    font-size: 0.92rem;
+    padding: 8px 18px;
+    font-size: 1.02rem;
     font-weight: 950;
-    color: #475569;
+    color: #1E293B;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -78,7 +78,7 @@
   }
 
   .progress-text {
-    font-size: 0.88rem;
+    font-size: 1.02rem;
     font-weight: 950;
     color: #1E293B;
     letter-spacing: 0.5px;

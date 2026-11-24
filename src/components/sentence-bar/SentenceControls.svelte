@@ -106,7 +106,7 @@
   }
 
   .btn-text {
-    font-size: 0.85rem;
+    font-size: 0.98rem;
     font-weight: 900;
     letter-spacing: 0.6px;
     text-transform: uppercase;
@@ -115,8 +115,8 @@
   .speak-btn {
     background: #16A34A;
     color: #FFFFFF;
-    min-width: 105px;
-    padding: 0 16px;
+    min-width: 112px;
+    padding: 0 18px;
     box-shadow: 0 4px 8px -1px rgba(22, 163, 74, 0.35);
   }
 
@@ -125,7 +125,7 @@
   }
 
   .speak-btn .btn-text {
-    font-size: 1rem;
+    font-size: 1.12rem;
     letter-spacing: 0.8px;
   }
 

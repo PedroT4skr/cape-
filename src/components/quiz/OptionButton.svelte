@@ -53,17 +53,17 @@
   }
 
   .option-badge {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
     background: #F1F5F9;
     color: #475569;
     border: 1px solid #E2E8F0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
-    font-weight: 850;
+    font-size: 1.3rem;
+    font-weight: 900;
     flex-shrink: 0;
   }
 
@@ -76,8 +76,8 @@
   .option-label {
     flex: 1;
     text-align: left;
-    font-size: clamp(1.2rem, 3.5vw, 1.55rem);
-    font-weight: 850;
+    font-size: clamp(1.45rem, 4vw, 1.9rem);
+    font-weight: 900;
     font-variant-numeric: tabular-nums;
   }
 

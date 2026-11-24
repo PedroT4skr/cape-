@@ -122,15 +122,15 @@
     background: rgba(37, 99, 235, 0.15);
     border: 1px solid #3b82f6;
     color: #60a5fa;
-    font-size: 0.75rem;
-    font-weight: 800;
-    padding: 0.25rem 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 850;
+    padding: 0.35rem 0.9rem;
     border-radius: 9999px;
     letter-spacing: 0.05em;
   }
 
   .hub-title {
-    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+    font-size: clamp(2.1rem, 5vw, 3rem);
     font-weight: 900;
     color: #f8fafc;
     margin: 0;
@@ -138,10 +138,10 @@
   }
 
   .hub-subtitle {
-    font-size: 1rem;
-    color: #94a3b8;
+    font-size: 1.18rem;
+    color: #cbd5e1;
     margin: 0;
-    line-height: 1.45;
+    line-height: 1.5;
   }
 
   .hub-grid {
@@ -262,27 +262,27 @@
   }
 
   .card-title {
-    font-size: 1.25rem;
-    font-weight: 800;
+    font-size: 1.45rem;
+    font-weight: 850;
     color: #f8fafc;
     margin: 0;
   }
 
   .card-desc {
-    font-size: 0.88rem;
-    color: #94a3b8;
+    font-size: 1.05rem;
+    color: #cbd5e1;
     margin: 0;
-    line-height: 1.4;
+    line-height: 1.45;
   }
 
   .card-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 0.9rem;
-    font-weight: 800;
-    color: #cbd5e1;
-    padding-top: 0.75rem;
+    font-size: 1.08rem;
+    font-weight: 850;
+    color: #f1f5f9;
+    padding-top: 0.85rem;
     border-top: 1px solid #334155;
   }
 
@@ -291,14 +291,15 @@
   }
 
   .quick-board-btn {
-    background: transparent;
-    border: none;
-    color: #94a3b8;
-    font-size: 0.95rem;
-    font-weight: 700;
+    background: #1e293b;
+    border: 2px solid #475569;
+    border-radius: 12px;
+    color: #f8fafc;
+    font-size: 1.1rem;
+    font-weight: 800;
     cursor: pointer;
-    padding: 0.5rem 1rem;
-    transition: color 0.15s ease;
+    padding: 0.75rem 1.4rem;
+    transition: all 0.15s ease;
   }
 
   .quick-board-btn:hover {

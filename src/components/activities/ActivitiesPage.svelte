@@ -1,14 +1,36 @@
 <script lang="ts">
-  import { closeActivitiesPage } from '../../stores/activity.store'
+  import {
+    closeActivitiesPage,
+    selectedCategoryId,
+    clearSelectedCategory
+  } from '../../stores/activity.store'
   import { openAdminLock } from '../../stores/admin.store'
+  import { navigateTo } from '../../stores/navigation.store'
   import TherapistActivitiesTab from '../admin/TherapistActivitiesTab.svelte'
-  import { ArrowLeft, Sparkles, Lock } from '@lucide/svelte'
+  import { ArrowLeft, Sparkles, Lock, LayoutGrid } from '@lucide/svelte'
+
+  let isInsideCategory = $derived($selectedCategoryId !== null)
+  let backText = $derived(isInsideCategory ? 'VOLTAR ÀS CATEGORIAS' : 'VOLTAR')
+
+  function handleContextualBack() {
+    if (isInsideCategory) {
+      clearSelectedCategory()
+    } else {
+      closeActivitiesPage()
+    }
+  }
 </script>
 
 <div class="activities-page-layout">
   <!-- Cabeçalho Superior da Página de Atividades -->
   <header class="activities-header">
     <div class="left-section">
+      <button class="back-board-btn" onclick={handleContextualBack} aria-label={backText}>
+        <ArrowLeft size={20} strokeWidth={2.8} />
+        <span class="back-label-full">{backText}</span>
+        <span class="back-label-short">VOLTAR</span>
+      </button>
+
       <div class="brand-badge">
         <Sparkles size={16} strokeWidth={2.4} />
         <span class="brand-name">CAPE CAA</span>
@@ -30,10 +52,13 @@
         <span class="manage-label-full">GERENCIAR BANCO</span>
       </button>
 
-      <button class="back-board-btn" onclick={closeActivitiesPage} aria-label="Voltar para a prancha de comunicação">
-        <ArrowLeft size={18} strokeWidth={2.4} />
-        <span class="back-label-full">VOLTAR À PRANCHA</span>
-        <span class="back-label-short">VOLTAR</span>
+      <button
+        class="manage-bank-btn"
+        onclick={() => navigateTo('hub')}
+        aria-label="Ir para o Menu Principal da Suíte CAPE"
+      >
+        <LayoutGrid size={16} strokeWidth={2.4} />
+        <span class="manage-label-full">SUÍTE CAPE</span>
       </button>
     </div>
   </header>

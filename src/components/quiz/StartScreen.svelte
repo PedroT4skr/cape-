@@ -103,7 +103,7 @@
   }
 
   .start-title {
-    font-size: clamp(1.8rem, 4vw, 2.3rem);
+    font-size: clamp(2.1rem, 4.5vw, 2.7rem);
     font-weight: 900;
     color: #0F172A;
     margin: 0;
@@ -111,33 +111,33 @@
   }
 
   .start-subtitle {
-    font-size: 0.95rem;
-    color: #64748B;
+    font-size: 1.15rem;
+    color: #475569;
     margin: 0;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .start-card {
     background: #FFFFFF;
     border: 2px solid #E2E8F0;
     border-radius: 20px;
-    padding: 1.5rem;
+    padding: 1.75rem;
     display: flex;
     flex-direction: column;
-    gap: 1.4rem;
+    gap: 1.5rem;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
   }
 
   .field-block {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.6rem;
   }
 
   .field-label {
-    font-size: 0.78rem;
-    font-weight: 850;
-    color: #475569;
+    font-size: 0.95rem;
+    font-weight: 900;
+    color: #334155;
     letter-spacing: 0.05em;
   }
 
@@ -159,9 +159,9 @@
     border: 2px solid #CBD5E1;
     border-radius: 12px;
     color: #0F172A;
-    font-size: 1.05rem;
-    font-weight: 700;
-    padding: 0.85rem 1rem 0.85rem 2.6rem;
+    font-size: 1.25rem;
+    font-weight: 750;
+    padding: 0.95rem 1rem 0.95rem 2.75rem;
     outline: none;
     transition: all 0.15s ease;
     box-sizing: border-box;

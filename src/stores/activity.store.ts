@@ -5,18 +5,26 @@ import { activityBank } from './activity-bank.store'
 import { soundEffects } from '../services/sound-effects.service'
 import { speechService } from '../services/speech.service'
 import { isAdminDashboardOpen } from './admin.store'
+import { activeView, previousMainView } from './navigation.store'
 
 export const selectedCategoryId = writable<ActivityCategoryId | null>(null)
 export const isActivitiesPageOpen = writable<boolean>(false)
 
 export function openActivitiesPage(): void {
+  const current = get(activeView)
+  if (current === 'board' || current === 'hub') {
+    previousMainView.set(current)
+  }
   isAdminDashboardOpen.set(false)
   isActivitiesPageOpen.set(true)
+  activeView.set('activities')
 }
 
 export function closeActivitiesPage(): void {
   isActivitiesPageOpen.set(false)
   selectedCategoryId.set(null)
+  const target = get(previousMainView) || 'board'
+  activeView.set(target)
 }
 
 export function selectCategory(id: ActivityCategoryId): void {
